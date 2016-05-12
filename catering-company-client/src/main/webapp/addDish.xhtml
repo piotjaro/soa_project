@@ -6,6 +6,20 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
-    <h:outputLabel value="Hello, world"/>
+    <h:form>
+        <h:panelGrid columns="3">
+            <h:outputLabel for="id" value="id"/>
+            <h:inputText id="id" value="#{remoteEJBClient.dish.id}"/>
+            <h:message for="id"/>
+
+            <h:outputLabel for="name" value="name"/>
+            <h:inputText id="name" value="#{remoteEJBClient.dish.name}"/>
+            <h:message for="id"/>
+
+
+            <h:outputLabel for="save" value="save"/>
+            <h:commandButton id="save" action="#{remoteEJBClient.addDish()}" value="submit" />
+        </h:panelGrid>
+    </h:form>
 </f:view>
 </html>

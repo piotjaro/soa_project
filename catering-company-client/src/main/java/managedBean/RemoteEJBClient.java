@@ -14,6 +14,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,8 +26,8 @@ public class RemoteEJBClient {
     private final static Logger logger = Logger.getLogger(RemoteEJBClient.class .getName());
     MenuInfo info;
     MenuEditor menu;
-    Dish dish = new Dish();
-    Category category = new Category();
+    private Dish dish = new Dish();
+    private Category category = new Category(123, "adsf");
 
     @PostConstruct
     public void initMethod() throws NamingException {
@@ -42,16 +43,17 @@ public class RemoteEJBClient {
     }
 
 
-    public String showDishes() throws NamingException {
+    public List<Dish> showDishes() throws NamingException {
         return info.printDishes();
     }
 
     public String addCategory() throws NamingException {
+        logger.warning("category client: " + category);
         return menu.addCategory(category);
     }
 
 
-    public String showCategories() throws NamingException {
+    public List<Category> showCategories() throws NamingException {
         return info.printCategories();
     }
 

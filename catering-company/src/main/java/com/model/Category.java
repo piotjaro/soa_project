@@ -50,4 +50,8 @@ public class Category implements Serializable {
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
     }
+
+    public String toString() {
+        return "id: " + id + "name: " + name;
+    }
 }

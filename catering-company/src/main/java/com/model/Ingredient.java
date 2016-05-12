@@ -33,4 +33,8 @@ public class Ingredient implements Serializable{
     public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
+
+    public String toString() {
+        return "id: " + id + ", name: " + name + ", quantity: " + quantity;
+    }
 }

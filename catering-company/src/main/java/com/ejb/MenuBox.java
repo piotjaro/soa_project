@@ -77,6 +77,7 @@ public class MenuBox {
 
     @Lock(WRITE)
     public void addCategory(Category category) {
+        logger.warn("category: " + category.toString());
         categories.add(category);
     }
 

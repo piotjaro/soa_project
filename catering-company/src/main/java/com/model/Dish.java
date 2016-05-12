@@ -71,4 +71,8 @@ public class Dish implements Serializable{
     public void setPathToPhoto(String pathToPhoto) {
         this.pathToPhoto = pathToPhoto;
     }
+
+    public String toString() {
+        return "id: " + id + " name: " + name + ", category: " + category + ", price: " + price + ", ingredients" + ingredients;
+    }
 }
