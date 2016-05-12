@@ -1,18 +1,28 @@
 package com.model;
 
+//import javax.persistence.Entity;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by piotrek on 08.05.16.
  */
-public class Dish {
+//@Entity
+public class Dish implements Serializable{
+
+//    @Id
+//    @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     private String name;
-    private int price;
-
-    public Dish(int id, String name, int price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-    }
+    private Category category = new Category();
+    private double price;
+    private List<Ingredient> ingredients = new ArrayList<>();
+    private String pathToPhoto;
 
     public int getId() {
         return id;
@@ -30,15 +40,35 @@ public class Dish {
         this.name = name;
     }
 
-    public int getPrice() {
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public String toString() {
-        return "id: "  + id + ", name: " + name + ", price: " + price;
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public String getPathToPhoto() {
+        return pathToPhoto;
+    }
+
+    public void setPathToPhoto(String pathToPhoto) {
+        this.pathToPhoto = pathToPhoto;
     }
 }

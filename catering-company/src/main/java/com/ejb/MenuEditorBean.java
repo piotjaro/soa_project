@@ -1,6 +1,13 @@
 package com.ejb;
 
+//import com.model.Dish;
+import com.model.Category;
 import com.model.Dish;
+import com.model.Ingredient;
+import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 
 import javax.annotation.PostConstruct;
@@ -12,20 +19,48 @@ import java.util.List;
 @Stateful
 @Remote(MenuEditor.class)
 public class MenuEditorBean implements MenuEditor {
-//	private static final Logger logger =
-//			Logger.getLogger(TheatreBookerBean.class);
+	private static final Logger logger =
+			Logger.getLogger(MenuEditorBean.class);
 
-	int money;
 	@EJB MenuBox box;
 
-	@PostConstruct
-	public void createCustomer() {
-		this.money=100;
+	public String addDish(Dish dish) {
+//		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+//		Session session = sessionFactory.openSession();
+//		session.beginTransaction();
+//		session.save(dish);
+//		session.getTransaction().commit();
+		box.addDish(dish);
+		return "Success";
 	}
 
 
 	@Override
-	public void addDish(Dish dish) {
-		box.addDish(dish);
+	public String editDish(int id, Dish dish) {
+		box.editDish(id, dish);
+		return "Success";
+	}
+
+	@Override
+	public String removeDish(int id) {
+		box.removeDish(id);
+		return "Success";
+	}
+
+	@Override
+	public String addCategory(Category category) {
+		box.addCategory(category);
+		return "Success";
+
+	}
+
+	@Override
+	public String editCategory(int id, String category) {
+		return box.editCategory(id, category);
+	}
+
+	@Override
+	public String removeCategory(int id) {
+		return box.removeCategory(id);
 	}
 }
