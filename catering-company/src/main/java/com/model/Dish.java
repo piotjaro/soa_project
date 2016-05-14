@@ -1,10 +1,7 @@
 package com.model;
 
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
-//import javax.persistence.Id;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +9,17 @@ import java.util.List;
 /**
  * Created by piotrek on 08.05.16.
  */
-//@Entity
+@Entity
 public class Dish implements Serializable{
 
-//    @Id
-//    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     private String name;
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Category category = new Category();
     private double price;
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Ingredient> ingredients = new ArrayList<>();
     private String pathToPhoto;
 
@@ -73,6 +72,6 @@ public class Dish implements Serializable{
     }
 
     public String toString() {
-        return "id: " + id + " name: " + name + ", category: " + category + ", price: " + price + ", ingredients" + ingredients;
+        return "id: " + id + " name: " + name + ", price: " + price + ", ingredients" + ingredients;
     }
 }

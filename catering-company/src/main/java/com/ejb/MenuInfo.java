@@ -7,7 +7,8 @@ import com.model.Dish;
 import java.util.List;
 
 public interface MenuInfo {
-	public List<Dish> printDishes();
-	public List<Category> printCategories();
+	public List<Dish> getDishes();
+	public List<Category> getCategories();
+	public List<Dish> getDishesFromCategory(int id);
 
 }

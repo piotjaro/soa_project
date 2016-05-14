@@ -27,7 +27,7 @@ public class RemoteEJBClient {
     MenuInfo info;
     MenuEditor menu;
     private Dish dish = new Dish();
-    private Category category = new Category(123, "adsf");
+    private Category category = new Category();
 
     @PostConstruct
     public void initMethod() throws NamingException {
@@ -43,9 +43,10 @@ public class RemoteEJBClient {
     }
 
 
-    public List<Dish> showDishes() throws NamingException {
-        return info.printDishes();
-    }
+
+//    public List<Dish> showDishes() throws NamingException {
+//        return info.printDishes();
+//    }
 
     public String addCategory() throws NamingException {
         logger.warning("category client: " + category);
@@ -54,7 +55,7 @@ public class RemoteEJBClient {
 
 
     public List<Category> showCategories() throws NamingException {
-        return info.printCategories();
+        return info.getCategories();
     }
 
     public Dish getDish() {

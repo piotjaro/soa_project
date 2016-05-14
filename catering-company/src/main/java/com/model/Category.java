@@ -1,5 +1,9 @@
 package com.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +11,10 @@ import java.util.List;
 /**
  * Created by piotrek on 12.05.16.
  */
+@Entity
 public class Category implements Serializable {
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     private String name;
 
@@ -52,6 +59,6 @@ public class Category implements Serializable {
     }
 
     public String toString() {
-        return "id: " + id + "name: " + name;
+        return "id: " + id + " name: " + name;
     }
 }

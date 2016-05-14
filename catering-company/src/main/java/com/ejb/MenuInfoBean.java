@@ -32,14 +32,17 @@ public class  MenuInfoBean implements MenuInfo  {
 //	}
 
 	@Override
-	public List<Dish> printDishes() {
+	public List<Dish> getDishes() {
 		return box.getDishes();
 	}
 
 	@Override
-	public List<Category> printCategories() {
+	public List<Category> getCategories() {
 		return box.getCategories();
 	}
 
-
+	@Override
+	public List<Dish> getDishesFromCategory(int id) {
+		return box.getDishesFromCategory(id);
+	}
 }

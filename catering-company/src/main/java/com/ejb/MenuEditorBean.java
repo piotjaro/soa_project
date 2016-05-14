@@ -25,19 +25,14 @@ public class MenuEditorBean implements MenuEditor {
 	@EJB MenuBox box;
 
 	public String addDish(Dish dish) {
-//		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-//		Session session = sessionFactory.openSession();
-//		session.beginTransaction();
-//		session.save(dish);
-//		session.getTransaction().commit();
 		box.addDish(dish);
 		return "Success";
 	}
 
 
 	@Override
-	public String editDish(int id, Dish dish) {
-		box.editDish(id, dish);
+	public String editDish(Dish dish) {
+		box.editDish(dish);
 		return "Success";
 	}
 
@@ -55,12 +50,14 @@ public class MenuEditorBean implements MenuEditor {
 	}
 
 	@Override
-	public String editCategory(int id, String category) {
-		return box.editCategory(id, category);
+	public String editCategory(Category category) {
+		box.editCategory(category);
+		return "Success";
 	}
 
 	@Override
 	public String removeCategory(int id) {
-		return box.removeCategory(id);
+		box.removeCategory(id);
+		return "Success";
 	}
 }

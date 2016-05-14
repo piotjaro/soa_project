@@ -8,17 +8,29 @@
 <f:view>
     <h:form>
         <h:panelGrid columns="3">
-            <h:outputLabel for="id" value="id"/>
-            <h:inputText id="id" value="#{remoteEJBClient.dish.id}"/>
-            <h:message for="id"/>
+
 
             <h:outputLabel for="name" value="name"/>
             <h:inputText id="name" value="#{remoteEJBClient.dish.name}"/>
-            <h:message for="id"/>
+            <h:message for="name"/>
 
+            <h:outputLabel for="category" value="Category"/>
+            <h:selectOneMenu id="category" value="#{remoteEJBClient.dish.name}">
+                <f:selectItems value="#{remoteEJBClient.showCategories()}" var="category" itemValue="#{category.id}" itemLabel="#{category.name}" />
+            </h:selectOneMenu>
+            <h:message for="category"/>
+
+            <h:outputLabel for="price" value="Price"/>
+            <h:inputText id="price" value="#{remoteEJBClient.dish.price}"/>
+            <h:message for="price"/>
+
+
+            <h:outputLabel for="ingredient" value="Ingredient"/>
+            <h:inputText id="ingredient" value="#{remoteEJBClient.dish.ingredients.add()}"/>
+            <h:message for="price"/>
 
             <h:outputLabel for="save" value="save"/>
-            <h:commandButton id="save" action="#{remoteEJBClient.addDish()}" value="submit" />
+            <h:commandButton id="save" action="#{remoteEJBClient.addDish()}" value="submit"/>
         </h:panelGrid>
     </h:form>
 </f:view>
