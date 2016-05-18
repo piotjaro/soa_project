@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+</h:head>
+<h:body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Menu</div>
+        <button onclick="location.href = 'hello.xhtml';">main page</button>
+        <div class="panel-body">
+            <h:form>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Category</th>
+                        <th>Dish</th>
+                        <th>Price/Ingredients</th>
+                        <th>Quantity Of Ingredient</th>
+                        <th>Remove</th>
+                        <th>Edit</th>
+                    </tr>
+                    <ui:repeat id="printMenu" value="#{remoteEJBClient.showCategories()}" var="category">
+                        <tr>
+                            <td><h:outputLabel value="#{category.name}"/></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <h:commandButton value="Remove Category" id="removeCategory#{category.id}"
+                                                 action="#{remoteEJBClient.removeCategoriesWithDishes(category.id)}">
+                                    <f:ajax render="removeCategory#{category.id}"
+                                            execute="removeCategory#{category.id} printMenu"/>
+                                </h:commandButton>
+                            </td>
+                            <td><h:commandButton action="#{remoteEJBClient.editCategory(category.id)}"
+                                                 value="edit category"/><br/></td>
+                        </tr>
+
+                        <ui:repeat value="#{remoteEJBClient.getCategoryDishes(category.id)}" var="dish">
+                            <tr>
+                                <td></td>
+                                <td><h:outputLabel value="#{dish.name}"/></td>
+                                <td><h:outputLabel value="#{dish.price}"/></td>
+                                <td></td>
+                                <td>
+                                    <h:commandButton value="Remove Dish" id="removeDish#{dish.id}"
+                                                     action="#{remoteEJBClient.removeDish(dish.id)}">
+                                        <f:ajax render="removeDish#{dish.id}" execute="removeDish#{dish.id} printMenu"/>
+                                    </h:commandButton>
+                                </td>
+                                <td><h:commandButton action="#{remoteEJBClient.editDish(dish.id)}"
+                                                     value="edit dish"/><br/></td>
+                            </tr>
+                            <ui:repeat value="#{dish.ingredients}" var="ingredient">
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td><h:outputLabel value="#{ingredient.name}"/></td>
+                                    <td><h:outputLabel value="#{ingredient.quantity}"/></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </ui:repeat>
+
+
+                        </ui:repeat>
+                    </ui:repeat>
+                </table>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+
+</html>
