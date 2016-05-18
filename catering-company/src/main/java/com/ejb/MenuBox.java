@@ -4,6 +4,7 @@ package com.ejb;
 
 import com.model.Category;
 import com.model.Dish;
+import com.model.Ingredient;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
@@ -33,7 +34,7 @@ public class MenuBox {
     @Lock(READ)
     public List<Dish> getDishes() {
         Query q1 = em.createQuery("Select d from Dish d");
-        return q1.getResultList();
+        return (List<Dish>)q1.getResultList();
     }
 
     @Lock(WRITE)
@@ -57,7 +58,7 @@ public class MenuBox {
     @Lock(READ)
     public List<Category> getCategories() {
         Query q1 = em.createQuery("Select c from Category c");
-        return q1.getResultList();
+        return (List<Category>)q1.getResultList();
     }
 
 
@@ -69,7 +70,6 @@ public class MenuBox {
     @Lock(WRITE)
     public void editCategory(Category category) {
         em.merge(category);
-
     }
 
     @Lock(WRITE)
@@ -79,11 +79,40 @@ public class MenuBox {
     }
 
     @Lock(WRITE)
+    public void removeIngredient(int id) {
+        Ingredient ingredient = em.find(Ingredient.class, id);
+        em.remove(ingredient);
+    }
+
+    @Lock(READ)
     public List<Dish> getDishesFromCategory(int id) {
         Query q1 = em.createQuery("Select d from Dish d where d.category.id = "+ id +"");
-        return (List<Dish>)q1;
+        return (List<Dish>)q1.getResultList();
+    }
+
+    @Lock(READ)
+    public Category getCategory(int id) {
+        return em.find(Category.class, id);
+    }
+
+    @Lock(READ)
+    public Dish getDish(int id) {
+        return em.find(Dish.class, id);
     }
 
 
+    @Lock(READ)
+    public Ingredient getIngredient(int id) {
+        return em.find(Ingredient.class, id);
+    }
 
+    @Lock(READ)
+    public List<Ingredient> getIngredientFromDish(int id) {
+        return em.find(Dish.class, id).getIngredients();
+    }
+
+    @Lock(WRITE)
+    public void editIngredient(Ingredient ingredient) {
+        em.merge(ingredient);
+    }
 }

@@ -60,4 +60,15 @@ public class MenuEditorBean implements MenuEditor {
 		box.removeCategory(id);
 		return "Success";
 	}
+	@Override
+	public String removeIngredient(int id) {
+		box.removeIngredient(id);
+		return "Success";
+	}
+
+	@Override
+	public String editIngredient(Ingredient ingredient) {
+		box.editIngredient(ingredient);
+		return "Success";
+	}
 }

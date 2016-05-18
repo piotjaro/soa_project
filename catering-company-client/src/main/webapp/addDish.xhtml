@@ -5,33 +5,70 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:form>
-        <h:panelGrid columns="3">
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+</h:head>
+<h:body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Add Dish
+            <button class="btn btn-default" onclick="location.href = 'hello.xhtml';">Main Page</button>
+        </div>
+        <div class="panel-body">
+            <h:outputLabel id="addIngredient" value="#{remoteEJBClient.addIngredient()}"/>
+            <h:form>
+                <h:panelGrid columns="3">
+
+                    <h:outputLabel for="name" value="name"/>
+                    <h:inputText styleClass="form-control" id="name" value="#{remoteEJBClient.dish.name}"/>
+                    <h:message for="name"/>
+
+                    <h:outputLabel for="category" value="Category"/>
+                    <h:selectOneMenu styleClass="form-control" id="category" value="#{remoteEJBClient.dish.category.id}">
+                        <f:selectItems value="#{remoteEJBClient.showCategories()}" var="category"
+                                       itemValue="#{category.id}" itemLabel="#{category.name}"/>
+                    </h:selectOneMenu>
+                    <h:message for="category"/>
+
+                    <h:outputLabel for="ingredientName" value="Ingredient name"/>
+                    <h:inputText styleClass="form-control" id="ingredientName"
+                                 value="#{remoteEJBClient.ingredient.name}"/>
+                    <h:message for="ingredientName"/>
+
+                    <h:outputLabel for="ingredientQuantity" value="Ingredient quantity"/>
+                    <h:inputText styleClass="form-control" id="ingredientQuantity"
+                                 value="#{remoteEJBClient.ingredient.quantity}"/>
+                    <h:message for="ingredientQuantity"/>
+
+                    <h:outputLabel for="addIngredientButton" value="Add ingredient"/>
+                    <h:commandButton styleClass="btn btn-default" id="addIngredientButton" value="Add ingredient">
+                        <f:ajax execute="ingredientName ingredientQuantity" render="addIngredient showIngredients"/>
+                    </h:commandButton>
+                    <h:message for="addIngredientButton"/>
+
+                    <h:panelGroup/>
+                    <h:panelGroup id="showIngredients">
+                        <ui:repeat id="someId" value="#{remoteEJBClient.showIngredients()}" var="ingredient">
+                            <h:outputLabel value="#{ingredient.name}"/>&nbsp;
+                            <h:outputLabel value="#{ingredient.quantity}"/><br/>
+                        </ui:repeat>
+                    </h:panelGroup>
 
 
-            <h:outputLabel for="name" value="name"/>
-            <h:inputText id="name" value="#{remoteEJBClient.dish.name}"/>
-            <h:message for="name"/>
+                    <h:panelGroup/>
 
-            <h:outputLabel for="category" value="Category"/>
-            <h:selectOneMenu id="category" value="#{remoteEJBClient.dish.name}">
-                <f:selectItems value="#{remoteEJBClient.showCategories()}" var="category" itemValue="#{category.id}" itemLabel="#{category.name}" />
-            </h:selectOneMenu>
-            <h:message for="category"/>
-
-            <h:outputLabel for="price" value="Price"/>
-            <h:inputText id="price" value="#{remoteEJBClient.dish.price}"/>
-            <h:message for="price"/>
+                    <h:outputLabel for="price" value="Price"/>
+                    <h:inputText styleClass="form-control" id="price" value="#{remoteEJBClient.dish.price}"/>
+                    <h:message for="price"/>
 
 
-            <h:outputLabel for="ingredient" value="Ingredient"/>
-            <h:inputText id="ingredient" value="#{remoteEJBClient.dish.ingredients.add()}"/>
-            <h:message for="price"/>
+                    <h:outputLabel for="save" value="save"/>
+                    <h:commandButton styleClass="btn btn-default" id="save" action="#{remoteEJBClient.addDish()}"
+                                     value="save"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+    </div>
 
-            <h:outputLabel for="save" value="save"/>
-            <h:commandButton id="save" action="#{remoteEJBClient.addDish()}" value="submit"/>
-        </h:panelGrid>
-    </h:form>
-</f:view>
+
+</h:body>
 </html>

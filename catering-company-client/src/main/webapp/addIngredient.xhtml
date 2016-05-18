@@ -5,7 +5,32 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+</h:head>
+<h:body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Add Category
+            <button class="btn btn-default" onclick="location.href = 'hello.xhtml';">Main Page</button>
+        </div>
+        <div class="panel-body">
+            <h:form>
+                <h:panelGrid columns="3">
+
+                    <h:outputLabel for="name" value="name"/>
+                    <h:inputText styleClass="form-control" id="name" value="#{remoteEJBClient.ingredient.name}"/>
+                    <h:message for="name"/>
+
+
+                    <h:outputLabel for="quantity" value="quantity"/>
+                    <h:inputText styleClass="form-control" id="quantity" value="#{remoteEJBClient.ingredient.quantity}"/>
+                    <h:message for="quantity"/>
+
+                    <h:outputLabel for="add" value="add"/>
+                    <h:commandButton styleClass="btn btn-default" id="add" action="#{remoteEJBClient.addIngredientFromMenu()}" value="add"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+    </div>
+</h:body>
 </html>

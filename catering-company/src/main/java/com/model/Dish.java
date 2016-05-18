@@ -16,10 +16,10 @@ public class Dish implements Serializable{
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     private String name;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Category category = new Category();
     private double price;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
     private List<Ingredient> ingredients = new ArrayList<>();
     private String pathToPhoto;
 
@@ -63,6 +63,10 @@ public class Dish implements Serializable{
         this.ingredients = ingredients;
     }
 
+    public void addIngredient(Ingredient ingredient) {
+        ingredients.add(ingredient);
+    }
+
     public String getPathToPhoto() {
         return pathToPhoto;
     }
@@ -72,6 +76,6 @@ public class Dish implements Serializable{
     }
 
     public String toString() {
-        return "id: " + id + " name: " + name + ", price: " + price + ", ingredients" + ingredients;
+        return "id: " + id + " name: " + name + ", price: " + price + ", category" + category + ", ingredients: " + ingredients; //+ ", ingredients" + ingredients;
     }
 }

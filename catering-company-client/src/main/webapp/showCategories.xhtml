@@ -5,13 +5,36 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+</h:head>
+<h:body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Show Categories
+            <button class="btn btn-default" onclick="location.href = 'hello.xhtml';">Main Page</button>
+        </div>
 
+        <div class="panel-body">
 
-<f:view>
-    <h:form>
-        <ui:repeat value="#{remoteEJBClient.showCategories()}" var="data">
-            <h:outputLabel value="#{data}"/><br/>
-        </ui:repeat>
-    </h:form>
-</f:view>
+            <h:form>
+                <table class="table table-striped">
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                    </tr>
+                    <ui:repeat value="#{remoteEJBClient.showCategories()}" var="category">
+                        <tr>
+                            <td><h:outputLabel value="#{category.id}"/></td>
+                            <td><h:outputLabel value="#{category.name}"/></td>
+                        </tr>
+
+                    </ui:repeat>
+                </table>
+            </h:form>
+
+        </div>
+    </div>
+</h:body>
+
 </html>

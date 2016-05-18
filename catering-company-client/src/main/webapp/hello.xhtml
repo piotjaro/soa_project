@@ -4,11 +4,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
-
 <h:head>
-    <title>JSF 2.0 Hello World</title>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+
 </h:head>
+
 <h:body>
-    #{remoteEJBClient.bookSeat(4)}
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Main Page</div>
+
+        <div class="panel-body">
+
+            <button class="btn btn-default" onclick="location.href = 'showDishes.xhtml';">show all dishes</button>
+            <button class="btn btn-default" onclick="location.href = 'showCategories.xhtml';">show all categories</button>
+            <button class="btn btn-default" onclick="location.href = 'addDish.xhtml';">add dish</button>
+            <button class="btn btn-default" onclick="location.href = 'addCategory.xhtml';">add category</button>
+            <button class="btn btn-default" onclick="location.href = 'showMenu.xhtml';">show menu</button>
+            <button class="btn btn-default" onclick="location.href = 'showResult.xhtml';">show result</button>
+            <h:form>
+                <h:commandButton action="#{remoteEJBClient.goToAddCategory()}" value="add category"/>
+                <h:commandButton action="#{remoteEJBClient.goToAddDish()}" value="add dish"/>
+            </h:form>
+        </div>
+    </div>
+
+
 </h:body>
+
+
 </html>

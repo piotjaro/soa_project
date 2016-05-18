@@ -5,6 +5,7 @@ package com.ejb;
 
 import com.model.Category;
 import com.model.Dish;
+import com.model.Ingredient;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
@@ -44,5 +45,25 @@ public class  MenuInfoBean implements MenuInfo  {
 	@Override
 	public List<Dish> getDishesFromCategory(int id) {
 		return box.getDishesFromCategory(id);
+	}
+
+	@Override
+	public Category getCategory(int id) {
+		return box.getCategory(id);
+	}
+
+	@Override
+	public Dish getDish(int id) {
+		return box.getDish(id);
+	}
+
+	@Override
+	public Ingredient getIngredient(int id) {
+		return box.getIngredient(id);
+	}
+
+	@Override
+	public List<Ingredient> getIngredientFromDish(int id) {
+		return box.getIngredientFromDish(id);
 	}
 }
