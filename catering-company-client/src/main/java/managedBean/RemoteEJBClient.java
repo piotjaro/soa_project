@@ -89,11 +89,15 @@ public class RemoteEJBClient {
     }
 
     public String addIngredientFromMenu(){
-        result = "ing: " + ingredient.toString();
         List <Ingredient> ingredients = dish.getIngredients();
         ingredients.add(ingredient);
         dish.setIngredients(ingredients);
         menu.editDish(dish);
+        dish = info.getDish(dish.getId());
+        Ingredient ingredient1 = dish.getIngredients().get(dish.getIngredients().size()-1);
+        ingredient1.setName(ingredient.getName());
+        ingredient1.setQuantity(ingredient.getQuantity());
+        menu.editIngredient(ingredient1);
         return "success";
     }
 

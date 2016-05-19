@@ -18,13 +18,11 @@
 
             <button class="btn btn-default" onclick="location.href = 'showDishes.xhtml';">show all dishes</button>
             <button class="btn btn-default" onclick="location.href = 'showCategories.xhtml';">show all categories</button>
-            <button class="btn btn-default" onclick="location.href = 'addDish.xhtml';">add dish</button>
-            <button class="btn btn-default" onclick="location.href = 'addCategory.xhtml';">add category</button>
             <button class="btn btn-default" onclick="location.href = 'showMenu.xhtml';">show menu</button>
             <button class="btn btn-default" onclick="location.href = 'showResult.xhtml';">show result</button>
-            <h:form>
-                <h:commandButton action="#{remoteEJBClient.goToAddCategory()}" value="add category"/>
-                <h:commandButton action="#{remoteEJBClient.goToAddDish()}" value="add dish"/>
+            <h:form style="display: inline;">
+                <h:commandButton styleClass="btn btn-default" action="#{remoteEJBClient.goToAddCategory()}" value="add category"/>
+                <h:commandButton styleClass="btn btn-default" action="#{remoteEJBClient.goToAddDish()}" value="add dish"/>
             </h:form>
         </div>
     </div>

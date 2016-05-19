@@ -25,7 +25,6 @@ import static javax.ejb.LockType.WRITE;
 @Singleton
 @Startup
 public class MenuBox {
-    private List<Dish> dishes = new ArrayList<>();
     private static final Logger logger = Logger.getLogger(MenuBox.class);
     @PersistenceContext(name="catering-company")
     private EntityManager em;
@@ -52,6 +51,7 @@ public class MenuBox {
 
     @Lock(WRITE)
     public void editDish(Dish dish) {
+
         em.merge(dish);
     }
 
