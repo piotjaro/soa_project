@@ -25,6 +25,7 @@
                         <th>Quantity Of Ingredient</th>
                         <th>Remove</th>
                         <th>Edit</th>
+                        <th>Add to cart</th>
                     </tr>
                     <ui:repeat id="printMenu" value="#{remoteEJBClient.showCategories()}" var="category">
                         <tr>
@@ -39,6 +40,7 @@
                             </td>
                             <td><h:commandButton action="#{remoteEJBClient.editCategory(category.id)}"
                                                  value="edit category"/><br/></td>
+                            <td></td>
                         </tr>
 
                         <ui:repeat value="#{remoteEJBClient.getCategoryDishes(category.id)}" var="dish">
@@ -54,6 +56,10 @@
                                 </td>
                                 <td><h:commandButton action="#{remoteEJBClient.editDish(dish.id)}"
                                                      value="edit dish"/><br/></td>
+                                <td>
+                                    <h:commandButton action="#{remoteEJBClient.addToCart(dish.id)}"
+                                                     value="add to card"/><br/>
+                                </td>
                             </tr>
                             <ui:repeat value="#{dish.ingredients}" var="ingredient">
                                 <tr>
@@ -65,6 +71,7 @@
                                             <h:commandButton action="#{remoteEJBClient.removeSingleIngredient(dish.id, ingredient.id)}" value="Remove Ingredient" />
                                     </td>
                                     <td><h:commandButton action="#{remoteEJBClient.editIngredient(ingredient.id)}" value="edit ingredient"/><br/></td>
+                                    <td></td>
                                 </tr>
                             </ui:repeat>
                             <tr>

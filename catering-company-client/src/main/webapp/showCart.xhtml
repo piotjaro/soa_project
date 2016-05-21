@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+</h:head>
+<h:body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Show Categories
+            <button class="btn btn-default" onclick="location.href = 'hello.xhtml';">Main Page</button>
+        </div>
+
+        <div class="panel-body">
+
+            <h:form>
+                <table class="table table-striped">
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>price</th>
+                        <th>remove</th>
+                    </tr>
+                    <ui:repeat value="#{remoteEJBClient.cart.dishes}" var="dish">
+                        <tr>
+                            <td><h:outputLabel value="#{dish.id}"/></td>
+                            <td><h:outputLabel value="#{dish.name}"/></td>
+                            <td><h:outputLabel value="#{dish.price}"/></td>
+                            <td>
+                                <h:commandButton action="#{remoteEJBClient.removeDishFromCart(dish.id)}" value="Remove" />
+                            </td>
+                        </tr>
+
+                    </ui:repeat>
+                </table>
+                <h:outputLabel value="total cost: #{remoteEJBClient.cart.cost}"/>
+                <h:commandButton action="#{remoteEJBClient.addCartToUser()}" value="send order" />
+            </h:form>
+
+        </div>
+    </div>
+</h:body>
+
+</html>

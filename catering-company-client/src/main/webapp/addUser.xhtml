@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+</h:head>
+<h:body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Add User
+            <button class="btn btn-default" onclick="location.href = 'hello.xhtml';">Main Page</button>
+        </div>
+        <div class="panel-body">
+            <h:form>
+                <h:panelGrid columns="3">
+
+                    <h:outputLabel for="login" value="login"/>
+                    <h:inputText styleClass="form-control" id="login" value="#{remoteEJBClient.userToAdd.login}"/>
+                    <h:message for="login"/>
+
+                    <h:outputLabel for="password" value="password"/>
+                    <h:inputText styleClass="form-control" id="password" value="#{remoteEJBClient.userToAdd.password}"/>
+                    <h:message for="password"/>
+
+                    <h:outputLabel for="role" value="role: CUSTOMER MANAGER WORKER DELIVER"/>
+                    <h:inputText styleClass="form-control" id="role" value="#{remoteEJBClient.userToAdd.role}"/>
+                    <h:message for="role"/>
+
+                    <h:outputLabel for="name" value="name"/>
+                    <h:inputText styleClass="form-control" id="name" value="#{remoteEJBClient.userToAdd.name}"/>
+                    <h:message for="name"/>
+
+
+                    <h:outputLabel for="surname" value="surname"/>
+                    <h:inputText styleClass="form-control" id="surname" value="#{remoteEJBClient.userToAdd.surname}"/>
+                    <h:message for="surname"/>
+
+
+                    <h:outputLabel for="mail" value="mail"/>
+                    <h:inputText styleClass="form-control" id="mail" value="#{remoteEJBClient.userToAdd.mail}"/>
+                    <h:message for="mail"/>
+
+                    <h:outputLabel for="name" value="save"/>
+                    <h:commandButton styleClass="btn btn-default" id="save" action="#{remoteEJBClient.addUser()}" value="add"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>

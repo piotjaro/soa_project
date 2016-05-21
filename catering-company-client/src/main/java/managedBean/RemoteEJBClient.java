@@ -1,16 +1,13 @@
 package managedBean;
 
 
-import com.ejb.MenuEditor;
-import com.ejb.MenuInfo;
-import com.ejb.MenuInfoBean;
-import com.model.Category;
-import com.model.Dish;
-import com.model.Ingredient;
+import com.ejb.*;
+import com.model.*;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -24,12 +21,42 @@ import java.util.logging.Logger;
 public class RemoteEJBClient {
     private final static Hashtable jndiProperties = new Hashtable();
     private final static Logger logger = Logger.getLogger(RemoteEJBClient.class.getName());
-    MenuInfo info;
-    MenuEditor menu;
+    private MenuInfo info;
+    private MenuEditor menu;
+    private UserEditor userEditor;
+    private UserInfo userInfo;
     private Dish dish;
     private Category category;
     private Ingredient ingredient;
     private String result;
+    private UserAccount user;
+    private UserAccount userToAdd;
+    private Cart cart = new Cart();
+
+    //CONSTRUCTORS
+
+    public RemoteEJBClient() {
+        dish = new Dish();
+        category = new Category();
+        ingredient = new Ingredient();
+    }
+
+    //POST CONTRUCTORS
+
+    @PostConstruct
+    public void initMethod() throws NamingException {
+        Logger.getLogger("org.jboss").setLevel(Level.SEVERE);
+        Logger.getLogger("org.xnio").setLevel(Level.SEVERE);
+        info = lookupMenuInfoEJB();
+        menu = lookupMenuEditorEJB();
+        userEditor = lookupUserEditorEJB();
+        userInfo = lookupUserInfoEJB();
+        cart.setDishes(new ArrayList<>());
+
+        jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+    }
+
+    //GETTERY, SETTERY
 
     public void setResult(String result) {
         this.result = result;
@@ -39,21 +66,59 @@ public class RemoteEJBClient {
         return result;
     }
 
-    @PostConstruct
-    public void initMethod() throws NamingException {
-        Logger.getLogger("org.jboss").setLevel(Level.SEVERE);
-        Logger.getLogger("org.xnio").setLevel(Level.SEVERE);
-        info = lookupMenuInfoEJB();
-        menu = lookupMenuEditorEJB();
-        jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+    public Dish getDish() {
+        return dish;
     }
 
-
-    public RemoteEJBClient() {
-        dish = new Dish();
-        category = new Category();
-        ingredient = new Ingredient();
+    public void setDish(Dish dish) {
+        this.dish = dish;
     }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<Dish> getCategoryDishes(int id) {
+        return info.getDishesFromCategory(id);
+    }
+
+    public Ingredient getIngredient() {
+        return ingredient;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public UserAccount getUser() {
+        return user;
+    }
+
+    public void setUser(UserAccount user) {
+        this.user = user;
+    }
+
+    public void setIngredient(Ingredient ingredient) {
+        this.ingredient = ingredient;
+    }
+
+    public UserAccount getUserToAdd() {
+        return userToAdd;
+    }
+
+    public void setUserToAdd(UserAccount userToAdd) {
+        this.userToAdd = userToAdd;
+    }
+
+    //DISH METHODS
 
     public String addDish() throws NamingException {
         menu.addDish(dish);
@@ -65,6 +130,31 @@ public class RemoteEJBClient {
     public List<Dish> showDishes() throws NamingException {
         return info.getDishes();
     }
+
+    public String removeDish(int id) {
+        Dish dish1 = info.getDish(id);
+        List<Ingredient> ingredients = dish1.getIngredients();
+        dish1.setIngredients(new ArrayList<Ingredient>());
+        menu.editDish(dish1);
+
+        for(Ingredient ingredient : ingredients) {
+            removeIngredient(ingredient.getId());
+        }
+        menu.removeDish(id);
+        return "success";
+    }
+
+    public String saveEditedDish(){
+        menu.editDish(dish);
+        return "success.html";
+    }
+
+    public String editDish(int id) {
+        dish = info.getDish(id);
+        return "editDish";
+    }
+
+    //INGREDIENT METHODS
 
     public List<Ingredient> showIngredients() {
         return dish.getIngredients();
@@ -101,33 +191,6 @@ public class RemoteEJBClient {
         return "success";
     }
 
-
-    public List<Category> showCategories() throws NamingException {
-        return info.getCategories();
-    }
-
-    public String removeCategories(int id) {
-        List<Dish> dishes = info.getDishesFromCategory(id);
-        for(Dish dish: dishes) {
-            removeDish(dish.getId());
-        }
-        menu.removeCategory(id);
-        return "success";
-    }
-
-    public String removeDish(int id) {
-        Dish dish1 = info.getDish(id);
-        List<Ingredient> ingredients = dish1.getIngredients();
-        dish1.setIngredients(new ArrayList<Ingredient>());
-        menu.editDish(dish1);
-
-        for(Ingredient ingredient : ingredients) {
-            removeIngredient(ingredient.getId());
-        }
-        menu.removeDish(id);
-        return "success";
-    }
-
     public String removeIngredient(int id) {
         menu.removeIngredient(id);
         return "success";
@@ -148,25 +211,6 @@ public class RemoteEJBClient {
         return "success";
     }
 
-    public String editCategory(int id) {
-        category = info.getCategory(id);
-        return "editCategory";
-    }
-
-    public String saveEditedCategory(){
-        menu.editCategory(category);
-        return "success";
-    }
-    public String saveEditedDish(){
-        menu.editDish(dish);
-        return "success.html";
-    }
-
-    public String editDish(int id) {
-        dish = info.getDish(id);
-        return "editDish";
-    }
-
     public String editIngredient(int id) {
         ingredient = info.getIngredient(id);
         return "editIngredient";
@@ -174,6 +218,31 @@ public class RemoteEJBClient {
 
     public String saveEditedIngredient(){
         menu.editIngredient(ingredient);
+        return "success";
+    }
+
+    //CATEGORY METHODS
+
+    public List<Category> showCategories() throws NamingException {
+        return info.getCategories();
+    }
+
+    public String removeCategories(int id) {
+        List<Dish> dishes = info.getDishesFromCategory(id);
+        for(Dish dish: dishes) {
+            removeDish(dish.getId());
+        }
+        menu.removeCategory(id);
+        return "success";
+    }
+
+    public String editCategory(int id) {
+        category = info.getCategory(id);
+        return "editCategory";
+    }
+
+    public String saveEditedCategory(){
+        menu.editCategory(category);
         return "success";
     }
 
@@ -207,32 +276,48 @@ public class RemoteEJBClient {
         return result;
     }
 
-    public Dish getDish() {
-        return dish;
+    //USER METHODS
+
+    public String goToAddUser() {
+        userToAdd = new UserAccount();
+        return "addUser";
     }
 
-    public void setDish(Dish dish) {
-        this.dish = dish;
+    public String addUser() {
+        userEditor.addUser(userToAdd);
+        return "success";
     }
 
-    public Category getCategory() {
-        return category;
+    public Cart showCart() {
+        return cart;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public String addToCart(int id) {
+        result = info.getDish(id).toString();
+        result += cart.getId() + " " + cart.getDishes();
+        cart.addDish(info.getDish(id));
+        return "success";
     }
 
-    public List<Dish> getCategoryDishes(int id) {
-        return info.getDishesFromCategory(id);
-    }
-    public Ingredient getIngredient() {
-        return ingredient;
+    public String addCartToUser() {
+        UserAccount userAccount = userInfo.getUserByLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
+        userAccount.addCart(cart);
+        userEditor.editUser(userAccount);
+        cart = new Cart();
+        cart.setDishes(new ArrayList<>());
+        return "success";
     }
 
-    public void setIngredient(Ingredient ingredient) {
-        this.ingredient = ingredient;
+    public String removeDishFromCart(int id) {
+        cart.removeDish(id);
+        return "success";
     }
+
+    public List<UserAccount> showUsers() {
+        return userInfo.getUsers();
+    }
+
+    //INITIAL METHODS
 
     private static MenuInfo lookupMenuInfoEJB() throws NamingException {
 
@@ -245,6 +330,20 @@ public class RemoteEJBClient {
 
         final Context context = new InitialContext(jndiProperties);
         return (MenuEditor) context.lookup("ejb:/catering-company//MenuEditorBean!com.ejb.MenuEditor?stateful");
+
+    }
+
+    private static UserInfo lookupUserInfoEJB() throws NamingException {
+
+        final Context context = new InitialContext(jndiProperties);
+        return (UserInfo) context.lookup("ejb:/catering-company//UserInfoBean!com.ejb.UserInfo");
+
+    }
+
+    private static UserEditor lookupUserEditorEJB() throws NamingException {
+
+        final Context context = new InitialContext(jndiProperties);
+        return (UserEditor) context.lookup("ejb:/catering-company//UserEditorBean!com.ejb.UserEditor?stateful");
 
     }
 

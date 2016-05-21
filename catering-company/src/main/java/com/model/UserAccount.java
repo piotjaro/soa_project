@@ -1,6 +1,8 @@
 package com.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,25 +10,26 @@ import java.util.List;
  */
 
 @Entity
-public class UserCatering {
+public class UserAccount implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     private String login;
     private String password;
+    private String role;
     private String name;
     private String surname;
     private String mail;
     private double debt;
-    @OneToMany(cascade = CascadeType.PERSIST)
-    private List<Cart> historyCarts;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+    private List<Cart> actualCarts = new ArrayList<>();
 
+    public UserAccount() {
+    }
 
-    private List<Cart> actualCarts;
-
-    public UserCatering() {
+    public void addCart(Cart cart) {
+        actualCarts.add(cart);
     }
 
     public int getId() {
@@ -51,6 +54,14 @@ public class UserCatering {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getName() {
@@ -90,13 +101,6 @@ public class UserCatering {
         this.debt = debt;
     }
 
-    public List<Cart> getHistoryCarts() {
-        return historyCarts;
-    }
-
-    public void setHistoryCarts(List<Cart> historyCarts) {
-        this.historyCarts = historyCarts;
-    }
 
     public List<Cart> getActualCarts() {
         return actualCarts;
