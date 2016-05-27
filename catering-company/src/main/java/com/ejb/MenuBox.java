@@ -2,10 +2,7 @@ package com.ejb;
 
 //import com.model.Dish;
 
-import com.model.Cart;
-import com.model.Category;
-import com.model.Dish;
-import com.model.Ingredient;
+import com.model.*;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
@@ -42,6 +39,34 @@ public class MenuBox {
         em.persist(dish);
     }
 
+    @Lock(WRITE)
+    public void addMenu(Menu menu) {
+        em.persist(menu);
+    }
+
+    @Lock(WRITE)
+    public void editMenu(Menu menu) {
+        em.merge(menu);
+    }
+
+    @Lock(READ)
+    public List<Menu> getMenus() {
+        Query q1 = em.createQuery("Select m from Menu m");
+        return (List<Menu>)q1.getResultList();
+    }
+
+    @Lock(READ)
+    public Menu getMenu(int id) {
+        Query q1 = em.createQuery("Select m from Menu m where m.id = "+ id +"");
+        return (Menu)q1.getResultList();
+    }
+
+    @Lock(WRITE)
+    public void removeMenu(int id) {
+
+        Menu menu = em.find(Menu.class, id);
+        em.remove(menu);
+    }
 
     @Lock(WRITE)
     public void removeDish(int id) {

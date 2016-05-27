@@ -50,6 +50,12 @@ public class UserBox {
     }
 
     @Lock(READ)
+    public List<Cart> getCarts() {
+        Query q1 = em.createQuery("Select c from Cart c");
+        return (List<Cart>)q1.getResultList();
+    }
+
+    @Lock(READ)
     public UserAccount getUser(int id) {
 
         return em.find(UserAccount.class, id);

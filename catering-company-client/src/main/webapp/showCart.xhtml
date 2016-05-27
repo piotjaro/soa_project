@@ -39,8 +39,12 @@
                 </table>
                 date: <h:inputText value="#{remoteEJBClient.cart.dateOfReceipt}">
                     <f:convertDateTime pattern="HH-mm:dd-mm-yyyy" />
-                </h:inputText>
-                <h:outputLabel value="total cost: #{remoteEJBClient.cart.cost}"/>
+                </h:inputText><br/>
+                city: <h:inputText value="#{remoteEJBClient.cart.address.city}"/>
+                street: <h:inputText value="#{remoteEJBClient.cart.address.street}"/>
+                number: <h:inputText value="#{remoteEJBClient.cart.address.number}"/><br/>
+                <h:outputLabel value="total cost: #{remoteEJBClient.cart.cost}"/><br/>
+                pay from salary: <h:selectBooleanCheckbox value="#{remoteEJBClient.cart.paidFromSalary}"/><br/>
                 <h:commandButton action="#{remoteEJBClient.addCartToUser()}" value="send order" />
             </h:form>
 

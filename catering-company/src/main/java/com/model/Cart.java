@@ -21,7 +21,7 @@ public class Cart implements Serializable {
     private boolean paidFromSalary;
     private Date dateOfReceipt;
     @OneToOne(cascade = CascadeType.PERSIST)
-    private Address address;
+    private Address address = new Address();
     private double cost;
     private String status;
 
@@ -63,6 +63,7 @@ public class Cart implements Serializable {
     public void removeDish(Dish dish) {
         dishes.remove(dish);
     }
+
     public void removeDish(int id) {
 
         for(Dish dish: dishes) {
@@ -102,6 +103,8 @@ public class Cart implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+
+
 
     @Override
     public String toString() {
