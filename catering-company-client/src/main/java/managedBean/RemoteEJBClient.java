@@ -194,7 +194,37 @@ public class RemoteEJBClient {
         for(int i = 0; i<carts.size(); i++) {
             if(carts.get(i).getId() == cartId) {
                 Cart cartTmp = carts.get(i);
-                cartTmp.setStatus("Canceled");
+                cartTmp.setStatus("Cancelled");
+                menu.editCart(cartTmp);
+                break;
+            }
+        }
+        return "success";
+    }
+
+    public String payFromSalary(int userId, int cartId) {
+
+        UserAccount userAccount = userInfo.getUserByLogin(userInfo.getUsers(userId).getLogin());
+        List<Cart> carts = userAccount.getActualCarts();
+        for(int i = 0; i<carts.size(); i++) {
+            if(carts.get(i).getId() == cartId) {
+                Cart cartTmp = carts.get(i);
+                cartTmp.setPaidFromSalary(true);
+                menu.editCart(cartTmp);
+                break;
+            }
+        }
+        return "success";
+    }
+
+    public String payCash(int userId, int cartId) {
+
+        UserAccount userAccount = userInfo.getUserByLogin(userInfo.getUsers(userId).getLogin());
+        List<Cart> carts = userAccount.getActualCarts();
+        for(int i = 0; i<carts.size(); i++) {
+            if(carts.get(i).getId() == cartId) {
+                Cart cartTmp = carts.get(i);
+                cartTmp.setPaidFromSalary(false);
                 menu.editCart(cartTmp);
                 break;
             }

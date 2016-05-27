@@ -13,84 +13,88 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             Menu
-        <button class="btn btn-default" onclick="location.href = 'hello.xhtml';">main page</button>
+            <button class="btn btn-default" onclick="location.href = 'hello.xhtml';">main page</button>
         </div>
-        <div class="panel-body">
-            <h:form>
-                <table class="table table-striped">
-                    <tr>
-                        <th>Category</th>
-                        <th>Dish</th>
-                        <th>Price/Ingredients</th>
-                        <th>Quantity Of Ingredient</th>
-                        <th>Remove</th>
-                        <th>Edit</th>
-                        <th>Add to cart</th>
-                    </tr>
-                    <ui:repeat id="printMenu" value="#{remoteEJBClient.showCategories()}" var="category">
+    </div>
+    <h:form>
+
+
+        <ui:repeat id="printMenu" value="#{remoteEJBClient.showCategories()}" var="category">
+            <div class="panel panel-default">
+                <div class="panel-heading">#{category.name}
+                    <h:commandButton styleClass="btn btn-default" value="Remove Category"
+                                     id="removeCategory#{category.id}"
+                                     action="#{remoteEJBClient.removeCategories(category.id)}">
+                        <f:ajax render="removeCategory#{category.id}"
+                                execute="removeCategory#{category.id} printMenu"/>
+                    </h:commandButton>
+                    <h:commandButton styleClass="btn btn-default" action="#{remoteEJBClient.editCategory(category.id)}"
+                                     value="edit category"/>
+
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                    <ui:repeat value="#{remoteEJBClient.getCategoryDishes(category.id)}" var="dish">
                         <tr>
-                            <td><h:outputLabel value="#{category.name}"/></td>
+                            <td><h:outputLabel value="#{dish.name} "/></td>
+                            <td><h:outputLabel value="#{dish.price}"/></td>
+                            <td>
+                                <h:commandButton styleClass="btn btn-default" value="Remove Dish" id="removeDish#{dish.id}"
+                                                 action="#{remoteEJBClient.removeDish(dish.id)}"/>
+                            </td>
+                            <td>
+                                <h:commandButton styleClass="btn btn-default" action="#{remoteEJBClient.editDish(dish.id)}"
+                                                 value="edit dish"/>
+                            </td>
+                            <td>
+                                <h:commandButton styleClass="btn btn-default" action="#{remoteEJBClient.addToCart(dish.id)}"
+                                                 value="add to card"/>
+                            </td>
+
+                        </tr>
+                            <ui:repeat value="#{dish.ingredients}" var="ingredient">
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <h:outputText value="#{ingredient.name} "/>
+                                    </td>
+                                    <td>
+                                        <h:outputText value="#{ingredient.quantity}"/>
+                                    </td>
+                                    <td>
+                                        <h:commandButton styleClass="btn btn-default btn-xs"
+                                                         action="#{remoteEJBClient.removeSingleIngredient(dish.id, ingredient.id)}"
+                                                         value="Remove Ingredient"/>
+                                    </td>
+                                    <td>
+                                        <h:commandButton styleClass="btn btn-default btn-xs"
+                                                         action="#{remoteEJBClient.editIngredient(ingredient.id)}"
+                                                         value="edit ingredient"/>
+                                    </td>
+
+                                </tr>
+                            </ui:repeat>
+                        <tr>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td>
-                                <h:commandButton value="Remove Category" id="removeCategory#{category.id}" action="#{remoteEJBClient.removeCategories(category.id)}">
-                                    <f:ajax render="removeCategory#{category.id}" execute="removeCategory#{category.id} printMenu"/>
-                                </h:commandButton>
+                                <h:commandButton styleClass="btn btn-default btn-xs"
+                                                 action="#{remoteEJBClient.goToAddIngredient(dish.id)}"
+                                                 value="Add Ingredient"/>
                             </td>
-                            <td><h:commandButton action="#{remoteEJBClient.editCategory(category.id)}"
-                                                 value="edit category"/><br/></td>
-                            <td></td>
                         </tr>
 
-                        <ui:repeat value="#{remoteEJBClient.getCategoryDishes(category.id)}" var="dish">
-                            <tr>
-                                <td></td>
-                                <td><h:outputLabel value="#{dish.name}"/></td>
-                                <td><h:outputLabel value="#{dish.price}"/></td>
-                                <td></td>
-                                <td>
-                                    <h:commandButton value="Remove Dish" id="removeDish#{dish.id}"
-                                                     action="#{remoteEJBClient.removeDish(dish.id)}"/>
 
-                                </td>
-                                <td><h:commandButton action="#{remoteEJBClient.editDish(dish.id)}"
-                                                     value="edit dish"/><br/></td>
-                                <td>
-                                    <h:commandButton action="#{remoteEJBClient.addToCart(dish.id)}"
-                                                     value="add to card"/><br/>
-                                </td>
-                            </tr>
-                            <ui:repeat value="#{dish.ingredients}" var="ingredient">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td><h:outputLabel value="#{ingredient.name}"/></td>
-                                    <td><h:outputLabel value="#{ingredient.quantity}"/></td>
-                                    <td>
-                                            <h:commandButton action="#{remoteEJBClient.removeSingleIngredient(dish.id, ingredient.id)}" value="Remove Ingredient" />
-                                    </td>
-                                    <td><h:commandButton action="#{remoteEJBClient.editIngredient(ingredient.id)}" value="edit ingredient"/><br/></td>
-                                    <td></td>
-                                </tr>
-                            </ui:repeat>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <h:commandButton action="#{remoteEJBClient.goToAddIngredient(dish.id)}" value="Add Ingredient" />
-                                </td>
-                                <td></td>
-                            </tr>
 
-                        </ui:repeat>
                     </ui:repeat>
-                </table>
-            </h:form>
-        </div>
-    </div>
+                    </table>
+                </div>
+            </div>
+        </ui:repeat>
+
+    </h:form>
 </h:body>
 
 </html>

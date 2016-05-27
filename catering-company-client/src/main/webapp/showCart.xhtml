@@ -37,6 +37,9 @@
 
                     </ui:repeat>
                 </table>
+                date: <h:inputText value="#{remoteEJBClient.cart.dateOfReceipt}">
+                    <f:convertDateTime pattern="HH-mm:dd-mm-yyyy" />
+                </h:inputText>
                 <h:outputLabel value="total cost: #{remoteEJBClient.cart.cost}"/>
                 <h:commandButton action="#{remoteEJBClient.addCartToUser()}" value="send order" />
             </h:form>
