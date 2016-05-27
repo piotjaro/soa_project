@@ -1,5 +1,6 @@
 package com.ejb;
 
+import com.model.Cart;
 import com.model.UserAccount;
 import org.apache.log4j.Logger;
 
@@ -31,6 +32,13 @@ public class UserBox {
     }
 
     @Lock(WRITE)
+    public Cart addCart(Cart cart) {
+        em.persist(cart);
+        return cart;
+    }
+
+
+    @Lock(WRITE)
     public void deleteUser(UserAccount user) {
         em.remove(user);
     }
@@ -46,15 +54,33 @@ public class UserBox {
 
         return em.find(UserAccount.class, id);
     }
+    @Lock(READ)
+    public Cart getCart(int id) {
+        Query q1 = em.createQuery("Select c from Cart c where c.id= '"+ id +"'");
+        return (Cart)q1.getResultList().get(0);
+    }
 
     @Lock(WRITE)
     public void editUser(UserAccount user) {
         em.merge(user);
+        for(Cart cart: user.getActualCarts()){
+            em.merge(cart);
+        }
+    }
+
+    @Lock(WRITE)
+    public void editCart(Cart cart) {
+        em.merge(cart);
     }
 
     @Lock(READ)
     public UserAccount getUserByLogin(String login) {
         Query q1 = em.createQuery("Select u from UserAccount u where u.login= '"+ login +"'");
         return (UserAccount)q1.getResultList().get(0);
+    }
+
+    @Lock(WRITE)
+    public void deleteCart(Cart cart) {
+        em.remove(cart);
     }
 }

@@ -58,7 +58,11 @@ public class Category implements Serializable {
         return name != null ? name.hashCode() : 0;
     }
 
+    @Override
     public String toString() {
-        return "id: " + id + " name: " + name;
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -1,5 +1,6 @@
 package com.ejb;
 
+import com.model.Cart;
 import com.model.UserAccount;
 
 import javax.ejb.EJB;
@@ -27,8 +28,14 @@ public class UserInfoBean implements UserInfo {
     public UserAccount getUsers(int id) {
         return box.getUser(id);
     }
+
     @Override
     public UserAccount getUserByLogin(String login) {
         return box.getUserByLogin(login);
+    }
+
+    @Override
+    public Cart getCart(int id) {
+        return box.getCart(id);
     }
 }

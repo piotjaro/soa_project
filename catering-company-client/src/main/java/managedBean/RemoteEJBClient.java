@@ -146,7 +146,7 @@ public class RemoteEJBClient {
 
     public String saveEditedDish(){
         menu.editDish(dish);
-        return "success.html";
+        return "success";
     }
 
     public String editDish(int id) {
@@ -180,14 +180,32 @@ public class RemoteEJBClient {
 
     public String addIngredientFromMenu(){
         List <Ingredient> ingredients = dish.getIngredients();
+        ingredient = menu.addIngredient(ingredient);
         ingredients.add(ingredient);
         dish.setIngredients(ingredients);
         menu.editDish(dish);
-        dish = info.getDish(dish.getId());
-        Ingredient ingredient1 = dish.getIngredients().get(dish.getIngredients().size()-1);
-        ingredient1.setName(ingredient.getName());
-        ingredient1.setQuantity(ingredient.getQuantity());
-        menu.editIngredient(ingredient1);
+        return "success";
+    }
+
+    public String cancelCart(int userId, int cartId) {
+
+        UserAccount userAccount = userInfo.getUserByLogin(userInfo.getUsers(userId).getLogin());
+        List<Cart> carts = userAccount.getActualCarts();
+        for(int i = 0; i<carts.size(); i++) {
+            if(carts.get(i).getId() == cartId) {
+                Cart cartTmp = carts.get(i);
+                cartTmp.setStatus("Canceled");
+                menu.editCart(cartTmp);
+                break;
+            }
+        }
+        return "success";
+    }
+
+    public String removeDishFromCart(int dishId, int cartId) {
+        Cart cartTmp = userInfo.getCart(cartId);
+        cartTmp.removeDish(dishId);
+        userEditor.editCart(cartTmp);
         return "success";
     }
 
@@ -283,6 +301,11 @@ public class RemoteEJBClient {
         return "addUser";
     }
 
+    public String goToUserPanel() {
+        user =  userInfo.getUserByLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
+        return "userPanel";
+    }
+
     public String addUser() {
         userEditor.addUser(userToAdd);
         return "success";
@@ -301,10 +324,11 @@ public class RemoteEJBClient {
 
     public String addCartToUser() {
         UserAccount userAccount = userInfo.getUserByLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
-        userAccount.addCart(cart);
+        cart.setStatus("New");
+        Cart cart1 = userEditor.addCart(cart);
+        userAccount.addCart(cart1);
         userEditor.editUser(userAccount);
         cart = new Cart();
-        cart.setDishes(new ArrayList<>());
         return "success";
     }
 

@@ -1,6 +1,7 @@
 package com.ejb;
 
 //import com.model.Dish;
+import com.model.Cart;
 import com.model.Category;
 import com.model.Dish;
 import com.model.Ingredient;
@@ -70,5 +71,16 @@ public class MenuEditorBean implements MenuEditor {
 	public String editIngredient(Ingredient ingredient) {
 		box.editIngredient(ingredient);
 		return "Success";
+	}
+
+	@Override
+	public void editCart(Cart cart) {
+		box.editCart(cart);
+	}
+
+	@Override
+	public Ingredient addIngredient(Ingredient ingredient) {
+		return box.addIngredient(ingredient);
+
 	}
 }

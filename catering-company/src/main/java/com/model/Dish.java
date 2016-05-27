@@ -75,7 +75,15 @@ public class Dish implements Serializable{
         this.pathToPhoto = pathToPhoto;
     }
 
+    @Override
     public String toString() {
-        return "id: " + id + " name: " + name + ", price: " + price + ", category" + category + ", ingredients: " + ingredients; //+ ", ingredients" + ingredients;
+        return "Dish{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category=" + category +
+                ", price=" + price +
+                ", ingredients=" + ingredients +
+                ", pathToPhoto='" + pathToPhoto + '\'' +
+                '}';
     }
 }

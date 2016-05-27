@@ -2,6 +2,7 @@ package com.ejb;
 
 //import com.model.Dish;
 
+import com.model.Cart;
 import com.model.Category;
 import com.model.Dish;
 import com.model.Ingredient;
@@ -73,6 +74,11 @@ public class MenuBox {
     }
 
     @Lock(WRITE)
+    public void editCart(Cart cart) {
+        em.merge(cart);
+    }
+
+    @Lock(WRITE)
     public void removeCategory(int id) {
         Category category = em.find(Category.class, id);
         em.remove(category);
@@ -114,5 +120,11 @@ public class MenuBox {
     @Lock(WRITE)
     public void editIngredient(Ingredient ingredient) {
         em.merge(ingredient);
+    }
+
+    @Lock(WRITE)
+    public Ingredient addIngredient(Ingredient ingredient) {
+        em.persist(ingredient);
+        return ingredient;
     }
 }

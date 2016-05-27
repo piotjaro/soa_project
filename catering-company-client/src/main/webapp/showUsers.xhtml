@@ -11,39 +11,40 @@
 <h:body>
     <div class="panel panel-primary">
         <div class="panel-heading">
-            Show Categories
+            Show Users
             <button class="btn btn-default" onclick="location.href = 'hello.xhtml';">Main Page</button>
         </div>
 
         <div class="panel-body">
 
             <h:form>
-                <table class="table table-striped">
-                    <tr>
-                        <th>id</th>
-                        <th>login</th>
-                        <th>password</th>
-                        <th>role</th>
-                        <th>name</th>
-                        <th>surname</th>
-                        <th>mail</th>
-                        <th>debt</th>
-                    </tr>
-                    <ui:repeat value="#{remoteEJBClient.showUsers()}" var="user">
-                        <tr>
-                            <td><h:outputLabel value="#{user.id}"/></td>
-                            <td><h:outputLabel value="#{user.login}"/></td>
-                            <td><h:outputLabel value="#{user.password}"/></td>
-                            <td><h:outputLabel value="#{user.role}"/></td>
-                            <td><h:outputLabel value="#{user.name}"/></td>
-                            <td><h:outputLabel value="#{user.surname}"/></td>
-                            <td><h:outputLabel value="#{user.mail}"/></td>
-                            <td><h:outputLabel value="#{user.debt}"/></td>
-                            <td><h:outputLabel value="#{user.actualCarts}"/></td>
-                        </tr>
 
+                <ui:repeat value="#{remoteEJBClient.showUsers()}" var="user">
+                    <h:outputLabel value="#{user.login}"/>
+                    <ui:repeat value="#{user.actualCarts}" var="cart">
+
+                        <h:outputLabel value="Date of receipt: #{cart.dateOfReceipt}"/>
+                        <h:outputLabel value=", address: #{cart.address}"/>
+                        <h:outputLabel value=", total cost: #{cart.cost}"/>
+                        <h:outputLabel value=", status: #{cart.status}"/>
+
+                        <table class="table table-striped">
+
+                            <ui:repeat value="#{cart.dishes}" var="dish">
+
+                                <tr>
+                                    <td>
+                                        <h:outputLabel value="#{dish.name}"/> <h:commandButton action="#{remoteEJBClient.removeDishFromCart(dish.id, cart.id)}" value="remove dish" />
+                                    </td>
+                                </tr>
+
+                            </ui:repeat>
+                        </table>
+                        <h:commandButton action="#{remoteEJBClient.cancelCart(user.id, cart.id)}" value="Cancel cart" />
                     </ui:repeat>
-                </table>
+                    <br/>
+
+                </ui:repeat>
             </h:form>
 
         </div>

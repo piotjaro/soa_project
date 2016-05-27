@@ -42,7 +42,12 @@ public class Ingredient implements Serializable{
         this.quantity = quantity;
     }
 
+    @Override
     public String toString() {
-        return "id: " + id + ", name: " + name + ", quantity: " + quantity;
+        return "Ingredient{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", quantity=" + quantity +
+                '}';
     }
 }

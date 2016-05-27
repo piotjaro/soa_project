@@ -1,5 +1,6 @@
 package com.ejb;
 
+import com.model.Cart;
 import com.model.UserAccount;
 import org.apache.log4j.Logger;
 
@@ -29,7 +30,21 @@ public class UserEditorBean implements UserEditor {
     }
 
     @Override
+    public void deleteCart(Cart cart) {
+        box.deleteCart(cart);
+    }
+
+    @Override
     public void editUser(UserAccount user) {
         box.editUser(user);
+    }
+
+    @Override
+    public void editCart(Cart cart) {
+        box.editCart(cart);
+    }
+
+    public Cart addCart(Cart cart) {
+       return box.addCart(cart);
     }
 }

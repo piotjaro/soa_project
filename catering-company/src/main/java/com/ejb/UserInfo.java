@@ -1,5 +1,6 @@
 package com.ejb;
 
+import com.model.Cart;
 import com.model.UserAccount;
 
 import java.util.List;
@@ -11,5 +12,6 @@ public interface UserInfo {
     public List<UserAccount> getUsers();
     public UserAccount getUsers(int id);
     public UserAccount getUserByLogin(String login);
+    public Cart getCart(int id);
 
 }

@@ -16,13 +16,14 @@ public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
-    @OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+    @OneToMany(fetch=FetchType.EAGER)
     private List<Dish> dishes = new ArrayList<>();
-    private boolean isPaid;
+    private boolean paidFromSalary;
     private Date dateOfReceipt;
     @OneToOne(cascade = CascadeType.PERSIST)
     private Address address;
     private double cost;
+    private String status;
 
     public Cart() {
     }
@@ -43,14 +44,13 @@ public class Cart implements Serializable {
         this.dishes = dishes;
     }
 
-    public boolean isPaid() {
-        return isPaid;
+    public boolean isPaidFromSalary() {
+        return paidFromSalary;
     }
 
-    public void setIsPaid(boolean isPaid) {
-        this.isPaid = isPaid;
+    public void setPaidFromSalary(boolean paidFromSalary) {
+        this.paidFromSalary = paidFromSalary;
     }
-
 
     public Date getDateOfReceipt() {
         return dateOfReceipt;
@@ -70,7 +70,6 @@ public class Cart implements Serializable {
                 removeDish(dish);
                 return;
             }
-
         }
     }
 
@@ -96,4 +95,24 @@ public class Cart implements Serializable {
         return  result;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", dishes=" + dishes +
+                ", paidFromSalary=" + paidFromSalary +
+                ", dateOfReceipt=" + dateOfReceipt +
+                ", address=" + address +
+                ", cost=" + cost +
+                ", status=" + status +
+                '}';
+    }
 }

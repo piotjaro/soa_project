@@ -22,7 +22,7 @@ public class UserAccount implements Serializable {
     private String surname;
     private String mail;
     private double debt;
-    @OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+    @OneToMany(fetch=FetchType.EAGER)
     private List<Cart> actualCarts = new ArrayList<>();
 
     public UserAccount() {
@@ -91,7 +91,7 @@ public class UserAccount implements Serializable {
     public double getDebt() {
         double result = 0.0;
         for(Cart cart : actualCarts) {
-            if(!cart.isPaid())
+            if(!cart.isPaidFromSalary())
                 result += cart.getCost();
         }
         return debt;
@@ -108,5 +108,20 @@ public class UserAccount implements Serializable {
 
     public void setActualCarts(List<Cart> actualCarts) {
         this.actualCarts = actualCarts;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAccount{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", mail='" + mail + '\'' +
+                ", debt=" + debt +
+                ", actualCarts=" + actualCarts +
+                '}';
     }
 }
