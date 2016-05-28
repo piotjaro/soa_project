@@ -19,8 +19,6 @@
             <button class="btn btn-default" onclick="location.href = 'showDishes.xhtml';">show all dishes</button>
             <button class="btn btn-default" onclick="location.href = 'showCategories.xhtml';">show all categories</button>
             <button class="btn btn-default" onclick="location.href = 'showMenu.xhtml';">show menu</button>
-            <button class="btn btn-default" onclick="location.href = 'showResult.xhtml';">show result</button>
-            <button class="btn btn-default" onclick="location.href = 'showResult.xhtml';">show result</button>
             <button class="btn btn-default" onclick="location.href = 'showUsers.xhtml';">show users</button>
             <button class="btn btn-default" onclick="location.href = 'showCart.xhtml';">show cart</button>
         </div>
@@ -31,10 +29,10 @@
 
         <div class="panel-body">
             <h:form style="display: inline;">
-                <h:commandButton styleClass="btn btn-default" action="#{remoteEJBClient.goToAddCategory()}" value="add category"/>
-                <h:commandButton styleClass="btn btn-default" action="#{remoteEJBClient.goToAddDish()}" value="add dish"/>
-                <h:commandButton styleClass="btn btn-default" action="#{remoteEJBClient.goToAddUser()}" value="add user"/>
-                <h:commandButton styleClass="btn btn-default" action="#{remoteEJBClient.goToUserPanel()}" value="user panel"/>
+                <h:commandButton styleClass="btn btn-default" action="#{menuManager.goToAddCategory()}" value="add category"/>
+                <h:commandButton styleClass="btn btn-default" action="#{menuManager.goToAddDish()}" value="add dish"/>
+                <h:commandButton styleClass="btn btn-default" action="#{client.goToUserPanel()}" value="user panel"/>
+                <h:commandButton styleClass="btn btn-default" action="#{menuManager.goToCreateMenu()}" value="createMenu"/>
             </h:form>
         </div>
     </div>

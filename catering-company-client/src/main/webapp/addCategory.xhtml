@@ -18,11 +18,11 @@
                 <h:panelGrid columns="3">
 
                     <h:outputLabel for="name" value="name"/>
-                    <h:inputText styleClass="form-control" id="name" value="#{remoteEJBClient.category.name}"/>
+                    <h:inputText styleClass="form-control" id="name" value="#{menuManager.category.name}"/>
                     <h:message for="name"/>
 
                     <h:outputLabel for="name" value="save"/>
-                    <h:commandButton styleClass="btn btn-default" id="save" action="#{remoteEJBClient.addCategory()}" value="save"/>
+                    <h:commandButton styleClass="btn btn-default" id="save" action="#{menuManager.addCategory()}" value="save"/>
                 </h:panelGrid>
             </h:form>
         </div>

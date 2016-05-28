@@ -16,8 +16,6 @@ public class Dish implements Serializable{
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     private String name;
-    @ManyToOne
-    private Category category = new Category();
     private double price;
     @OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
     private List<Ingredient> ingredients = new ArrayList<>();
@@ -37,14 +35,6 @@ public class Dish implements Serializable{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     public double getPrice() {
@@ -75,12 +65,15 @@ public class Dish implements Serializable{
         this.pathToPhoto = pathToPhoto;
     }
 
+    public void removeIngredient(Ingredient ingredient) {
+        ingredients.remove(ingredient);
+    }
+
     @Override
     public String toString() {
         return "Dish{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", category=" + category +
                 ", price=" + price +
                 ", ingredients=" + ingredients +
                 ", pathToPhoto='" + pathToPhoto + '\'' +

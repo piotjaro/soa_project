@@ -50,7 +50,7 @@ public class MenuBox {
     }
 
     @Lock(READ)
-    public List<Menu> getMenus() {
+    public List<Menu> getAllMenu() {
         Query q1 = em.createQuery("Select m from Menu m");
         return (List<Menu>)q1.getResultList();
     }

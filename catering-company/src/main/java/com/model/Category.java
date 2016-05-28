@@ -1,9 +1,6 @@
 package com.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +14,9 @@ public class Category implements Serializable {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     private String name;
+
+    @OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+    private List<Dish> dishes = new ArrayList<>();
 
     public Category(int id, String name) {
         this.id = id;
@@ -40,6 +40,22 @@ public class Category implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
+    }
+
+    public void addDish(Dish dish) {
+        dishes.add(dish);
+    }
+
+    public void removeDish(Dish dish) {
+        dishes.remove(dish);
     }
 
     @Override

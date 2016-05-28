@@ -14,29 +14,22 @@
             <button class="btn btn-default" onclick="location.href = 'hello.xhtml';">Main Page</button>
         </div>
         <div class="panel-body">
-            <h:outputLabel id="addIngredient" value="#{remoteEJBClient.addIngredient()}"/>
+            <h:outputLabel id="addIngredient" value="#{menuManager.addIngredient()}"/>
             <h:form>
                 <h:panelGrid columns="3">
 
                     <h:outputLabel for="name" value="name"/>
-                    <h:inputText styleClass="form-control" id="name" value="#{remoteEJBClient.dish.name}"/>
+                    <h:inputText styleClass="form-control" id="name" value="#{menuManager.dish.name}"/>
                     <h:message for="name"/>
-
-                    <h:outputLabel for="category" value="Category"/>
-                    <h:selectOneMenu styleClass="form-control" id="category" value="#{remoteEJBClient.dish.category.id}">
-                        <f:selectItems value="#{remoteEJBClient.showCategories()}" var="category"
-                                       itemValue="#{category.id}" itemLabel="#{category.name}"/>
-                    </h:selectOneMenu>
-                    <h:message for="category"/>
 
                     <h:outputLabel for="ingredientName" value="Ingredient name"/>
                     <h:inputText styleClass="form-control" id="ingredientName"
-                                 value="#{remoteEJBClient.ingredient.name}"/>
+                                 value="#{menuManager.ingredient.name}"/>
                     <h:message for="ingredientName"/>
 
                     <h:outputLabel for="ingredientQuantity" value="Ingredient quantity"/>
                     <h:inputText styleClass="form-control" id="ingredientQuantity"
-                                 value="#{remoteEJBClient.ingredient.quantity}"/>
+                                 value="#{menuManager.ingredient.quantity}"/>
                     <h:message for="ingredientQuantity"/>
 
                     <h:outputLabel for="addIngredientButton" value="Add ingredient"/>
@@ -47,7 +40,7 @@
 
                     <h:panelGroup/>
                     <h:panelGroup id="showIngredients">
-                        <ui:repeat id="someId" value="#{remoteEJBClient.showIngredients()}" var="ingredient">
+                        <ui:repeat id="someId" value="#{menuManager.showIngredients()}" var="ingredient">
                             <h:outputLabel value="#{ingredient.name}"/>&nbsp;
                             <h:outputLabel value="#{ingredient.quantity}"/><br/>
                         </ui:repeat>
@@ -57,12 +50,12 @@
                     <h:panelGroup/>
 
                     <h:outputLabel for="price" value="Price"/>
-                    <h:inputText styleClass="form-control" id="price" value="#{remoteEJBClient.dish.price}"/>
+                    <h:inputText styleClass="form-control" id="price" value="#{menuManager.dish.price}"/>
                     <h:message for="price"/>
 
 
                     <h:outputLabel for="save" value="save"/>
-                    <h:commandButton styleClass="btn btn-default" id="save" action="#{remoteEJBClient.addDish()}"
+                    <h:commandButton styleClass="btn btn-default" id="save" action="#{menuManager.addDish()}"
                                      value="save"/>
                 </h:panelGrid>
             </h:form>

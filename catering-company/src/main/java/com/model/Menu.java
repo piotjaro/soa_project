@@ -1,6 +1,7 @@
 package com.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,15 +9,15 @@ import java.util.List;
  * Created by piotrek on 27.05.16.
  */
 @Entity
-public class Menu {
+public class Menu implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     private boolean isCurrent;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Dish dayDish = new Dish();
-    @OneToMany(fetch=FetchType.EAGER)
-    private List<Dish> dishes = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+    private List<Category> categories = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -42,12 +43,20 @@ public class Menu {
         this.dayDish = dayDish;
     }
 
-    public List<Dish> getDishes() {
-        return dishes;
+    public List<Category> getCategories() {
+        return categories;
     }
 
-    public void setDishes(List<Dish> dishes) {
-        this.dishes = dishes;
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public void addCategory(Category category) {
+        categories.add(category);
+    }
+
+    public void removeCategory(Category category) {
+        categories.remove(category);
     }
 
     @Override
@@ -56,7 +65,7 @@ public class Menu {
                 "id=" + id +
                 ", isCurrent=" + isCurrent +
                 ", dayDish=" + dayDish +
-                ", dishes=" + dishes +
+                ", categories=" + categories +
                 '}';
     }
 }

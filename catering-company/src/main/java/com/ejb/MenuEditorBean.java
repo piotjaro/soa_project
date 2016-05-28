@@ -1,10 +1,7 @@
 package com.ejb;
 
 //import com.model.Dish;
-import com.model.Cart;
-import com.model.Category;
-import com.model.Dish;
-import com.model.Ingredient;
+import com.model.*;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -30,6 +27,12 @@ public class MenuEditorBean implements MenuEditor {
 		return "Success";
 	}
 
+	@Override
+	public String addMenu(Menu menu) {
+		box.addMenu(menu);
+		return "Success";
+	}
+
 
 	@Override
 	public String editDish(Dish dish) {
@@ -38,8 +41,20 @@ public class MenuEditorBean implements MenuEditor {
 	}
 
 	@Override
+	public String editMenu(Menu menu) {
+		box.editMenu(menu);
+		return "Success";
+	}
+
+	@Override
 	public String removeDish(int id) {
 		box.removeDish(id);
+		return "Success";
+	}
+
+	@Override
+	public String removeMenu(int id) {
+		box.removeMenu(id);
 		return "Success";
 	}
 

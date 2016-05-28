@@ -18,16 +18,16 @@
                 <h:panelGrid columns="3">
 
                     <h:outputLabel for="name" value="name"/>
-                    <h:inputText styleClass="form-control" id="name" value="#{remoteEJBClient.ingredient.name}"/>
+                    <h:inputText styleClass="form-control" id="name" value="#{menuManager.ingredient.name}"/>
                     <h:message for="name"/>
 
 
                     <h:outputLabel for="quantity" value="quantity"/>
-                    <h:inputText styleClass="form-control" id="quantity" value="#{remoteEJBClient.ingredient.quantity}"/>
+                    <h:inputText styleClass="form-control" id="quantity" value="#{menuManager.ingredient.quantity}"/>
                     <h:message for="quantity"/>
 
                     <h:outputLabel for="add" value="add"/>
-                    <h:commandButton styleClass="btn btn-default" id="add" action="#{remoteEJBClient.addIngredientFromMenu()}" value="add"/>
+                    <h:commandButton styleClass="btn btn-default" id="add" action="#{menuManager.addIngredientFromMenu()}" value="add"/>
                 </h:panelGrid>
             </h:form>
         </div>

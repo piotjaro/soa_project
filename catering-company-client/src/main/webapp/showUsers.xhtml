@@ -19,7 +19,7 @@
 
             <h:form>
 
-                <ui:repeat value="#{remoteEJBClient.showUsers()}" var="user">
+                <ui:repeat value="#{menuManager.showUsers()}" var="user">
                     <h:outputLabel value="#{user.login}"/>
                     <ui:repeat value="#{user.actualCarts}" var="cart">
 
@@ -34,13 +34,13 @@
 
                                 <tr>
                                     <td>
-                                        <h:outputLabel value="#{dish.name}"/> <h:commandButton action="#{remoteEJBClient.removeDishFromCart(dish.id, cart.id)}" value="remove dish" />
+                                        <h:outputLabel value="#{dish.name}"/> <h:commandButton action="#{menuManager.removeDishFromCart(dish.id, cart.id)}" value="remove dish" />
                                     </td>
                                 </tr>
 
                             </ui:repeat>
                         </table>
-                        <h:commandButton action="#{remoteEJBClient.cancelCart(user.id, cart.id)}" value="Cancel cart" />
+                        <h:commandButton action="#{menuManager.cancelCart(user.id, cart.id)}" value="Cancel cart" />
                     </ui:repeat>
                     <br/>
 

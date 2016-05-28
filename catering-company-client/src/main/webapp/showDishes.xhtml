@@ -27,7 +27,7 @@
                 <th>category</th>
                 <th>ingredients</th>
             </tr>
-            <ui:repeat value="#{remoteEJBClient.showDishes()}" var="dish">
+            <ui:repeat value="#{menuManager.showDishes()}" var="dish">
                 <tr>
                     <td><h:outputLabel value="#{dish.id}"/></td>
                     <td><h:outputLabel value="#{dish.name}"/></td>

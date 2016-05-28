@@ -16,14 +16,10 @@
         </div>
         <div class="panel-body">
             <h:form>
-                dish name: <h:inputText styleClass="form-control" value="#{remoteEJBClient.dish.name}"/>
-                price: <h:inputText styleClass="form-control" value="#{remoteEJBClient.dish.price}"/>
-                category:
-                <h:selectOneMenu styleClass="form-control" id="category" value="#{remoteEJBClient.dish.category.id}">
-                    <f:selectItems value="#{remoteEJBClient.showCategories()}" var="category" itemValue="#{category.id}" itemLabel="#{category.name}"/>
-                </h:selectOneMenu>
-                path to photo: <h:inputText styleClass="form-control" value="#{remoteEJBClient.dish.pathToPhoto}"/>
-                <h:commandButton styleClass="btn btn-default" action="#{remoteEJBClient.saveEditedDish()}"
+                dish name: <h:inputText styleClass="form-control" value="#{menuManager.dish.name}"/>
+                price: <h:inputText styleClass="form-control" value="#{menuManager.dish.price}"/>
+                path to photo: <h:inputText styleClass="form-control" value="#{menuManager.dish.pathToPhoto}"/>
+                <h:commandButton styleClass="btn btn-default" action="#{menuManager.saveEditedDish()}"
                                  value="edit dish"/>
             </h:form>
         </div>

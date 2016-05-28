@@ -37,12 +37,12 @@
         </div>
 
         <div class="panel-body">
-            login: <h:outputLabel value="#{remoteEJBClient.user.login}"/><br/>
-            debt: <h:outputLabel value="#{remoteEJBClient.user.debt}"/><br/>
-            mail: <h:outputLabel value="#{remoteEJBClient.user.mail}"/><br/>
-            name: <h:outputLabel value="#{remoteEJBClient.user.name}"/><br/>
-            surname: <h:outputLabel value="#{remoteEJBClient.user.surname}"/><br/>
-            role: <h:outputLabel value="#{remoteEJBClient.user.role}"/><br/>
+            login: <h:outputLabel value="#{client.user.login}"/><br/>
+            debt: <h:outputLabel value="#{client.user.debt}"/><br/>
+            mail: <h:outputLabel value="#{client.user.mail}"/><br/>
+            name: <h:outputLabel value="#{client.user.name}"/><br/>
+            surname: <h:outputLabel value="#{client.user.surname}"/><br/>
+            role: <h:outputLabel value="#{client.user.role}"/><br/>
 
         <ul class="nav nav-tabs">
             <li id="newTab" class="active"><a href="#"
@@ -57,7 +57,7 @@
     </div>
     <div class="panel-group">
         <div id="new">
-            <c:forEach items="#{remoteEJBClient.user.actualCarts}" var="cart">
+            <c:forEach items="#{client.user.actualCarts}" var="cart">
                 <c:choose>
                     <c:when test="#{cart.status == 'New'}">
                         <div class="panel panel-success">
@@ -73,16 +73,24 @@
                                 <tr>
                                     <td>
                                         <h:outputLabel value="#{dish.name}"/>
+                                        <h:form>
+                                        <h:commandButton class="btn btn-default" action="#{client.removeDishFromCart(dish.id, cart.id)}"
+                                                                                              value="remove dish"/>
+                                        </h:form>
                                     </td>
                                 </tr>
                             </ui:repeat>
+                            <tr>
+                            </tr>
                         </table>
                         <h:form>
-                            <h:commandButton class="btn btn-default" action="#{remoteEJBClient.cancelCart(remoteEJBClient.user.id, cart.id)}"
+                            <h:commandButton class="btn btn-default" action="#{client.goToAddDishFromMenu(cart.id)}"
+                                             value="AddDish"/>
+                            <h:commandButton class="btn btn-default" action="#{client.cancelCart(client.user.id, cart.id)}"
                                              value="Cancel cart"/>
-                            <h:commandButton class="btn btn-default" action="#{remoteEJBClient.payFromSalary(remoteEJBClient.user.id, cart.id)}"
+                            <h:commandButton class="btn btn-default" action="#{client.payFromSalary(client.user.id, cart.id)}"
                                              value="pay from salary"/>
-                            <h:commandButton class="btn btn-default" action="#{remoteEJBClient.payCash(remoteEJBClient.user.id, cart.id)}"
+                            <h:commandButton class="btn btn-default" action="#{client.payCash(client.user.id, cart.id)}"
                                              value="pay cash"/>
                         </h:form>
 
@@ -93,7 +101,7 @@
         </div>
 
         <div id="cancelled" style="display: none">
-            <c:forEach items="#{remoteEJBClient.user.actualCarts}" var="cart">
+            <c:forEach items="#{client.user.actualCarts}" var="cart">
                 <c:choose>
                     <c:when test="#{cart.status == 'Cancelled'}">
                         <div class="panel panel-danger">
@@ -113,15 +121,6 @@
                                     </tr>
                                 </ui:repeat>
                             </table>
-                            <h:form>
-                                <h:commandButton class="btn btn-default" action="#{remoteEJBClient.cancelCart(remoteEJBClient.user.id, cart.id)}"
-                                                 value="Cancel cart"/>
-                                <h:commandButton class="btn btn-default" action="#{remoteEJBClient.payFromSalary(remoteEJBClient.user.id, cart.id)}"
-                                                 value="pay from salary"/>
-                                <h:commandButton class="btn btn-default" action="#{remoteEJBClient.payCash(remoteEJBClient.user.id, cart.id)}"
-                                                 value="pay cash"/>
-                            </h:form>
-
                         </div>
                     </c:when>
                 </c:choose>

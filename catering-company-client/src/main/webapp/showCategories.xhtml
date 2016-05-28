@@ -23,7 +23,7 @@
                         <th>id</th>
                         <th>name</th>
                     </tr>
-                    <ui:repeat value="#{remoteEJBClient.showCategories()}" var="category">
+                    <ui:repeat value="#{menuManager.showCategories()}" var="category">
                         <tr>
                             <td><h:outputLabel value="#{category.id}"/></td>
                             <td><h:outputLabel value="#{category.name}"/></td>

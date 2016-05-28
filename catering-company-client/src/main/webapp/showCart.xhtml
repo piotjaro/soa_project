@@ -25,27 +25,27 @@
                         <th>price</th>
                         <th>remove</th>
                     </tr>
-                    <ui:repeat value="#{remoteEJBClient.cart.dishes}" var="dish">
+                    <ui:repeat value="#{client.cart.dishes}" var="dish">
                         <tr>
                             <td><h:outputLabel value="#{dish.id}"/></td>
                             <td><h:outputLabel value="#{dish.name}"/></td>
                             <td><h:outputLabel value="#{dish.price}"/></td>
                             <td>
-                                <h:commandButton action="#{remoteEJBClient.removeDishFromCart(dish.id)}" value="Remove" />
+                                <h:commandButton action="#{client.removeDishFromCart(dish.id)}" value="Remove" />
                             </td>
                         </tr>
 
                     </ui:repeat>
                 </table>
-                date: <h:inputText value="#{remoteEJBClient.cart.dateOfReceipt}">
+                date: <h:inputText value="#{client.cart.dateOfReceipt}">
                     <f:convertDateTime pattern="HH-mm:dd-mm-yyyy" />
                 </h:inputText><br/>
-                city: <h:inputText value="#{remoteEJBClient.cart.address.city}"/>
-                street: <h:inputText value="#{remoteEJBClient.cart.address.street}"/>
-                number: <h:inputText value="#{remoteEJBClient.cart.address.number}"/><br/>
-                <h:outputLabel value="total cost: #{remoteEJBClient.cart.cost}"/><br/>
-                pay from salary: <h:selectBooleanCheckbox value="#{remoteEJBClient.cart.paidFromSalary}"/><br/>
-                <h:commandButton action="#{remoteEJBClient.addCartToUser()}" value="send order" />
+                city: <h:inputText value="#{client.cart.address.city}"/>
+                street: <h:inputText value="#{client.cart.address.street}"/>
+                number: <h:inputText value="#{client.cart.address.number}"/><br/>
+                <h:outputLabel value="total cost: #{client.cart.cost}"/><br/>
+                pay from salary: <h:selectBooleanCheckbox value="#{client.cart.paidFromSalary}"/><br/>
+                <h:commandButton action="#{client.addCartToUser()}" value="send order" />
             </h:form>
 
         </div>
