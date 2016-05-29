@@ -1,10 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <h:outputStylesheet library="css" name="bootstrap.min.css"/>
 </h:head>
@@ -16,6 +12,9 @@
         </div>
 
         <div class="panel-body">
+            <h:form>
+                <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.cancelCart()}" value="cancel"/><br/>
+            </h:form>
 
             <h:form>
                 <table class="table table-striped">
@@ -31,21 +30,35 @@
                             <td><h:outputLabel value="#{dish.name}"/></td>
                             <td><h:outputLabel value="#{dish.price}"/></td>
                             <td>
-                                <h:commandButton action="#{client.removeDishFromCart(dish.id)}" value="Remove" />
+                                <h:commandButton action="#{client.removeDishFromCart(dish.id)}" value="Remove"/>
                             </td>
                         </tr>
 
                     </ui:repeat>
                 </table>
                 date: <h:inputText value="#{client.cart.dateOfReceipt}">
-                    <f:convertDateTime pattern="HH-mm:dd-mm-yyyy" />
-                </h:inputText><br/>
+                <f:convertDateTime pattern="HH-mm:dd-mm-yyyy"/>
+            </h:inputText><br/>
                 city: <h:inputText value="#{client.cart.address.city}"/>
                 street: <h:inputText value="#{client.cart.address.street}"/>
                 number: <h:inputText value="#{client.cart.address.number}"/><br/>
                 <h:outputLabel value="total cost: #{client.cart.cost}"/><br/>
                 pay from salary: <h:selectBooleanCheckbox value="#{client.cart.paidFromSalary}"/><br/>
-                <h:commandButton action="#{client.addCartToUser()}" value="send order" />
+
+                subscribed type:
+                <h:selectOneMenu value="#{client.cart.subscribedType}">
+                    <f:selectItem itemValue="None" itemLabel="None"/>
+                    <f:selectItem itemValue="Regular" itemLabel="Regular"/>
+                    <f:selectItem itemValue="Repeated" itemLabel="Repeated"/>
+                    <f:selectItem itemValue="OnDays" itemLabel="OnDays"/>
+                </h:selectOneMenu><br/>
+
+                subscribed values: <h:inputText value="#{client.cart.subscribedValue}"/><br/>
+
+                <h:commandButton rendered="#{client.cart.id eq 0}" action="#{client.addCartToUser()}" value="send order"/>
+                <h:commandButton rendered="#{client.cart.id gt 0}" action="#{client.addCartToUser()}" value="update order"/>
+
+
             </h:form>
 
         </div>

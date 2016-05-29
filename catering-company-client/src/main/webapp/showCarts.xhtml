@@ -5,20 +5,20 @@
     <h:outputStylesheet library="css" name="bootstrap.min.css"/>
     <h:outputScript>
         function hide(id) {
-            document.getElementById(id).style.display = "none";
+        document.getElementById(id).style.display = "none";
         }
 
         function show(id) {
-            document.getElementById(id).style.display = "inline";
+        document.getElementById(id).style.display = "inline";
         }
 
         function activeTab(id) {
-            document.getElementById(id).className = "active";
+        document.getElementById(id).className = "active";
         }
 
 
         function deactiveTab(id) {
-            document.getElementById(id).className = "";
+        document.getElementById(id).className = "";
         }
     </h:outputScript>
 
@@ -33,43 +33,32 @@
         </div>
 
         <div class="panel-body">
-            login: <h:outputLabel value="#{client.user.login}"/><br/>
-            debt: <h:outputLabel value="#{client.user.debt}"/><br/>
-            mail: <h:outputLabel value="#{client.user.mail}"/><br/>
-            name: <h:outputLabel value="#{client.user.name}"/><br/>
-            surname: <h:outputLabel value="#{client.user.surname}"/><br/>
-            role: <h:outputLabel value="#{client.user.role}"/><br/>
 
             <ul class="nav nav-tabs">
                 <li id="newTab" class="active">
                     <a href="#" onclick="
-                    show('new'); hide('cancelled'); hide('inProgress'); hide('ready'); hide('finished');hide('subscribed');
-                    activeTab('newTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('readyTab'); deactiveTab('finishedTab'); deactiveTab('subscribedTab')">new</a>
+                    show('new'); hide('cancelled'); hide('inProgress'); hide('ready'); hide('finished');
+                    activeTab('newTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('readyTab'); deactiveTab('finishedTab') ">new</a>
                 </li>
                 <li id="cancelledTab">
                     <a href="#" onclick="
-                    show('cancelled'); hide('inProgress'); hide('new'); hide('ready'); hide('finished');hide('subscribed');
-                    activeTab('cancelledTab'); deactiveTab('inProgressTab'); deactiveTab('newTab'); deactiveTab('readyTab'); deactiveTab('finishedTab'); deactiveTab('subscribedTab')">cancelled</a>
+                    show('cancelled'); hide('inProgress'); hide('new'); hide('ready'); hide('finished');
+                    activeTab('cancelledTab'); deactiveTab('inProgressTab'); deactiveTab('newTab'); deactiveTab('readyTab'); deactiveTab('finishedTab')">cancelled</a>
                 </li>
                 <li id="readyTab">
                     <a href="#" onclick="
-                    show('ready'); hide('inProgress'); hide('cancelled'); hide('new'); hide('finished');hide('subscribed');
-                    activeTab('readyTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('newTab'); deactiveTab('finishedTab'); deactiveTab('subscribedTab')">ready</a>
+                    show('ready'); hide('inProgress'); hide('cancelled'); hide('new'); hide('finished');
+                    activeTab('readyTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('newTab'); deactiveTab('finishedTab')">ready</a>
                 </li>
                 <li id="finishedTab">
                     <a href="#" onclick="
-                    show('finished'); hide('inProgress'); hide('cancelled'); hide('ready'); hide('new');hide('subscribed');
-                    activeTab('finishedTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('readyTab'); deactiveTab('newTab'); deactiveTab('subscribedTab')">finished</a>
-                </li>
-                <li id="subscribedTab">
-                    <a href="#" onclick="
-                    show('subscribed'); hide('inProgress'); hide('cancelled'); hide('ready'); hide('finished');hide('new');
-                    activeTab('subscribedTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('readyTab'); deactiveTab('finishedTab'); deactiveTab('newTab')">subscribed</a>
+                    show('finished'); hide('inProgress'); hide('cancelled'); hide('ready'); hide('new');
+                    activeTab('finishedTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('readyTab'); deactiveTab('newTab')">finished</a>
                 </li>
                 <li id="inProgressTab">
                     <a href="#" onclick="
-                    show('inProgress'); hide('cancelled'); hide('new'); hide('ready'); hide('finished');hide('subscribed');
-                    activeTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('newTab'); deactiveTab('readyTab'); deactiveTab('finishedTab'); deactiveTab('subscribedTab')">in progress</a>
+                    show('inProgress'); hide('cancelled'); hide('new'); hide('ready'); hide('finished');
+                    activeTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('newTab'); deactiveTab('readyTab'); deactiveTab('finishedTab');">in progress</a>
                 </li>
             </ul>
 
@@ -77,9 +66,8 @@
     </div>
     <div class="panel-group">
         <div id="new">
-            <c:forEach items="#{client.user.actualCarts}" var="cart">
-                <c:choose>
-                    <c:when test="#{cart.status == 'New'}">
+            <c:forEach items="#{staff.getNewCarts()}" var="cart">
+
                         <div class="panel panel-success">
                             <div class="panel-heading">
                                 <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
@@ -98,21 +86,18 @@
                                 </ui:repeat>
                                 <tr></tr>
                             </table>
-                            <h:form>
-                                <h:commandButton class="btn btn-default" action="#{client.goToEditCart(cart)}" value="Edit cart"/>
-                                <h:commandButton class="btn btn-default" action="#{client.cancelCart(client.user.id, cart.id)}" value="Cancel cart"/>
-                            </h:form>
-
                         </div>
-                    </c:when>
-                </c:choose>
+                        <h:form>
+                            <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'Cancelled')}" value="cancel cart"/>
+                            <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'Ready')}" value="ready cart"/>
+                            <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'Finished')}" value="finish cart"/>
+                            <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'InProgress')}" value="in progress cart"/>
+                        </h:form>
             </c:forEach>
         </div>
 
         <div id="cancelled" style="display: none">
-            <c:forEach items="#{client.user.actualCarts}" var="cart">
-                <c:choose>
-                    <c:when test="#{cart.status == 'Cancelled'}">
+            <c:forEach items="#{staff.getCancelledCarts()}" var="cart">
                         <div class="panel panel-danger">
                             <div class="panel-heading">
                                 <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
@@ -131,15 +116,17 @@
                                 </ui:repeat>
                             </table>
                         </div>
-                    </c:when>
-                </c:choose>
+                <h:form>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'New')}" value="new cart"/>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'Ready')}" value="ready cart"/>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'Finished')}" value="finish cart"/>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'InProgress')}" value="in progress cart"/>
+                </h:form>
             </c:forEach>
         </div>
 
         <div id="ready" style="display: none">
-            <c:forEach items="#{client.user.actualCarts}" var="cart">
-                <c:choose>
-                    <c:when test="#{cart.status == 'Ready'}">
+            <c:forEach items="#{staff.getReadyCarts()}" var="cart">
                         <div class="panel panel-danger">
                             <div class="panel-heading">
                                 <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
@@ -158,15 +145,17 @@
                                 </ui:repeat>
                             </table>
                         </div>
-                    </c:when>
-                </c:choose>
+                <h:form>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'Cancelled')}" value="cancel cart"/>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'New')}" value="new cart"/>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'Finished')}" value="finish cart"/>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'InProgress')}" value="in progress cart"/>
+                </h:form>
             </c:forEach>
         </div>
 
         <div id="finished" style="display: none">
-            <c:forEach items="#{client.user.actualCarts}" var="cart">
-                <c:choose>
-                    <c:when test="#{cart.status == 'Finished'}">
+            <c:forEach items="#{staff.getFinishedCarts()}" var="cart">
                         <div class="panel panel-danger">
                             <div class="panel-heading">
                                 <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
@@ -185,41 +174,18 @@
                                 </ui:repeat>
                             </table>
                         </div>
-                    </c:when>
-                </c:choose>
+                <h:form>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'Cancelled')}" value="cancel cart"/>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'Ready')}" value="ready cart"/>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'New')}" value="new cart"/>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'InProgress')}" value="in progress cart"/>
+                </h:form>
             </c:forEach>
         </div>
 
-        <div id="subscribed" style="display: none">
-            <c:forEach items="#{client.user.actualCarts}" var="cart">
-                <c:choose>
-                    <c:when test="#{cart.status == 'Subscribed'}">
-                        <div class="panel panel-danger">
-                            <div class="panel-heading">
-                                <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
-                                <h:outputText value=", total cost: #{cart.cost}"/>
-                                <h:outputText value=", paid from salary: #{cart.paidFromSalary}"/>
-                                <h:outputText value=", address: #{cart.address}"/>
-                            </div>
-
-                            <table class="table table-striped">
-                                <ui:repeat value="#{cart.dishes}" var="dish">
-                                    <tr>
-                                        <td>
-                                            <h:outputLabel value="#{dish.name}"/>
-                                        </td>
-                                    </tr>
-                                </ui:repeat>
-                            </table>
-                        </div>
-                    </c:when>
-                </c:choose>
-            </c:forEach>
-        </div>
         <div id="inProgress" style="display: none">
-            <c:forEach items="#{client.user.actualCarts}" var="cart">
-                <c:choose>
-                    <c:when test="#{cart.status == 'Subscribed'}">
+            <c:forEach items="#{staff.getInProgressCarts()}" var="cart">
+
                         <div class="panel panel-danger">
                             <div class="panel-heading">
                                 <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
@@ -238,8 +204,12 @@
                                 </ui:repeat>
                             </table>
                         </div>
-                    </c:when>
-                </c:choose>
+                <h:form>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'Cancelled')}" value="cancel cart"/>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'Ready')}" value="ready cart"/>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'Finished')}" value="finish cart"/>
+                    <h:commandButton class="btn btn-default btn-xs" action="#{staff.changeCartStatus(cart, 'New')}" value="new cart"/>
+                </h:form>
             </c:forEach>
         </div>
     </div>

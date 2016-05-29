@@ -13,5 +13,11 @@ public interface UserInfo {
     public UserAccount getUsers(int id);
     public UserAccount getUserByLogin(String login);
     public Cart getCart(int id);
+    public List<Cart> getCarts();
+    public List<Cart> getNewCarts();
+    public List<Cart> getCancelledCarts();
+    public List<Cart> getReadyCarts();
+    public List<Cart> getFinishedCarts();
+    public List<Cart> getInProgressCarts();
 
 }

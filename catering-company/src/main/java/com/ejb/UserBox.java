@@ -51,9 +51,40 @@ public class UserBox {
 
     @Lock(READ)
     public List<Cart> getCarts() {
-        Query q1 = em.createQuery("Select c from Cart c");
+        Query q1 = em.createQuery("Select c from Cart c ORDER BY c.dateOfReceipt");
         return (List<Cart>)q1.getResultList();
     }
+
+    @Lock(READ)
+    public List<Cart> getNewCarts() {
+        Query q1 = em.createQuery("Select c from Cart c where c.status='New' ORDER BY c.dateOfReceipt");
+        return (List<Cart>)q1.getResultList();
+    }
+    @Lock(READ)
+    public List<Cart> getCancelledCarts() {
+        Query q1 = em.createQuery("Select c from Cart c where c.status='Cancelled' ORDER BY c.dateOfReceipt");
+        return (List<Cart>)q1.getResultList();
+    }
+
+
+    @Lock(READ)
+    public List<Cart> getInProgressCarts() {
+        Query q1 = em.createQuery("Select c from Cart c where c.status='InProgress' ORDER BY c.dateOfReceipt");
+        return (List<Cart>)q1.getResultList();
+    }
+
+    @Lock(READ)
+    public List<Cart> getReadyCarts() {
+        Query q1 = em.createQuery("Select c from Cart c where c.status='Ready' ORDER BY c.dateOfReceipt");
+        return (List<Cart>)q1.getResultList();
+    }
+
+    @Lock(READ)
+    public List<Cart> getFinishedCarts() {
+        Query q1 = em.createQuery("Select c from Cart c where c.status='Finished' ORDER BY c.dateOfReceipt");
+        return (List<Cart>)q1.getResultList();
+    }
+
 
     @Lock(READ)
     public UserAccount getUser(int id) {
@@ -68,10 +99,14 @@ public class UserBox {
 
     @Lock(WRITE)
     public void editUser(UserAccount user) {
-        em.merge(user);
+
         for(Cart cart: user.getActualCarts()){
-            em.merge(cart);
+            if(cart.getId()==0)
+                em.persist(cart);
+            else
+                em.merge(cart);
         }
+        em.merge(user);
     }
 
     @Lock(WRITE)
@@ -89,4 +124,8 @@ public class UserBox {
     public void deleteCart(Cart cart) {
         em.remove(cart);
     }
+
+
+
+
 }

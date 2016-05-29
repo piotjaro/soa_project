@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,11 +20,15 @@ public class Cart implements Serializable {
     @OneToMany(fetch=FetchType.EAGER)
     private List<Dish> dishes = new ArrayList<>();
     private boolean paidFromSalary;
+    private Date createDate;
     private Date dateOfReceipt;
     @OneToOne(cascade = CascadeType.PERSIST)
     private Address address = new Address();
     private double cost;
     private String status;
+    private String subscribedType;  //regular, repeated, onDays
+    private String subscribedValue;
+
 
     public Cart() {
     }
@@ -104,7 +109,29 @@ public class Cart implements Serializable {
         this.status = status;
     }
 
+    public Date getCreateDate() {
+        return createDate;
+    }
 
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getSubscribedType() {
+        return subscribedType;
+    }
+
+    public void setSubscribedType(String subscribedType) {
+        this.subscribedType = subscribedType;
+    }
+
+    public String getSubscribedValue() {
+        return subscribedValue;
+    }
+
+    public void setSubscribedValue(String subscribedValue) {
+        this.subscribedValue = subscribedValue;
+    }
 
     @Override
     public String toString() {

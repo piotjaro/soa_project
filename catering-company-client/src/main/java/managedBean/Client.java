@@ -1,11 +1,13 @@
 package managedBean;
 
 import com.model.Cart;
+import com.model.Dish;
 import com.model.UserAccount;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +21,6 @@ public class Client {
     private UserAccount user;
     private Initial initial = new Initial();
     private Cart cart = new Cart();
-    private int cartIdToEdit = -1;
 
     public UserAccount getUser() {
         return user;
@@ -40,14 +41,6 @@ public class Client {
     public String goToUserPanel() {
         user =  initial.getUserInfo().getUserByLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
         return "userPanel";
-    }
-
-    public int getCartIdToEdit() {
-        return cartIdToEdit;
-    }
-
-    public void setCartIdToEdit(int cartIdToEdit) {
-        this.cartIdToEdit = cartIdToEdit;
     }
 
     public String removeDishFromCart(int dishId, int cartId) {
@@ -71,25 +64,27 @@ public class Client {
         return "success";
     }
 
-    public String addToCart(int id) {
-        cart.addDish(initial.getInfo().getDish(id));
+    public String addToCart(Dish dish) {
+        cart.addDish(dish);
         return "success";
     }
 
-    public String addToModyfiedCart(int dishId, int cartId) {
-        cartIdToEdit = -1;
-        Cart cartTmp = initial.getUserInfo().getCart(cartId);
-        cartTmp.addDish(initial.getInfo().getDish(dishId));
-        initial.getUserEditor().editCart(cartTmp);
+    public String addToModyfiedCart(Dish dish) {
+        cart.addDish(dish);
         return "Success";
     }
 
     public String addCartToUser() {
-        UserAccount userAccount = initial.getUserInfo().getUserByLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
-        cart.setStatus("New");
-        Cart cart1 = initial.getUserEditor().addCart(cart);
-        userAccount.addCart(cart1);
-        initial.getUserEditor().editUser(userAccount);
+        cart.setCreateDate(new Date());
+        if(cart.getId() == 0) {
+            UserAccount userAccount = initial.getUserInfo().getUserByLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
+            cart.setStatus("New");
+            userAccount.addCart(cart);
+            initial.getUserEditor().editUser(userAccount);
+        } else {
+            initial.getUserEditor().editCart(cart);
+        }
+
         cart = new Cart();
         return "success";
     }
@@ -129,9 +124,14 @@ public class Client {
         return "success";
     }
 
-    public String goToAddDishFromMenu(int cartId) {
-        cartIdToEdit = cartId;
-        return "showMenu";
+    public String goToEditCart(Cart cart1) {
+        cart = cart1;
+        return "showCart";
+    }
+
+    public String cancelCart(){
+        cart = new Cart();
+        return "success";
     }
 
 

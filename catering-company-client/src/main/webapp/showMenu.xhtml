@@ -1,10 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
     <h:outputStylesheet library="css" name="bootstrap.min.css"/>
@@ -17,19 +14,20 @@
         </div>
     </div>
     <h:form>
-        <ui:repeat value="#{menuManager.showAllMenu()}" var="menu">
-            <ui:repeat value="#{menu.categories}" var="category">
-                <h:outputLabel value="#{category.name}"/><br/>
-                <ui:repeat value="#{category.dishes}" var="dish">
-                    ----<h:outputLabel value="#{dish.name}"/> - <h:outputLabel value="#{dish.price}"/><br/>
-                    <ui:repeat value="#{dish.ingredients}" var="ingredient">
-                        --------<h:outputLabel value="#{ingredient.name}"/> - <h:outputLabel value="#{ingredient.quantity}"/><br/>
-                    </ui:repeat>
+        Day dish:<h:outputLabel value="#{menuManager.showCurrentMenu().dayDish.name}"/><br/>
+        <ui:repeat value="#{menuManager.showCurrentMenu().categories}" var="category">
+            <h:outputLabel value="#{category.name}"/><br/>
+            <ui:repeat value="#{category.dishes}" var="dish">
+                ----<h:outputLabel value="#{dish.name}"/> - <h:outputLabel value="#{dish.price}"/>
+                <h:commandButton styleClass="btn btn-default btn-xs" action="#{client.addToCart(dish)}"
+                                 value="add to card"/>
+                <br/>
+                <ui:repeat value="#{dish.ingredients}" var="ingredient">
+                    --------------<h:outputLabel value="#{ingredient.name}"/> - <h:outputLabel
+                        value="#{ingredient.quantity}"/><br/>
                 </ui:repeat>
             </ui:repeat>
-            ---------------------------------------------------------------------------------
         </ui:repeat>
-
     </h:form>
 </h:body>
 

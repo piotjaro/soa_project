@@ -38,4 +38,35 @@ public class UserInfoBean implements UserInfo {
     public Cart getCart(int id) {
         return box.getCart(id);
     }
+
+    @Override
+    public List<Cart> getCarts() {
+        return box.getCarts();
+    }
+
+    @Override
+    public List<Cart> getNewCarts() {
+        return box.getNewCarts();
+    }
+
+    @Override
+    public List<Cart> getCancelledCarts() {
+        return box.getCancelledCarts();
+    }
+
+    @Override
+    public List<Cart> getReadyCarts() {
+        return box.getReadyCarts();
+    }
+
+    @Override
+    public List<Cart> getFinishedCarts() {
+        return box.getFinishedCarts();
+    }
+
+    @Override
+    public List<Cart> getInProgressCarts() {
+        return box.getInProgressCarts();
+    }
+
 }

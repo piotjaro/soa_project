@@ -46,6 +46,24 @@ public class MenuBox {
 
     @Lock(WRITE)
     public void editMenu(Menu menu) {
+        for(Category category : menu.getCategories()){
+            if(category.getId()==0)
+                em.persist(category);
+            else
+                em.merge(category);
+            for(Dish dish : category.getDishes()) {
+                if(dish.getId()==0)
+                    em.persist(dish);
+                else
+                    em.merge(dish);
+                for(Ingredient ingredient : dish.getIngredients()) {
+                    if(ingredient.getId() == 0)
+                        em.persist(ingredient);
+                    else
+                        em.merge(ingredient);
+                }
+            }
+        }
         em.merge(menu);
     }
 
@@ -63,7 +81,6 @@ public class MenuBox {
 
     @Lock(WRITE)
     public void removeMenu(int id) {
-
         Menu menu = em.find(Menu.class, id);
         em.remove(menu);
     }
@@ -77,7 +94,6 @@ public class MenuBox {
 
     @Lock(WRITE)
     public void editDish(Dish dish) {
-
         em.merge(dish);
     }
 
@@ -100,6 +116,10 @@ public class MenuBox {
 
     @Lock(WRITE)
     public void editCart(Cart cart) {
+        if(cart.getAddress().getId()==0)
+            em.persist(cart.getAddress());
+        else
+            em.merge(cart.getAddress());
         em.merge(cart);
     }
 

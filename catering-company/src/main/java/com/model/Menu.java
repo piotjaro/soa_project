@@ -14,7 +14,7 @@ public class Menu implements Serializable{
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     private boolean isCurrent;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne
     private Dish dayDish = new Dish();
     @OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
     private List<Category> categories = new ArrayList<>();
