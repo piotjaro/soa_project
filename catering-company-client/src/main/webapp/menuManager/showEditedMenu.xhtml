@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+</h:head>
+<h:body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Edit menu
+            <button class="btn btn-default" onclick="location.href = '../customer/hello.xhtml';">main page</button>
+        </div>
+        <div class="panel-body" id="toRender">
+            <h:form>
+
+                <h:commandButton rendered="#{menuManager.menu.id eq 0}" styleClass="btn btn-default btn-xs" action="#{menuManager.saveMenu()}" value="save menu"/>
+                <h:commandButton rendered="#{menuManager.menu.id gt 0}" styleClass="btn btn-default btn-xs" action="#{menuManager.saveMenu()}" value="update menu"/>
+
+                <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.goToAddCategory()}" value="add category"/><br/>
+
+                <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.cancelMenu()}" value="cancel"/><br/>
+
+                <ui:repeat value="#{menuManager.menu.categories}" var="category">
+                    <h:outputLabel value="#{category.name}"/>
+                    <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.goToEditCategory(category)}" value="edit category"/>
+                    <h:commandButton styleClass="btn btn-default btn-xs" id="removeCategory#{category.id}" action="#{menuManager.removeCategory(category)}" value="remove category"/>
+                    <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.goToAddDish(category)}" value="add dish"/><br/>
+                    <ui:repeat value="#{category.dishes}" var="dish">
+                        ----<h:outputText value="#{dish.name}"/>
+                        <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.goToEditDish(dish)}" value="edit dish"/>
+                        <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.removeDish(category, dish)}" value="remove dish"/>
+
+                        <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.goToAddIngredient(dish)}" value="Add Ingredient"/>
+                        <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.setDayDish(dish)}" value="Set day dish"/><br/>
+
+                        <ui:repeat value="#{dish.ingredients}" var="ingredient">
+                            ------------<h:outputText value="#{ingredient.name} - #{ingredient.quantity}"/>
+                            <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.goToEditIngredient(ingredient)}" value="edit ingredient"/>
+                            <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.removeIngredient(dish,ingredient)}" value="remove ingredient"/>
+                            <br/>
+                        </ui:repeat>
+                    </ui:repeat>
+                </ui:repeat>
+            </h:form>
+
+        </div>
+    </div>
+    <h:form>
+    </h:form>
+</h:body>
+</html>

@@ -16,13 +16,11 @@
 
         <div class="panel-body">
 
-            <button class="btn btn-default" onclick="location.href = 'showDishes.xhtml';">show all dishes</button>
-            <button class="btn btn-default" onclick="location.href = 'showCategories.xhtml';">show all categories</button>
-            <button class="btn btn-default" onclick="location.href = 'showAllMenu.xhtml';">show all menu</button>
+            <button class="btn btn-default" onclick="location.href = '../menuManager/showAllMenu.xhtml';">show all menu</button>
             <button class="btn btn-default" onclick="location.href = 'showMenu.xhtml';">show menu</button>
-            <button class="btn btn-default" onclick="location.href = 'showUsers.xhtml';">show users</button>
             <button class="btn btn-default" onclick="location.href = 'showCart.xhtml';">show cart</button>
-            <button class="btn btn-default" onclick="location.href = 'showCarts.xhtml';">show carts</button>
+            <button class="btn btn-default" onclick="location.href = '../staff/showCarts.xhtml';">show carts</button>
+            <button class="btn btn-default" onclick="location.href = '/catering-company-client/all/registration.xhtml';">registration</button>
         </div>
     </div>
 
@@ -32,8 +30,9 @@
         <div class="panel-body">
             <h:form style="display: inline;">
                 <h:commandButton styleClass="btn btn-default" action="#{client.goToUserPanel()}" value="user panel"/>
-                <h:commandButton rendered="#{menuManager.menu.id eq 0}" styleClass="btn btn-default" action="#{menuManager.goToCreateMenu()}" value="Create menu"/>
+                <h:commandButton rendered="#{facesContext.externalContext.isUserInRole('MENUMANAGER') and menuManager.menu.id ge 0}" styleClass="btn btn-default" action="#{menuManager.goToCreateMenu()}" value="Create menu"/>
                 <h:commandButton rendered="#{menuManager.menu.id gt 0}" styleClass="btn btn-default" action="#{menuManager.goToCreateMenu()}" value="Update Menu"/>
+                <h:commandButton styleClass="btn btn-default" action="#{registrationLogout.logout()}" value="logout"/>
             </h:form>
         </div>
     </div>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+</h:head>
+<h:body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Add Category
+            <button class="btn btn-default" onclick="location.href = '../customer/hello.xhtml';">Main Page</button>
+        </div>
+        <div class="panel-body">
+            <h:form>
+                <h:panelGrid columns="3">
+
+                    <h:outputLabel for="name" value="name"/>
+                    <h:inputText styleClass="form-control" id="name" value="#{staff.cart.addictionalInformation}"/>
+                    <h:message for="name"/>
+
+                    <h:outputLabel for="name" value="save"/>
+                    <h:commandButton styleClass="btn btn-default" id="save" action="#{staff.addComment()}" value="save"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>

@@ -33,12 +33,12 @@
         </div>
 
         <div class="panel-body">
-            login: <h:outputLabel value="#{client.user.login}"/><br/>
-            debt: <h:outputLabel value="#{client.user.debt}"/><br/>
-            mail: <h:outputLabel value="#{client.user.mail}"/><br/>
-            name: <h:outputLabel value="#{client.user.name}"/><br/>
-            surname: <h:outputLabel value="#{client.user.surname}"/><br/>
-            role: <h:outputLabel value="#{client.user.role}"/><br/>
+            login: <h:outputLabel value="#{client.getUserFromDatabase().login}"/><br/>
+            debt: <h:outputLabel value="#{client.getUserFromDatabase().debt}"/><br/>
+            mail: <h:outputLabel value="#{client.getUserFromDatabase().mail}"/><br/>
+            name: <h:outputLabel value="#{client.getUserFromDatabase().name}"/><br/>
+            surname: <h:outputLabel value="#{client.getUserFromDatabase().surname}"/><br/>
+            role: <h:outputLabel value="#{client.getUserFromDatabase().role}"/><br/>
 
             <ul class="nav nav-tabs">
                 <li id="newTab" class="active">
@@ -77,7 +77,7 @@
     </div>
     <div class="panel-group">
         <div id="new">
-            <c:forEach items="#{client.user.actualCarts}" var="cart">
+            <c:forEach items="#{client.getUserFromDatabase().actualCarts}" var="cart">
                 <c:choose>
                     <c:when test="#{cart.status == 'New'}">
                         <div class="panel panel-success">

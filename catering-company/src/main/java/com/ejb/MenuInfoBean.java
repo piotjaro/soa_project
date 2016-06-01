@@ -11,11 +11,14 @@ import com.model.Menu;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Stateless
+@WebService(serviceName="catering-company")
 @Remote(MenuInfo.class)
 public class  MenuInfoBean implements MenuInfo  {
 	@EJB MenuBox box;
@@ -38,6 +41,7 @@ public class  MenuInfoBean implements MenuInfo  {
 		return box.getDishes();
 	}
 
+	@WebMethod(operationName = "getCategories")
 	@Override
 	public List<Category> getCategories() {
 		return box.getCategories();

@@ -8,7 +8,10 @@ import com.sun.net.httpserver.Authenticator;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.naming.NamingException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,8 +113,12 @@ public class MenuManager {
         return "success";
     }
 
-    public String goToCreateMenu() {
-        return "showEditedMenu";
+    public void goToCreateMenu() {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/catering-company-client/menuManager/showEditedMenu.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //EDIT

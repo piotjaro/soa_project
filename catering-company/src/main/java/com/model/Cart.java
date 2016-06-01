@@ -28,6 +28,7 @@ public class Cart implements Serializable {
     private String status;
     private String subscribedType;  //regular, repeated, onDays
     private String subscribedValue;
+    private String addictionalInformation;
 
 
     public Cart() {
@@ -131,6 +132,14 @@ public class Cart implements Serializable {
 
     public void setSubscribedValue(String subscribedValue) {
         this.subscribedValue = subscribedValue;
+    }
+
+    public String getAddictionalInformation() {
+        return addictionalInformation;
+    }
+
+    public void setAddictionalInformation(String addictionalInformation) {
+        this.addictionalInformation = addictionalInformation;
     }
 
     @Override

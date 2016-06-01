@@ -11,15 +11,21 @@
 </h:head>
 <h:body>
     <div class="panel panel-primary">
-        <div class="panel-heading">Edit Category
-        <button class="btn btn-default" onclick="location.href = 'hello.xhtml';">main page</button>
+        <div class="panel-heading">Edit dish
+            <button class="btn btn-default" onclick="location.href = '../customer/hello.xhtml';">main page</button>
         </div>
         <div class="panel-body">
             <h:form>
-                category name: <h:inputText styleClass="form-control" value="#{menuManager.category.name}"/>
-                <h:commandButton styleClass="btn btn-default" action="#{menuManager.saveEditedCategory()}" value="edit category"/>
+                dish name: <h:inputText styleClass="form-control" value="#{menuManager.dish.name}"/>
+                price: <h:inputText styleClass="form-control" value="#{menuManager.dish.price}"/>
+                path to photo: <h:inputText styleClass="form-control" value="#{menuManager.dish.pathToPhoto}"/>
+                <h:commandButton styleClass="btn btn-default" action="#{menuManager.saveEditedDish()}"
+                                 value="edit dish"/>
             </h:form>
         </div>
     </div>
+
 </h:body>
+
+
 </html>

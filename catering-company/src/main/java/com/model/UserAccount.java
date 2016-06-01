@@ -89,11 +89,6 @@ public class UserAccount implements Serializable {
     }
 
     public double getDebt() {
-        double result = 0.0;
-        for(Cart cart : actualCarts) {
-            if(!cart.isPaidFromSalary())
-                result += cart.getCost();
-        }
         return debt;
     }
 
@@ -108,6 +103,10 @@ public class UserAccount implements Serializable {
 
     public void setActualCarts(List<Cart> actualCarts) {
         this.actualCarts = actualCarts;
+    }
+
+    public void addDebt(double debtFromCart) {
+        debt += debtFromCart;
     }
 
     @Override

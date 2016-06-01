@@ -29,10 +29,7 @@ public class UserEditorBean implements UserEditor {
         box.deleteUser(user);
     }
 
-    @Override
-    public void deleteCart(Cart cart) {
-        box.deleteCart(cart);
-    }
+
 
     @Override
     public void editUser(UserAccount user) {
@@ -40,11 +37,8 @@ public class UserEditorBean implements UserEditor {
     }
 
     @Override
-    public void editCart(Cart cart) {
-        box.editCart(cart);
-    }
-
-    public Cart addCart(Cart cart) {
-       return box.addCart(cart);
+    public void addDebt(UserAccount user, double debtToAdd) {
+        user.addDebt(debtToAdd);
+        editUser(user);
     }
 }

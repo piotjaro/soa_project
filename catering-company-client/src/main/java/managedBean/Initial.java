@@ -1,9 +1,6 @@
 package managedBean;
 
-import com.ejb.MenuEditor;
-import com.ejb.MenuInfo;
-import com.ejb.UserEditor;
-import com.ejb.UserInfo;
+import com.ejb.*;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
@@ -23,6 +20,8 @@ public class Initial {
     private MenuEditor menu;
     private UserEditor userEditor;
     private UserInfo userInfo;
+    private CartEditor cartEditor;
+    private CartInfo cartInfo;
 
     public Initial(){
         Logger.getLogger("org.jboss").setLevel(Level.SEVERE);
@@ -32,6 +31,8 @@ public class Initial {
             menu = lookupMenuEditorEJB();
             userEditor = lookupUserEditorEJB();
             userInfo = lookupUserInfoEJB();
+            cartEditor = lookupCartEditorEJB();
+            cartInfo = lookupCartInfoEJB();
         } catch (NamingException e) {
             e.printStackTrace();
         }
@@ -73,6 +74,22 @@ public class Initial {
         this.userInfo = userInfo;
     }
 
+    public CartEditor getCartEditor() {
+        return cartEditor;
+    }
+
+    public void setCartEditor(CartEditor cartEditor) {
+        this.cartEditor = cartEditor;
+    }
+
+    public CartInfo getCartInfo() {
+        return cartInfo;
+    }
+
+    public void setCartInfo(CartInfo cartInfo) {
+        this.cartInfo = cartInfo;
+    }
+
     private static MenuInfo lookupMenuInfoEJB() throws NamingException {
 
         final Context context = new InitialContext(jndiProperties);
@@ -91,6 +108,20 @@ public class Initial {
 
         final Context context = new InitialContext(jndiProperties);
         return (UserInfo) context.lookup("ejb:/catering-company//UserInfoBean!com.ejb.UserInfo");
+
+    }
+
+    private static CartEditor lookupCartEditorEJB() throws NamingException {
+
+        final Context context = new InitialContext(jndiProperties);
+        return (CartEditor) context.lookup("ejb:/catering-company//CartEditorBean!com.ejb.CartEditor?stateful");
+
+    }
+
+    private static CartInfo lookupCartInfoEJB() throws NamingException {
+
+        final Context context = new InitialContext(jndiProperties);
+        return (CartInfo) context.lookup("ejb:/catering-company//CartInfoBean!com.ejb.CartInfo");
 
     }
 

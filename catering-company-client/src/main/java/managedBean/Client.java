@@ -9,6 +9,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by piotrek on 28.05.16.
@@ -44,9 +45,9 @@ public class Client {
     }
 
     public String removeDishFromCart(int dishId, int cartId) {
-        Cart cartTmp = initial.getUserInfo().getCart(cartId);
+        Cart cartTmp = initial.getCartInfo().getCart(cartId);
         cartTmp.removeDish(dishId);
-        initial.getUserEditor().editCart(cartTmp);
+        initial.getCartEditor().editCart(cartTmp);
         return "success";
     }
 
@@ -82,7 +83,7 @@ public class Client {
             userAccount.addCart(cart);
             initial.getUserEditor().editUser(userAccount);
         } else {
-            initial.getUserEditor().editCart(cart);
+            initial.getCartEditor().editCart(cart);
         }
 
         cart = new Cart();
@@ -134,6 +135,12 @@ public class Client {
         return "success";
     }
 
+    public UserAccount getUserFromDatabase() {
+        return initial.getUserInfo().getUserByLogin(user.getLogin());
+    }
 
-
+    public List<Cart> getCartsCurrentMoth() {
+        return initial.getUserInfo().getUserByLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser())
+                .getActualCarts().stream().filter(c -> c.getDateOfReceipt().getMonth() == new Date().getMonth()).collect(Collectors.toList());
+    }
 }
