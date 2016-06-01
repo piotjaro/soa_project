@@ -4,7 +4,7 @@
     <display-name>DemoWeb</display-name>
 
     <welcome-file-list>
-        <welcome-file>/customer/hello.xhtml</welcome-file>
+        <welcome-file>/hello.xhtml</welcome-file>
     </welcome-file-list>
 
     <servlet>
@@ -22,6 +22,7 @@
         <web-resource-collection>
             <web-resource-name>customer</web-resource-name>
             <url-pattern>/customer/*</url-pattern>
+            <url-pattern>/hello.xhtml</url-pattern>
             <http-method>POST</http-method>
             <http-method>GET</http-method>
             <http-method>PUT</http-method>

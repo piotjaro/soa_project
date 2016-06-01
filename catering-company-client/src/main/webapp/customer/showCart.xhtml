@@ -7,13 +7,13 @@
 <h:body>
     <div class="panel panel-primary">
         <div class="panel-heading">
-            Show Categories
-            <button class="btn btn-default" onclick="location.href = 'hello.xhtml';">Main Page</button>
+            Show Cart
+            <h:commandButton styleClass="btn btn-default" onclick="location.href = '../hello.xhtml';" value="Main menu"/>
         </div>
 
         <div class="panel-body">
             <h:form>
-                <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.cancelCart()}" value="cancel"/><br/>
+                <h:commandButton styleClass="btn btn-default btn-xs"  rendered="#{client.cart.dishes.size() > 0}" action="#{client.cancelCart()}" value="cancel"/><br/>
             </h:form>
 
             <h:form>
@@ -30,33 +30,33 @@
                             <td><h:outputLabel value="#{dish.name}"/></td>
                             <td><h:outputLabel value="#{dish.price}"/></td>
                             <td>
-                                <h:commandButton action="#{client.removeDishFromCart(dish.id)}" value="Remove"/>
+                                <h:commandButton styleClass="btn btn-default btn-xs" action="#{client.removeDishFromCart(dish.id)}" value="Remove"/>
                             </td>
                         </tr>
 
                     </ui:repeat>
                 </table>
-                date: <h:inputText value="#{client.cart.dateOfReceipt}">
+                date: <h:inputText styleClass="form-control" value="#{client.cart.dateOfReceipt}">
                 <f:convertDateTime pattern="HH-mm:dd-mm-yyyy"/>
             </h:inputText><br/>
-                city: <h:inputText value="#{client.cart.address.city}"/>
-                street: <h:inputText value="#{client.cart.address.street}"/>
-                number: <h:inputText value="#{client.cart.address.number}"/><br/>
+                city: <h:inputText styleClass="form-control" value="#{client.cart.address.city}"/>
+                street: <h:inputText styleClass="form-control" value="#{client.cart.address.street}"/>
+                number: <h:inputText styleClass="form-control" value="#{client.cart.address.number}"/><br/>
                 <h:outputLabel value="total cost: #{client.cart.cost}"/><br/>
                 pay from salary: <h:selectBooleanCheckbox value="#{client.cart.paidFromSalary}"/><br/>
 
                 subscribed type:
-                <h:selectOneMenu value="#{client.cart.subscribedType}">
+                <h:selectOneMenu styleClass="form-control" value="#{client.cart.subscribedType}">
                     <f:selectItem itemValue="None" itemLabel="None"/>
                     <f:selectItem itemValue="Regular" itemLabel="Regular"/>
                     <f:selectItem itemValue="Repeated" itemLabel="Repeated"/>
                     <f:selectItem itemValue="OnDays" itemLabel="OnDays"/>
                 </h:selectOneMenu><br/>
 
-                subscribed values: <h:inputText value="#{client.cart.subscribedValue}"/><br/>
+                subscribed values: <h:inputText styleClass="form-control" value="#{client.cart.subscribedValue}"/><br/>
 
-                <h:commandButton rendered="#{client.cart.id eq 0}" action="#{client.addCartToUser()}" value="send order"/>
-                <h:commandButton rendered="#{client.cart.id gt 0}" action="#{client.addCartToUser()}" value="update order"/>
+                <h:commandButton styleClass="btn btn-default" rendered="#{client.cart.id eq 0}" action="#{client.addCartToUser()}" value="send order"/>
+                <h:commandButton styleClass="btn btn-default" rendered="#{client.cart.id gt 0}" action="#{client.addCartToUser()}" value="update order"/>
 
 
             </h:form>

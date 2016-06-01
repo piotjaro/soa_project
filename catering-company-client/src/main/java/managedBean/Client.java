@@ -48,7 +48,8 @@ public class Client {
         Cart cartTmp = initial.getCartInfo().getCart(cartId);
         cartTmp.removeDish(dishId);
         initial.getCartEditor().editCart(cartTmp);
-        return "success";
+        return "/all/success.xhtml";
+
     }
 
     public String payCash(int userId, int cartId) {
@@ -62,17 +63,18 @@ public class Client {
                 break;
             }
         }
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String addToCart(Dish dish) {
         cart.addDish(dish);
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String addToModyfiedCart(Dish dish) {
         cart.addDish(dish);
-        return "Success";
+        return "/all/success.xhtml";
+
     }
 
     public String addCartToUser() {
@@ -87,12 +89,13 @@ public class Client {
         }
 
         cart = new Cart();
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String removeDishFromCart(int id) {
         cart.removeDish(id);
-        return "success";
+        return "/all/success.xhtml";
+
     }
 
     public String cancelCart(int userId, int cartId) {
@@ -107,7 +110,7 @@ public class Client {
                 break;
             }
         }
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String payFromSalary(int userId, int cartId) {
@@ -122,7 +125,7 @@ public class Client {
                 break;
             }
         }
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String goToEditCart(Cart cart1) {
@@ -132,7 +135,7 @@ public class Client {
 
     public String cancelCart(){
         cart = new Cart();
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public UserAccount getUserFromDatabase() {

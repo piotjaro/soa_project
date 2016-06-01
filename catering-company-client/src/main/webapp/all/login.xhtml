@@ -5,34 +5,23 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
-
-
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
 </h:head>
 <h:body>
+    <div class="panel panel-primary">
+    <div class="panel-heading">Login
+        <button class="btn btn-default" onclick="location.href = '/catering-company-client/all/registration.xhtml';">registration</button>
+    </div>
+    <div class="panel-body">
 
 
-            <button class="btn btn-default" onclick="location.href = 'registration.xhtml';">registration</button>
             <form action="j_security_check" method="post" class="form-horizontal">
-                <div class="form-group">
-                    <label class="control-label col-sm-2">Username:</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" class="" name="j_username"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-2">Password:</label>
-
-                    <div class="col-sm-10">
-                        <input type="password" class="" name="j_password"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
+                        login: <input class="form-control" type="text"  name="j_username"/>
+                        password:<input class="form-control" type="password" name="j_password"/>
                         <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                </div>
             </form>
+    </div>
+    </div>
 
 </h:body>
 </html>

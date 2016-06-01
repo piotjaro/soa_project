@@ -10,11 +10,11 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             Menu
-            <button class="btn btn-default" onclick="location.href = 'hello.xhtml';">main page</button>
+            <button class="btn btn-default" onclick="location.href = '../hello.xhtml';">main page</button>
         </div>
     </div>
     <h:form>
-        Day dish:<h:outputLabel value="#{menuManager.showCurrentMenu().dayDish.name}"/><br/>
+        <h:outputLabel rendered="#{menuManager.showCurrentMenu().dayDish eq ''}" value="Day dish: #{menuManager.showCurrentMenu().dayDish.name}"/><br/>
         <ui:repeat value="#{menuManager.showCurrentMenu().categories}" var="category">
             <h:outputLabel value="#{category.name}"/><br/>
             <ui:repeat value="#{category.dishes}" var="dish">

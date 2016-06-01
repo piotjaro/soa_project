@@ -39,7 +39,7 @@ public class Staff {
             cart.setStatus(status);
 
         initial.getCartEditor().editCart(cart);
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public List<Cart> getAllCarts() {
@@ -78,7 +78,7 @@ public class Staff {
     public String changeStatus(Cart cart, String status) {
         cart.setStatus(status);
         initial.getCartEditor().editCart(cart);
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String goToAddComment(Cart cart1) {
@@ -89,7 +89,7 @@ public class Staff {
     public String addComment(){
         initial.getCartEditor().editCart(cart);
         cart = new Cart();
-        return "success";
+        return "/all/success.xhtml";
     }
 
 }

@@ -27,7 +27,7 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             Menu
-            <button class="btn btn-default" onclick="location.href = '../customer/hello.xhtml';">main page</button>
+            <button class="btn btn-default" onclick="location.href = '../hello.xhtml';">main page</button>
         </div>
         <div class="panel-body">
             <ul class="nav nav-tabs">
@@ -40,6 +40,7 @@
     </div>
     <div id="current">
         <h:form>
+
             <ui:repeat value="#{menuManager.showCurrentMenu().categories}" var="category">
                 <h:outputLabel value="#{category.name}"/><br/>
                 <ui:repeat value="#{category.dishes}" var="dish">
@@ -49,11 +50,10 @@
                     </ui:repeat>
                 </ui:repeat>
             </ui:repeat>
-            <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.goToEditMenu(menuManager.showCurrentMenu())}" value="edit menu"/><br/>
-            <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.removeMenu(menuManager.showCurrentMenu())}" value="remove menu"/><br/>
-            <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.archiveMenu(menuManager.showCurrentMenu())}" value="archive menu"/><br/>
-            <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.currentMenu(menuManager.showCurrentMenu())}" value="current menu"/><br/>
-            ---------------------------------------------------------------------------------<br/>
+            <h:commandButton rendered="#{menuManager.showCurrentMenu().categories.size() > 0}" styleClass="btn btn-default btn-xs" action="#{menuManager.goToEditMenu(menuManager.showCurrentMenu())}" value="edit menu"/><br/>
+            <h:commandButton rendered="#{menuManager.showCurrentMenu().categories.size() > 0}" styleClass="btn btn-default btn-xs" action="#{menuManager.removeMenu(menuManager.showCurrentMenu())}" value="remove menu"/><br/>
+            <h:commandButton rendered="#{menuManager.showCurrentMenu().categories.size() > 0}" styleClass="btn btn-default btn-xs" action="#{menuManager.archiveMenu(menuManager.showCurrentMenu())}" value="archive menu"/><br/>
+            <h:commandButton rendered="#{menuManager.showCurrentMenu().categories.size() > 0}" styleClass="btn btn-default btn-xs" action="#{menuManager.currentMenu(menuManager.showCurrentMenu())}" value="current menu"/><br/>
         </h:form>
     </div>
 

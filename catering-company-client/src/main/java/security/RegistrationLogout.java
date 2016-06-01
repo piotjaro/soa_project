@@ -7,6 +7,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import java.io.IOException;
 
 /**
  * Created by piotrek on 31.05.16.
@@ -27,9 +28,13 @@ public class RegistrationLogout {
         this.user = user;
     }
 
-    public String logout() {
+    public void logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "login";
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/catering-company-client/all/login.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String regisration() {
@@ -37,6 +42,6 @@ public class RegistrationLogout {
         user.setPassword(DigestUtils.md5Hex(user.getPassword()));
         initial.getUserEditor().addUser(user);
         user = new UserAccount();
-        return "success";
+        return "/all/success.xhtml";
     }
 }

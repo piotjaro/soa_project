@@ -8,13 +8,13 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             Edit menu
-            <button class="btn btn-default" onclick="location.href = '../customer/hello.xhtml';">main page</button>
+            <button class="btn btn-default" onclick="location.href = '../hello.xhtml';">main page</button>
         </div>
         <div class="panel-body" id="toRender">
             <h:form>
 
-                <h:commandButton rendered="#{menuManager.menu.id eq 0}" styleClass="btn btn-default btn-xs" action="#{menuManager.saveMenu()}" value="save menu"/>
-                <h:commandButton rendered="#{menuManager.menu.id gt 0}" styleClass="btn btn-default btn-xs" action="#{menuManager.saveMenu()}" value="update menu"/>
+                <h:commandButton rendered="#{menuManager.menu.id eq 0 and menuManager.menu.categories.size() > 0}" styleClass="btn btn-default btn-xs" action="#{menuManager.saveMenu()}" value="save menu"/>
+                <h:commandButton rendered="#{menuManager.menu.id gt 0 and menuManager.menu.categories.size() > 0}" styleClass="btn btn-default btn-xs" action="#{menuManager.saveMenu()}" value="update menu"/>
 
                 <h:commandButton styleClass="btn btn-default btn-xs" action="#{menuManager.goToAddCategory()}" value="add category"/><br/>
 

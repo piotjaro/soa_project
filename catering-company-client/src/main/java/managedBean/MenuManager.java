@@ -75,7 +75,7 @@ public class MenuManager {
         dish = new Dish();
         ingredient = new Ingredient();
         category = new Category();
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String goToAddIngredient (Dish dish1) {
@@ -99,7 +99,7 @@ public class MenuManager {
     public String addCategory() throws NamingException {
         menu.addCategory(category);
         category = new Category();
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String addIngredientFromMenu(){
@@ -110,7 +110,7 @@ public class MenuManager {
         dish = new Dish();
         ingredient = new Ingredient();
         category = new Category();
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public void goToCreateMenu() {
@@ -154,24 +154,24 @@ public class MenuManager {
 
     public String saveEditedCategory(){
         // initial.getMenu().editCategory(category);
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String saveEditedIngredient(){
        // initial.getMenu().editIngredient(ingredient);
-        return "success";
+        return "/all/success.xhtml";
     }
 
     //REMOVE
 
     public String removeCategory(Category category){
         menu.removeCategory(category);
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String removeDish(Category category, Dish dish) {
         category.removeDish(dish);
-        return "success";
+        return "/all/success.xhtml";
     }
 
     //    public String removeIngredient(int id) {
@@ -219,12 +219,12 @@ public class MenuManager {
 
     public String removeIngredient(Dish dish, Ingredient ingredient) {
         dish.removeIngredient(ingredient);
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String removeMenu(Menu menu1) {
         initial.getMenu().removeMenu(menu1.getId());
-        return "success";
+        return "/all/success.xhtml";
     }
 
     //SHOW
@@ -251,7 +251,7 @@ public class MenuManager {
             initial.getMenu().editMenu(menu);
         }
         menu = new Menu();
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public List<Menu> showAllMenu() {
@@ -281,12 +281,13 @@ public class MenuManager {
 
     public String cancelMenu() {
         menu = new Menu();
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String archiveMenu(Menu menu1) {
         menu1.setIsCurrent(false);
-        return "success";
+        initial.getMenu().editMenu(menu1);
+        return "/all/success.xhtml";
     }
 
 
@@ -300,11 +301,12 @@ public class MenuManager {
         }
         menu1.setIsCurrent(true);
         initial.getMenu().editMenu(menu1);
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String setDayDish(Dish dish) {
         menu.setDayDish(dish);
-        return "success";
+        return "/all/success.xhtml";
+
     }
 }
