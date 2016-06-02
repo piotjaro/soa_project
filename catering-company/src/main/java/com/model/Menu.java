@@ -9,6 +9,11 @@ import java.util.List;
  * Created by piotrek on 27.05.16.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Menu.getAll", query = "Select m from Menu m"),
+        @NamedQuery(name = "Menu.getById", query = "Select m from Menu m where m.id= ?1")
+
+})
 public class Menu implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

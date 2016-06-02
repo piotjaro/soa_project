@@ -9,6 +9,9 @@ import java.util.List;
  * Created by piotrek on 12.05.16.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Category.getAll", query = "Select c from Category c")
+})
 public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

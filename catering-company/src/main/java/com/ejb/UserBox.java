@@ -38,8 +38,8 @@ public class UserBox {
 
     @Lock(READ)
     public List<UserAccount> getUsers() {
-        Query q1 = em.createQuery("Select u from UserAccount u");
-        return (List<UserAccount>)q1.getResultList();
+        Query query  = em.createNamedQuery("UserAccount.getAll");
+        return (List<UserAccount>)query.getResultList();
     }
 
 
@@ -64,7 +64,8 @@ public class UserBox {
 
     @Lock(READ)
     public UserAccount getUserByLogin(String login) {
-        Query q1 = em.createQuery("Select u from UserAccount u where u.login= '"+ login +"'");
+        Query q1 = em.createNamedQuery("UserAccount.getUserByLogin");
+        q1.setParameter(1, login);
         return (UserAccount)q1.getResultList().get(0);
     }
 

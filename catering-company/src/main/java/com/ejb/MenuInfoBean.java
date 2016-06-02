@@ -47,10 +47,10 @@ public class  MenuInfoBean implements MenuInfo  {
 		return box.getCategories();
 	}
 
-	@Override
-	public List<Dish> getDishesFromCategory(int id) {
-		return box.getDishesFromCategory(id);
-	}
+//	@Override
+//	public List<Dish> getDishesFromCategory(int id) {
+//		return box.getDishesFromCategory(id);
+//	}
 
 	@Override
 	public Category getCategory(int id) {

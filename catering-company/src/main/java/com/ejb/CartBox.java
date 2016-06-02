@@ -33,55 +33,62 @@ public class CartBox {
 
     @Lock(READ)
     public List<Cart> getCarts() {
-        Query q1 = em.createQuery("Select c from Cart c ORDER BY c.dateOfReceipt DESC");
+        Query q1 = em.createNamedQuery("Cart.getAll");
         return (List<Cart>)q1.getResultList();
     }
 
     @Lock(READ)
     public List<Cart> getNewCarts() {
-        Query q1 = em.createQuery("Select c from Cart c where c.status='New' ORDER BY c.dateOfReceipt DESC");
+        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
+        q1.setParameter(1, "New");
         return (List<Cart>)q1.getResultList();
     }
     @Lock(READ)
     public List<Cart> getCancelledCarts() {
-        Query q1 = em.createQuery("Select c from Cart c where c.status='Cancelled' ORDER BY c.dateOfReceipt DESC");
+        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
+        q1.setParameter(1, "Cancelled");
         return (List<Cart>)q1.getResultList();
     }
 
 
     @Lock(READ)
     public List<Cart> getInProgressCarts() {
-        Query q1 = em.createQuery("Select c from Cart c where c.status='InProgress' ORDER BY c.dateOfReceipt DESC");
+        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
+        q1.setParameter(1, "InProgress");
         return (List<Cart>)q1.getResultList();
     }
 
     @Lock(READ)
     public List<Cart> getReadyCarts() {
-        Query q1 = em.createQuery("Select c from Cart c where c.status='Ready' ORDER BY c.dateOfReceipt DESC");
+        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
+        q1.setParameter(1, "Ready");
         return (List<Cart>)q1.getResultList();
     }
 
     @Lock(READ)
     public List<Cart> getFinishedCarts() {
-        Query q1 = em.createQuery("Select c from Cart c where c.status='Finished' ORDER BY c.dateOfReceipt DESC");
+        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
+        q1.setParameter(1, "Finished");
         return (List<Cart>)q1.getResultList();
     }
 
     @Lock(READ)
     public List<Cart> getReadyToDeliveredCarts() {
-        Query q1 = em.createQuery("Select c from Cart c where c.status='Ready' and c.address.city <> '' ORDER BY c.dateOfReceipt DESC");
+        Query q1 = em.createNamedQuery("Cart.getReadyToDelivered");
         return (List<Cart>)q1.getResultList();
     }
 
     @Lock(READ)
     public List<Cart> getInDeliveredCarts() {
-        Query q1 = em.createQuery("Select c from Cart c where c.status='InDelivery' ORDER BY c.dateOfReceipt DESC");
+        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
+                q1.setParameter(1, "InDelivery");
         return (List<Cart>)q1.getResultList();
     }
 
     @Lock(READ)
     public Cart getCart(int id) {
-        Query q1 = em.createQuery("Select c from Cart c where c.id= '"+ id +"'");
+        Query q1 = em.createNamedQuery("Cart.getById");
+        q1.setParameter(1, id);
         return (Cart)q1.getResultList().get(0);
     }
 

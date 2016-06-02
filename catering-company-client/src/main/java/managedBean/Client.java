@@ -41,7 +41,7 @@ public class Client {
 
     public String goToUserPanel() {
         user =  initial.getUserInfo().getUserByLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
-        return "userPanel";
+        return "/customer/userPanel.xhtml";
     }
 
     public String removeDishFromCart(int dishId, int cartId) {
@@ -82,6 +82,7 @@ public class Client {
         if(cart.getId() == 0) {
             UserAccount userAccount = initial.getUserInfo().getUserByLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
             cart.setStatus("New");
+            cart.setSubscribedType("");
             userAccount.addCart(cart);
             initial.getUserEditor().editUser(userAccount);
         } else {
@@ -130,7 +131,7 @@ public class Client {
 
     public String goToEditCart(Cart cart1) {
         cart = cart1;
-        return "showCart";
+        return "/customer/showCart.xhtml";
     }
 
     public String cancelCart(){
@@ -144,6 +145,18 @@ public class Client {
 
     public List<Cart> getCartsCurrentMoth() {
         return initial.getUserInfo().getUserByLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser())
-                .getActualCarts().stream().filter(c -> c.getDateOfReceipt().getMonth() == new Date().getMonth()).collect(Collectors.toList());
+                .getActualCarts().stream().filter(c -> (c.getDateOfReceipt().getMonth() == new Date().getMonth()) && c.getDateOfReceipt().getYear() == new Date().getYear())
+                .filter(c-> c.getStatus().equals("Finished")).collect(Collectors.toList());
     }
+
+    public double getMontlyCostFromSalary(){
+        double result=0.0;
+        for(Cart cart : getCartsCurrentMoth()){
+            if(cart.isPaidFromSalary()){
+                result +=cart.getCost();
+            }
+        }
+        return result;
+    }
+
 }

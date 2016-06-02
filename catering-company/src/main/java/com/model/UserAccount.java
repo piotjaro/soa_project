@@ -10,6 +10,11 @@ import java.util.List;
  */
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "UserAccount.getAll", query = "select u from UserAccount u"),
+        @NamedQuery(name = "UserAccount.getUserByLogin", query = "Select u from UserAccount u where u.login = ?1"),
+
+})
 public class UserAccount implements Serializable {
 
     @Id

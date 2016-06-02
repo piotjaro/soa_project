@@ -30,7 +30,7 @@ public class MenuBox {
 
     @Lock(READ)
     public List<Dish> getDishes() {
-        Query q1 = em.createQuery("Select d from Dish d");
+        Query q1 = em.createNamedQuery("Dish.getAll");
         return (List<Dish>)q1.getResultList();
     }
 
@@ -69,13 +69,14 @@ public class MenuBox {
 
     @Lock(READ)
     public List<Menu> getAllMenu() {
-        Query q1 = em.createQuery("Select m from Menu m");
+        Query q1 = em.createNamedQuery("Menu.getAll");
         return (List<Menu>)q1.getResultList();
     }
 
     @Lock(READ)
     public Menu getMenu(int id) {
-        Query q1 = em.createQuery("Select m from Menu m where m.id = "+ id +"");
+        Query q1 = em.createQuery("Menu.getById");
+        q1.setParameter(1, id);
         return (Menu)q1.getResultList();
     }
 
@@ -99,7 +100,7 @@ public class MenuBox {
 
     @Lock(READ)
     public List<Category> getCategories() {
-        Query q1 = em.createQuery("Select c from Category c");
+        Query q1 = em.createNamedQuery("Category.getAll");
         return (List<Category>)q1.getResultList();
     }
 
@@ -135,11 +136,11 @@ public class MenuBox {
         em.remove(ingredient);
     }
 
-    @Lock(READ)
-    public List<Dish> getDishesFromCategory(int id) {
-        Query q1 = em.createQuery("Select d from Dish d where d.category.id = "+ id +"");
-        return (List<Dish>)q1.getResultList();
-    }
+//    @Lock(READ)
+//    public List<Dish> getDishesFromCategory(int id) {
+//        Query q1 = em.createQuery("Select d from Dish d where d.category.id = "+ id +"");
+//        return (List<Dish>)q1.getResultList();
+//    }
 
     @Lock(READ)
     public Category getCategory(int id) {

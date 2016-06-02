@@ -29,7 +29,7 @@
 
     <div class="panel panel-primary">
         <div class="panel-heading">User panel
-            <button class="btn btn-default" onclick="location.href = '../hello.xhtml';">Main Page</button>
+            <button class="btn btn-default" onclick="location.href = '/catering-company-client/hello.xhtml';">Main Page</button>
         </div>
 
         <div class="panel-body">
@@ -43,33 +43,38 @@
             <ul class="nav nav-tabs">
                 <li id="newTab" class="active">
                     <a href="#" onclick="
-                    show('new'); hide('cancelled'); hide('inProgress'); hide('ready'); hide('finished');hide('subscribed');
-                    activeTab('newTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('readyTab'); deactiveTab('finishedTab'); deactiveTab('subscribedTab')">new</a>
+                    show('new'); hide('monthlyFinished'); hide('cancelled'); hide('inProgress'); hide('ready'); hide('finished');hide('subscribed');
+                    activeTab('newTab'); deactiveTab('monthlyFinisedTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('readyTab'); deactiveTab('finishedTab'); deactiveTab('subscribedTab')">new</a>
                 </li>
                 <li id="cancelledTab">
                     <a href="#" onclick="
-                    show('cancelled'); hide('inProgress'); hide('new'); hide('ready'); hide('finished');hide('subscribed');
-                    activeTab('cancelledTab'); deactiveTab('inProgressTab'); deactiveTab('newTab'); deactiveTab('readyTab'); deactiveTab('finishedTab'); deactiveTab('subscribedTab')">cancelled</a>
+                    show('cancelled'); hide('monthlyFinished'); hide('inProgress'); hide('new'); hide('ready'); hide('finished');hide('subscribed');
+                    activeTab('cancelledTab'); deactiveTab('monthlyFinisedTab'); deactiveTab('inProgressTab'); deactiveTab('newTab'); deactiveTab('readyTab'); deactiveTab('finishedTab'); deactiveTab('subscribedTab')">cancelled</a>
                 </li>
                 <li id="readyTab">
                     <a href="#" onclick="
-                    show('ready'); hide('inProgress'); hide('cancelled'); hide('new'); hide('finished');hide('subscribed');
-                    activeTab('readyTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('newTab'); deactiveTab('finishedTab'); deactiveTab('subscribedTab')">ready</a>
+                    show('ready'); hide('monthlyFinished'); hide('inProgress'); hide('cancelled'); hide('new'); hide('finished');hide('subscribed');
+                    activeTab('readyTab'); deactiveTab('monthlyFinisedTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('newTab'); deactiveTab('finishedTab'); deactiveTab('subscribedTab')">ready</a>
                 </li>
                 <li id="finishedTab">
                     <a href="#" onclick="
-                    show('finished'); hide('inProgress'); hide('cancelled'); hide('ready'); hide('new');hide('subscribed');
-                    activeTab('finishedTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('readyTab'); deactiveTab('newTab'); deactiveTab('subscribedTab')">finished</a>
+                    show('finished'); hide('monthlyFinished'); hide('inProgress'); hide('cancelled'); hide('ready'); hide('new');hide('subscribed');
+                    activeTab('finishedTab'); deactiveTab('monthlyFinisedTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('readyTab'); deactiveTab('newTab'); deactiveTab('subscribedTab')">finished</a>
                 </li>
                 <li id="subscribedTab">
                     <a href="#" onclick="
-                    show('subscribed'); hide('inProgress'); hide('cancelled'); hide('ready'); hide('finished');hide('new');
-                    activeTab('subscribedTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('readyTab'); deactiveTab('finishedTab'); deactiveTab('newTab')">subscribed</a>
+                    show('subscribed'); hide('monthlyFinished'); hide('inProgress'); hide('cancelled'); hide('ready'); hide('finished');hide('new');
+                    activeTab('subscribedTab'); deactiveTab('monthlyFinisedTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('readyTab'); deactiveTab('finishedTab'); deactiveTab('newTab')">subscribed</a>
                 </li>
                 <li id="inProgressTab">
                     <a href="#" onclick="
-                    show('inProgress'); hide('cancelled'); hide('new'); hide('ready'); hide('finished');hide('subscribed');
+                    show('inProgress'); hide('monthlyFinished'); hide('cancelled'); hide('new'); hide('ready'); hide('finished');hide('subscribed');
                     activeTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('newTab'); deactiveTab('readyTab'); deactiveTab('finishedTab'); deactiveTab('subscribedTab')">in progress</a>
+                </li>
+                <li id="monthlyFinisedTab">
+                    <a href="#" onclick="
+                    show('monthlyFinished'); hide('inProgress'); hide('cancelled'); hide('new'); hide('ready'); hide('finished');hide('subscribed');
+                    activeTab('monthlyFinisedTab'); deactiveTab('inProgressTab'); deactiveTab('cancelledTab'); deactiveTab('newTab'); deactiveTab('readyTab'); deactiveTab('finishedTab'); deactiveTab('subscribedTab')">montly raport</a>
                 </li>
             </ul>
 
@@ -193,13 +198,15 @@
         <div id="subscribed" style="display: none">
             <c:forEach items="#{client.user.actualCarts}" var="cart">
                 <c:choose>
-                    <c:when test="#{cart.status == 'Subscribed'}">
+                    <c:when test="#{cart.subscribedType != ''}">
                         <div class="panel panel-danger">
                             <div class="panel-heading">
                                 <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
                                 <h:outputText value=", total cost: #{cart.cost}"/>
                                 <h:outputText value=", paid from salary: #{cart.paidFromSalary}"/>
                                 <h:outputText value=", address: #{cart.address}"/>
+                                <h:outputText value=", subscription type: #{cart.subscribedType}"/>
+                                <h:outputText value=", subscription value: #{cart.subscribedValue}"/>
                             </div>
 
                             <table class="table table-striped">
@@ -216,6 +223,33 @@
                 </c:choose>
             </c:forEach>
         </div>
+
+        <div id="monthlyFinished" style="display: none">
+            <ui:repeat value="#{client.getCartsCurrentMoth()}" var="cart">
+                <ui:repeat value="#{cart.dishes}" var="dish">
+                    <h:outputLabel value="#{dish.name}"/><br/>
+                </ui:repeat>
+                <h:outputLabel value="cost: #{cart.cost}"/><br/>
+            </ui:repeat>
+
+            total cost to pay from salary: #{client.getMontlyCostFromSalary()}<br/>
+
+            <button type="button" onclick="document.getElementById('monthlyDetails').style.display='inline'">show details</button><br/>
+            <div id ='monthlyDetails' style="display: none">
+                <ui:repeat value="#{client.getCartsCurrentMoth()}" var="cart">
+                    date of receipt<h:outputLabel value="${cart.dateOfReceipt}"/><br/>
+                    place: <h:outputLabel value="${cart.address.city}"/>, <h:outputLabel value="${cart.address.street}"/>, <h:outputLabel value="${cart.address.number}"/><br/>
+                    paid from salary: <h:outputLabel value="${cart.paidFromSalary}"/><br/>
+                    <ui:repeat value="#{cart.dishes}" var="dish">
+                        <h:outputLabel value="#{dish.name}"/>-<h:outputLabel value="#{dish.price}"/><br/>
+                    </ui:repeat>
+
+                    <h:outputLabel value="cost: #{cart.cost}"/><br/>
+                    --------------------------------------------------------------------<br/>
+                </ui:repeat>
+            </div>
+        </div>
+
         <div id="inProgress" style="display: none">
             <c:forEach items="#{client.user.actualCarts}" var="cart">
                 <c:choose>

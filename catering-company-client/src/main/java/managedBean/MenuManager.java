@@ -67,7 +67,7 @@ public class MenuManager {
         dish = new Dish();
         ingredient = new Ingredient();
         category = categoryTmp;
-        return "addDish";
+        return "/menuManager/addDish.xhtml";
     }
 
     public String addDish() throws NamingException {
@@ -81,7 +81,7 @@ public class MenuManager {
     public String goToAddIngredient (Dish dish1) {
         dish = dish1;
         ingredient = new Ingredient();
-        return "addIngredient";
+        return "/menuManager/addIngredient.xhtml";
     }
 
     public void addIngredient() {
@@ -93,7 +93,7 @@ public class MenuManager {
 
     public String goToAddCategory() {
         category = new Category();
-        return "addCategory";
+        return "/menuManager/addCategory.xhtml";
     }
 
     public String addCategory() throws NamingException {
@@ -125,21 +125,21 @@ public class MenuManager {
 
     public String goToEditMenu(Menu menu1) {
         menu = menu1;
-        return "showEditedMenu";
+        return "/menuManager/showEditedMenu.xhtml";
     }
 
     public String goToEditDish(Dish dish1) {
         dish = dish1;
-        return "editDish";
+        return "/menuManager/editDish.xhtml";
     }
 
     public String saveEditedDish(){
-        return "success";
+        return "/all/success.xhtml";
     }
 
     public String goToEditIngredient(Ingredient ingredient1) {
         ingredient = ingredient1;
-        return "editIngredient";
+        return "/menuManager/editIngredient.xhtml";
     }
 
 //    public String editIngredient(int id) {
@@ -149,7 +149,7 @@ public class MenuManager {
 
     public String goToEditCategory(Category category1) {
         category = category1;
-        return "editCategory";
+        return "/menuManager/editCategory.xhtml";
     }
 
     public String saveEditedCategory(){

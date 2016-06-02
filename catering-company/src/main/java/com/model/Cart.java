@@ -13,6 +13,13 @@ import java.util.List;
  * Created by piotrek on 18.05.16.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Cart.getAll", query = "Select c from Cart c ORDER BY c.dateOfReceipt DESC"),
+        @NamedQuery(name = "Cart.getAllByStatus", query = "Select c from Cart c where c.status = ?1 ORDER BY c.dateOfReceipt DESC"),
+        @NamedQuery(name = "Cart.getById", query = "Select c from Cart c where c.id= ?1"),
+        @NamedQuery(name = "Cart.getReadyToDelivered", query = "Select c from Cart c where c.status='Ready' and c.address.city <> '' ORDER BY c.dateOfReceipt DESC")
+
+})
 public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

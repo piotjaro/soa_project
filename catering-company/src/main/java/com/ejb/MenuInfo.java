@@ -11,7 +11,7 @@ import java.util.List;
 public interface MenuInfo {
 	public List<Dish> getDishes();
 	public List<Category> getCategories();
-	public List<Dish> getDishesFromCategory(int id);
+//	public List<Dish> getDishesFromCategory(int id);
 	public Category getCategory(int id);
 	public Dish getDish(int id);
 	public Ingredient getIngredient(int id);

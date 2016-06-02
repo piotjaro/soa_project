@@ -10,6 +10,10 @@ import java.util.List;
  * Created by piotrek on 08.05.16.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Dish.getAll", query = "Select d from Dish d")
+
+})
 public class Dish implements Serializable{
 
     @Id
@@ -20,6 +24,15 @@ public class Dish implements Serializable{
     @OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
     private List<Ingredient> ingredients = new ArrayList<>();
     private String pathToPhoto;
+    private Double dishPriceFromRestaurant;
+
+    public Double getDishPriceFromRestaurant() {
+        return dishPriceFromRestaurant;
+    }
+
+    public void setDishPriceFromRestaurant(Double dishPriceFromRestaurant) {
+        this.dishPriceFromRestaurant = dishPriceFromRestaurant;
+    }
 
     public int getId() {
         return id;

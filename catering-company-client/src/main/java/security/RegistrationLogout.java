@@ -42,6 +42,6 @@ public class RegistrationLogout {
         user.setPassword(DigestUtils.md5Hex(user.getPassword()));
         initial.getUserEditor().addUser(user);
         user = new UserAccount();
-        return "/all/success.xhtml";
+        return "/all/login.xhtml";
     }
 }

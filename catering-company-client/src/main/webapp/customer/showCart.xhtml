@@ -8,7 +8,7 @@
     <div class="panel panel-primary">
         <div class="panel-heading">
             Show Cart
-            <h:commandButton styleClass="btn btn-default" onclick="location.href = '../hello.xhtml';" value="Main menu"/>
+            <h:commandButton styleClass="btn btn-default" onclick="location.href = '/catering-company-client/hello.xhtml';" value="Main menu"/>
         </div>
 
         <div class="panel-body">
@@ -36,8 +36,8 @@
 
                     </ui:repeat>
                 </table>
-                date: <h:inputText styleClass="form-control" value="#{client.cart.dateOfReceipt}">
-                <f:convertDateTime pattern="HH-mm:dd-mm-yyyy"/>
+                date(dd-MM-yyyy hh:mm): <h:inputText styleClass="form-control" value="#{client.cart.dateOfReceipt}">
+                <f:convertDateTime type="both" pattern="dd-MM-yy HH:mm"/>
             </h:inputText><br/>
                 city: <h:inputText styleClass="form-control" value="#{client.cart.address.city}"/>
                 street: <h:inputText styleClass="form-control" value="#{client.cart.address.street}"/>

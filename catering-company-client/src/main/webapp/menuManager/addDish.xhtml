@@ -11,7 +11,7 @@
 <h:body>
     <div class="panel panel-primary">
         <div class="panel-heading">Add Dish
-            <button class="btn btn-default" onclick="location.href = '../hello.xhtml';">Main Page</button>
+            <button class="btn btn-default" onclick="location.href = '/catering-company-client/hello.xhtml';">Main Page</button>
         </div>
         <div class="panel-body">
             <h:outputLabel id="addIngredient" value="#{menuManager.addIngredient()}"/>
@@ -52,6 +52,10 @@
                     <h:outputLabel for="price" value="Price"/>
                     <h:inputText styleClass="form-control" id="price" value="#{menuManager.dish.price}"/>
                     <h:message for="price"/>
+
+                    <h:outputLabel for="priceFromRestaurant" value="priceFromRestaurant"/>
+                    <h:inputText styleClass="form-control" id="priceFromRestaurant" value="#{menuManager.dish.dishPriceFromRestaurant}"/>
+                    <h:message for="priceFromRestaurant"/>
 
 
                     <h:outputLabel for="save" value="save"/>
