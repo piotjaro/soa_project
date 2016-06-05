@@ -13,6 +13,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "UserAccount.getAll", query = "select u from UserAccount u"),
         @NamedQuery(name = "UserAccount.getUserByLogin", query = "Select u from UserAccount u where u.login = ?1"),
+        @NamedQuery(name = "UserAccount.getUserById", query = "Select u from UserAccount u where u.id = ?1")
 
 })
 public class UserAccount implements Serializable {

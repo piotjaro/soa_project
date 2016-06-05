@@ -81,4 +81,12 @@ public class  MenuInfoBean implements MenuInfo  {
 	public Menu getMenu(int id) {
 		return box.getMenu(id);
 	}
+
+	public Menu getCurrentMenu() {
+		return box.getCurrentMenu();
+	}
+
+	public List<Menu> getArchivedMenu() {
+		return box.getArchivedMenu();
+	}
 }

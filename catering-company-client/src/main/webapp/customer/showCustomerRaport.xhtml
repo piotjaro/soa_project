@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+</h:head>
+<h:body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Details
+            <button class="btn btn-default" onclick="location.href = '/catering-company-client/hello.xhtml';">Main Page</button>
+        </div>
+        <div class="panel-body">
+            <ui:repeat value="#{client.carts}" var="cart" >
+                <div style="display: none" id="details">
+                date: <h:outputText value="#{cart.dateOfReceipt}"/><br/>
+                place: <h:outputText value="#{cart.address.city}"/> <h:outputText value="#{cart.address.street}"/> <h:outputText value="#{cart.address.number}"/><br/>
+                is paid from salary: <h:outputText value="#{cart.paidFromSalary}"/><br/>
+                </div>
+                cost: <h:outputText value="#{cart.cost}"/><br/>
+
+
+                <ui:repeat value="#{cart.dishes}" var="dish">
+                    dish name: <h:outputText value="#{dish.name}"/><br/>
+                </ui:repeat>
+                -----------------------------------------------------------------<br/>
+            </ui:repeat>
+            total cost to pay from salary: <h:outputText value="#{client.allCostFromSalary()}"/><br/>
+            <button onclick="document.getElementById('details').style.display='inline'">show details</button>
+        </div>
+    </div>
+</h:body>
+</html>

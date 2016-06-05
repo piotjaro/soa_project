@@ -6,6 +6,7 @@ import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
+import java.util.Date;
 import java.util.List;
 
 
@@ -54,5 +55,10 @@ public class CartInfoBean implements CartInfo{
     @Override
     public List<Cart> getInDeliveredCarts() {
         return cartBox.getInDeliveredCarts();
+    }
+
+    @Override
+    public List<Cart> getCartsBetweenDate(Date date1, Date date2) {
+        return cartBox.getCartsBetweenDate(date1, date2);
     }
 }

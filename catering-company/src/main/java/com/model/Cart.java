@@ -17,7 +17,9 @@ import java.util.List;
         @NamedQuery(name = "Cart.getAll", query = "Select c from Cart c ORDER BY c.dateOfReceipt DESC"),
         @NamedQuery(name = "Cart.getAllByStatus", query = "Select c from Cart c where c.status = ?1 ORDER BY c.dateOfReceipt DESC"),
         @NamedQuery(name = "Cart.getById", query = "Select c from Cart c where c.id= ?1"),
-        @NamedQuery(name = "Cart.getReadyToDelivered", query = "Select c from Cart c where c.status='Ready' and c.address.city <> '' ORDER BY c.dateOfReceipt DESC")
+        @NamedQuery(name = "Cart.getReadyToDelivered", query = "Select c from Cart c where c.status='Ready' and c.address.city <> '' ORDER BY c.dateOfReceipt DESC"),
+       // @NamedQuery(name = "Cart.betweenDate", query = "Select c from Cart c where c.dateOfReceipt between ?1 and ?2 ORDER BY c.dateOfReceipt DESC")
+
 
 })
 public class Cart implements Serializable {

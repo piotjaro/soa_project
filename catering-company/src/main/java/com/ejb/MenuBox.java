@@ -47,22 +47,25 @@ public class MenuBox {
     @Lock(WRITE)
     public void editMenu(Menu menu) {
         for(Category category : menu.getCategories()){
-            if(category.getId()==0)
-                em.persist(category);
-            else
-                em.merge(category);
+
             for(Dish dish : category.getDishes()) {
-                if(dish.getId()==0)
-                    em.persist(dish);
-                else
-                    em.merge(dish);
+
                 for(Ingredient ingredient : dish.getIngredients()) {
                     if(ingredient.getId() == 0)
                         em.persist(ingredient);
                     else
                         em.merge(ingredient);
                 }
+                if(dish.getId()==0)
+                    em.persist(dish);
+                else
+                    em.merge(dish);
             }
+
+            if(category.getId()==0)
+                em.persist(category);
+            else
+                em.merge(category);
         }
         em.merge(menu);
     }
@@ -102,6 +105,20 @@ public class MenuBox {
     public List<Category> getCategories() {
         Query q1 = em.createNamedQuery("Category.getAll");
         return (List<Category>)q1.getResultList();
+    }
+
+    @Lock(READ)
+    public Menu getCurrentMenu() {
+        Query q1 = em.createNamedQuery("Menu.getCurrentMenu");
+        if(q1.getResultList().size()>0)
+            return (Menu)q1.getResultList().get(0);
+        else return null;
+    }
+
+    @Lock(READ)
+    public List<Menu> getArchivedMenu() {
+        Query q1 = em.createNamedQuery("Menu.getArchivedMenu");
+        return (List<Menu>)q1.getResultList();
     }
 
 
@@ -172,5 +189,17 @@ public class MenuBox {
     public Ingredient addIngredient(Ingredient ingredient) {
         em.persist(ingredient);
         return ingredient;
+    }
+
+    @Lock(WRITE)
+    public void setCurrentMenu(Menu menu) {
+        for(Menu menu1 : getAllMenu()){
+            if(menu1.isCurrent()){
+                menu1.setIsCurrent(false);
+                em.merge(menu1);
+            }
+        }
+        menu.setIsCurrent(true);
+        em.merge(menu);
     }
 }

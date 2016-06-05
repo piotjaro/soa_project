@@ -9,4 +9,5 @@ public interface CartEditor {
     public Cart addCart(Cart cart);
     public void editCart(Cart cart);
     public void deleteCart(Cart cart);
+    public void changeCartStatus(Cart cart, String status);
 }

@@ -98,4 +98,9 @@ public class MenuEditorBean implements MenuEditor {
 		return box.addIngredient(ingredient);
 
 	}
+
+	@Override
+	public  void setCurrentMenu(Menu menu){
+		box.setCurrentMenu(menu);
+	}
 }

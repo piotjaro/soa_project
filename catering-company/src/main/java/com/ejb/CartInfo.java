@@ -2,6 +2,7 @@ package com.ejb;
 
 import com.model.Cart;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,4 +17,5 @@ public interface CartInfo {
     public List<Cart> getFinishedCarts();
     public List<Cart> getInProgressCarts();
     public List<Cart> getInDeliveredCarts();
+    public List<Cart> getCartsBetweenDate(Date date1, Date date2);
 }

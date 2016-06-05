@@ -1,9 +1,6 @@
 package managedBean;
 
-import com.model.Category;
-import com.model.Dish;
-import com.model.Ingredient;
-import com.model.Menu;
+import com.model.*;
 import com.sun.net.httpserver.Authenticator;
 
 import javax.faces.bean.ManagedBean;
@@ -13,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.naming.NamingException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -245,39 +243,43 @@ public class MenuManager {
 
 
     public String saveMenu() {
-        if(menu.getId()==0){
-        initial.getMenu().addMenu(menu);
-        } else {
+        if(menu.getId()==0)
+            initial.getMenu().addMenu(menu);
+        else
             initial.getMenu().editMenu(menu);
-        }
+
         menu = new Menu();
         return "/all/success.xhtml";
     }
-
-    public List<Menu> showAllMenu() {
-        menu = new Menu();
-        return initial.getInfo().getAllMenu();
-
-    }
+//
+//    public List<Menu> showAllMenu() {
+//        menu = new Menu();
+//        return initial.getInfo().getAllMenu();
+//
+//    }
 
     public Menu showCurrentMenu(){
-        for(Menu menuTmp : initial.getInfo().getAllMenu()){
-            if(menuTmp.isCurrent()){
-                return menuTmp;
-            }
-        }
-        return null;
+        return initial.getInfo().getCurrentMenu();
     }
 
     public List<Menu> showArchiveMenu(){
-        List<Menu> archivedMenu = new ArrayList<>();
-        for(Menu menuTmp : initial.getInfo().getAllMenu()){
-            if(!menuTmp.isCurrent()){
-                archivedMenu.add(menuTmp);
-            }
-        }
-        return archivedMenu;
+        return initial.getInfo().getArchivedMenu();
     }
+
+//    public List<Cart> showBetweenDate(){
+//        Calendar cal = Calendar.getInstance();
+//        cal.set(Calendar.DAY_OF_MONTH, 1);
+//        cal.set(Calendar.YEAR, 2016);
+//        cal.set(Calendar.MONTH, 6);
+//
+//        Calendar cal2 = Calendar.getInstance();
+//        cal2.set(Calendar.DAY_OF_MONTH, 30);
+//        cal2.set(Calendar.YEAR, 2016);
+//        cal2.set(Calendar.MONTH, 6);
+//
+//
+//        //return initial.getCartInfo().getCartsBetweenDate(cal.getTime(), cal2.getTime());
+//    }
 
     public String cancelMenu() {
         menu = new Menu();
@@ -292,15 +294,7 @@ public class MenuManager {
 
 
     public String currentMenu(Menu menu1) {
-
-        for(Menu menuTmp : initial.getInfo().getAllMenu()){
-            if(menuTmp.isCurrent() == true){
-                menuTmp.setIsCurrent(false);
-                initial.getMenu().editMenu(menuTmp);
-            }
-        }
-        menu1.setIsCurrent(true);
-        initial.getMenu().editMenu(menu1);
+        initial.getMenu().setCurrentMenu(menu1);
         return "/all/success.xhtml";
     }
 

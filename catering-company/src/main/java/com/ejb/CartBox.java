@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import java.util.Date;
 import java.util.List;
 
 import static javax.ejb.LockType.READ;
@@ -23,6 +24,8 @@ import static javax.ejb.LockType.WRITE;
 public class CartBox {
     @PersistenceContext(name="catering-company")
     private EntityManager em;
+
+    UserBox userBox = new UserBox();
 
 
     @Lock(WRITE)
@@ -78,6 +81,14 @@ public class CartBox {
         return (List<Cart>)q1.getResultList();
     }
 
+    public List<Cart> getCartsBetweenDate(Date date1, Date date2) {
+//        Query q1 = em.createNamedQuery("Cart.betweenDate");
+//        q1.setParameter(1, date1);
+//        q1.setParameter(2, date2);
+//        return (List<Cart>)q1.getResultList();
+        return null;
+    }
+
     @Lock(READ)
     public List<Cart> getInDeliveredCarts() {
         Query q1 = em.createNamedQuery("Cart.getAllByStatus");
@@ -102,4 +113,11 @@ public class CartBox {
     public void editCart(Cart cart) {
         em.merge(cart);
     }
+
+//    @Lock(WRITE)
+//    public void changeCartStatus(Cart cart, String status) {
+//        if(status.equals("FinishedCash")) {
+//            if(!cart.getSubscribedType().equals("None"))
+//        }
+//    }
 }

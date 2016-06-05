@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static javax.ejb.LockType.READ;
@@ -41,14 +42,6 @@ public class UserBox {
         Query query  = em.createNamedQuery("UserAccount.getAll");
         return (List<UserAccount>)query.getResultList();
     }
-
-
-    @Lock(READ)
-    public UserAccount getUser(int id) {
-
-        return em.find(UserAccount.class, id);
-    }
-
     @Lock(WRITE)
     public void editUser(UserAccount user) {
 
@@ -67,6 +60,33 @@ public class UserBox {
         Query q1 = em.createNamedQuery("UserAccount.getUserByLogin");
         q1.setParameter(1, login);
         return (UserAccount)q1.getResultList().get(0);
+    }
+
+    @Lock(READ)
+    public UserAccount getUser(int id) {
+        Query q1 = em.createNamedQuery("UserAccount.getUserById");
+        q1.setParameter(1, id);
+        return (UserAccount)q1.getResultList().get(0);
+    }
+
+    @Lock(WRITE)
+    public void addCartToUser(int userId, Cart cart){
+        UserAccount userAccount = getUser(userId);
+        userAccount.addCart(cart);
+        editUser(userAccount);
+    }
+
+    @Lock(READ)
+    public UserAccount getUserByCart(Cart cart) {
+        List<UserAccount> users = getUsers();
+        for (UserAccount user : users) {
+            for(Cart cart1 : user.getActualCarts()) {
+                if (cart1.getId() == cart.getId())
+                    return user;
+            }
+        }
+
+        return null;
     }
 
 }

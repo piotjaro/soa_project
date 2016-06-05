@@ -105,7 +105,7 @@
                             </table>
                             <h:form>
                                 <h:commandButton class="btn btn-default" action="#{client.goToEditCart(cart)}" value="Edit cart"/>
-                                <h:commandButton class="btn btn-default" action="#{client.cancelCart(client.user.id, cart.id)}" value="Cancel cart"/>
+                                <h:commandButton class="btn btn-default" action="#{client.cancelCart(cart)}" value="Cancel cart"/>
                             </h:form>
 
                         </div>
@@ -198,7 +198,7 @@
         <div id="subscribed" style="display: none">
             <c:forEach items="#{client.user.actualCarts}" var="cart">
                 <c:choose>
-                    <c:when test="#{cart.subscribedType != ''}">
+                    <c:when test="#{cart.subscribedType != 'None'}">
                         <div class="panel panel-danger">
                             <div class="panel-heading">
                                 <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
@@ -223,32 +223,19 @@
                 </c:choose>
             </c:forEach>
         </div>
-
-        <div id="monthlyFinished" style="display: none">
-            <ui:repeat value="#{client.getCartsCurrentMoth()}" var="cart">
-                <ui:repeat value="#{cart.dishes}" var="dish">
-                    <h:outputLabel value="#{dish.name}"/><br/>
-                </ui:repeat>
-                <h:outputLabel value="cost: #{cart.cost}"/><br/>
-            </ui:repeat>
-
-            total cost to pay from salary: #{client.getMontlyCostFromSalary()}<br/>
-
-            <button type="button" onclick="document.getElementById('monthlyDetails').style.display='inline'">show details</button><br/>
-            <div id ='monthlyDetails' style="display: none">
-                <ui:repeat value="#{client.getCartsCurrentMoth()}" var="cart">
-                    date of receipt<h:outputLabel value="${cart.dateOfReceipt}"/><br/>
-                    place: <h:outputLabel value="${cart.address.city}"/>, <h:outputLabel value="${cart.address.street}"/>, <h:outputLabel value="${cart.address.number}"/><br/>
-                    paid from salary: <h:outputLabel value="${cart.paidFromSalary}"/><br/>
-                    <ui:repeat value="#{cart.dishes}" var="dish">
-                        <h:outputLabel value="#{dish.name}"/>-<h:outputLabel value="#{dish.price}"/><br/>
-                    </ui:repeat>
-
-                    <h:outputLabel value="cost: #{cart.cost}"/><br/>
-                    --------------------------------------------------------------------<br/>
-                </ui:repeat>
+        <h:form>
+            <div id="monthlyFinished" style="display: none">
+                date1(dd-MM-yyyy hh:mm):
+                <h:inputText id="date1" styleClass="form-control" value="#{client.date1}">
+                    <f:convertDateTime timeZone="CET" type="both" pattern="dd-MM-yy HH:mm"/>
+                </h:inputText><br/>
+                date(dd-MM-yyyy hh:mm):
+                <h:inputText id="date2" styleClass="form-control" value="#{client.date2}">
+                    <f:convertDateTime type="both" pattern="dd-MM-yy HH:mm"/>
+                </h:inputText><br/>
+                <h:commandButton timeZone="CET" action="#{client.finishedCartsBetweenDate}" value="generate raport"/>
             </div>
-        </div>
+        </h:form>
 
         <div id="inProgress" style="display: none">
             <c:forEach items="#{client.user.actualCarts}" var="cart">
@@ -277,7 +264,6 @@
             </c:forEach>
         </div>
     </div>
-
 
 
 </h:body>

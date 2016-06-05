@@ -30,61 +30,14 @@ public class Staff {
     }
 
     public String changeCartStatus(Cart cart, String status) {
-
-        if(status.equals("FinishedCash")) {
-//            if(!cart.getSubscribedType().equals("None")){
-//                subscriptionCart(cart);
-//            }
-            cart.setStatus("Finished");
-
-        } else if(status.equals("FinishedSalary")) {
-//            if(!cart.getSubscribedType().equals("None")){
-//                subscriptionCart(cart);
-//            }
-            cart.setStatus("Finished");
-            cart.setPaidFromSalary(true);
-            UserAccount userTmp = initial.getUserInfo().getUserByLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
-            initial.getUserEditor().addDebt(userTmp, cart.getCost());
-        } else if(status.equals("Cancelled")) {
-//            if(!cart.getSubscribedType().equals("None")){
-//                subscriptionCart(cart);
-//            }
-            cart.setStatus(status);
-        } else
-            cart.setStatus(status);
-
-        initial.getCartEditor().editCart(cart);
+        initial.getCartEditor().changeCartStatus(cart, status);
         return "/all/success.xhtml";
     }
 
-//    public void subscriptionCart(Cart cartInput) {
-//            Cart newCart = cartInput;
-//            newCart.setId(0);
-//            newCart.setStatus("New");
-//            Calendar cal = Calendar.getInstance();
-//            cal.setTime(newCart.getDateOfReceipt());
-//            if (cartInput.getSubscribedType().equals("Regular")) {
-//                cal.add(Calendar.DATE, 1);
-//            } else if (cartInput.getSubscribedType().equals("Repeated")){
-//                cal.add(Calendar.DATE, Integer.parseInt(cartInput.getSubscribedValue()));
-//            }
-//            newCart.setDateOfReceipt(cal.getTime());
-//        for(UserAccount userAccount : initial.getUserInfo().getUsers()){
-//            for(Cart cartTmp : userAccount.getActualCarts() ) {
-//                if(cartTmp.getId() == cart.getId()){
-//                    userAccount.addCart(newCart);
-//                    initial.getUserEditor().editUser(userAccount);
-//                    return;
-//                }
-//            }
-//        }
-//
+
+//    public List<Cart> getAllCarts() {
+//        return initial.getCartInfo().getCarts();
 //    }
-
-
-    public List<Cart> getAllCarts() {
-        return initial.getCartInfo().getCarts();
-    }
 
     public List<Cart> getNewCarts() {
         return initial.getCartInfo().getNewCarts();
@@ -115,11 +68,11 @@ public class Staff {
         return initial.getCartInfo().getInDeliveredCarts();
     }
 
-    public String changeStatus(Cart cart, String status) {
-        cart.setStatus(status);
-        initial.getCartEditor().editCart(cart);
-        return "/all/success.xhtml";
-    }
+//    public String changeStatus(Cart cart, String status) {
+//        cart.setStatus(status);
+//        initial.getCartEditor().editCart(cart);
+//        return "/all/success.xhtml";
+//    }
 
     public String goToAddComment(Cart cart1) {
         cart = cart1;

@@ -37,7 +37,7 @@
                     </ui:repeat>
                 </table>
                 date(dd-MM-yyyy hh:mm): <h:inputText styleClass="form-control" value="#{client.cart.dateOfReceipt}">
-                <f:convertDateTime type="both" pattern="dd-MM-yy HH:mm"/>
+                <f:convertDateTime timeZone="CET" type="both" pattern="dd-MM-yy HH:mm"/>
             </h:inputText><br/>
                 city: <h:inputText styleClass="form-control" value="#{client.cart.address.city}"/>
                 street: <h:inputText styleClass="form-control" value="#{client.cart.address.street}"/>

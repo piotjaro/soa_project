@@ -41,4 +41,9 @@ public class UserEditorBean implements UserEditor {
         user.addDebt(debtToAdd);
         editUser(user);
     }
+
+    @Override
+    public void addCartToUser(int userId, Cart cart){
+        box.addCartToUser(userId, cart);
+    }
 }

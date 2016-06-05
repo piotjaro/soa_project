@@ -10,6 +10,7 @@ public interface UserEditor {
 
     public void addUser(UserAccount user);
     public void deleteUser(UserAccount user);
+    public void addCartToUser(int userId, Cart cart);
 
     public void editUser(UserAccount user);
 

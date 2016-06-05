@@ -18,5 +18,7 @@ public interface MenuInfo {
 	public List<Ingredient> getIngredientFromDish(int id);
 	public List<Menu> getAllMenu();
 	public Menu getMenu(int id);
+	public Menu getCurrentMenu();
+	public List<Menu> getArchivedMenu();
 
 }

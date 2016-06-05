@@ -16,6 +16,7 @@ public interface MenuEditor {
    public String removeDish(int id);
    public String removeMenu(int id);
    public String removeIngredient(int id);
+   public void setCurrentMenu(Menu menu);
 
 
    public String addCategory(Category category);

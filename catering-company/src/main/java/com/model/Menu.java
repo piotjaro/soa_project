@@ -11,7 +11,9 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Menu.getAll", query = "Select m from Menu m"),
-        @NamedQuery(name = "Menu.getById", query = "Select m from Menu m where m.id= ?1")
+        @NamedQuery(name = "Menu.getById", query = "Select m from Menu m where m.id= ?1"),
+        @NamedQuery(name = "Menu.getCurrentMenu", query = "Select m from Menu m where m.isCurrent=true"),
+        @NamedQuery(name = "Menu.getArchivedMenu", query = "Select m from Menu m where m.isCurrent=false")
 
 })
 public class Menu implements Serializable{

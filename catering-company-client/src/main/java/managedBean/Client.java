@@ -1,12 +1,14 @@
 package managedBean;
 
-import com.model.Cart;
-import com.model.Dish;
-import com.model.UserAccount;
+import com.model.*;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,9 +24,42 @@ public class Client {
     private UserAccount user;
     private Initial initial = new Initial();
     private Cart cart = new Cart();
+    private Date date1 = new Date();
+    private Date date2 = new Date();
+    private List<Cart> carts = new ArrayList<>();
+
+    public List<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(List<Cart> carts) {
+        this.carts = carts;
+    }
 
     public UserAccount getUser() {
         return user;
+    }
+
+    public  String finishedCartsBetweenDate() {
+        List<Cart> result = new ArrayList();
+        carts = user.getActualCarts().stream().filter(c -> date1.compareTo(c.getDateOfReceipt())<=0)
+                .filter(c->date2.compareTo(c.getDateOfReceipt())>=0)
+                .filter(c-> c.getStatus().equals("Finished")).collect(Collectors.toList());
+        return "/customer/showCustomerRaport.xhtml";
+
+    }
+
+    public double allCostFromSalary() {
+        List<Cart> result = new ArrayList();
+        double allCost = 0.0;
+        carts = user.getActualCarts().stream().filter(c -> date1.compareTo(c.getDateOfReceipt())<=0)
+                .filter(c->date2.compareTo(c.getDateOfReceipt())>=0)
+                .filter(c-> c.getStatus().equals("Finished")).collect(Collectors.toList());
+        carts.stream().filter(c -> c.isPaidFromSalary()).collect(Collectors.toList());
+        for(Cart cart : carts ){
+            allCost += cart.getCost();
+        }
+        return allCost;
     }
 
     public void setUser(UserAccount user) {
@@ -33,6 +68,22 @@ public class Client {
 
     public Cart getCart() {
         return cart;
+    }
+
+    public Date getDate1() {
+        return date1;
+    }
+
+    public void setDate1(Date date1) {
+        this.date1 = date1;
+    }
+
+    public Date getDate2() {
+        return date2;
+    }
+
+    public void setDate2(Date date2) {
+        this.date2 = date2;
     }
 
     public void setCart(Cart cart) {
@@ -44,51 +95,42 @@ public class Client {
         return "/customer/userPanel.xhtml";
     }
 
-    public String removeDishFromCart(int dishId, int cartId) {
-        Cart cartTmp = initial.getCartInfo().getCart(cartId);
-        cartTmp.removeDish(dishId);
-        initial.getCartEditor().editCart(cartTmp);
-        return "/all/success.xhtml";
+//    public String removeDishFromCart(int dishId, int cartId) {
+//        Cart cartTmp = initial.getCartInfo().getCart(cartId);
+//        cartTmp.removeDish(dishId);
+//        initial.getCartEditor().editCart(cartTmp);
+//        return "/all/success.xhtml";
+//
+//    }
 
-    }
-
-    public String payCash(int userId, int cartId) {
-        UserAccount userAccount = initial.getUserInfo().getUserByLogin(initial.getUserInfo().getUsers(userId).getLogin());
-        List<Cart> carts = userAccount.getActualCarts();
-        for(int i = 0; i<carts.size(); i++) {
-            if(carts.get(i).getId() == cartId) {
-                Cart cartTmp = carts.get(i);
-                cartTmp.setPaidFromSalary(false);
-                initial.getMenu().editCart(cartTmp);
-                break;
-            }
-        }
-        return "/all/success.xhtml";
-    }
+//    public String payCash(int userId, int cartId) {
+//        UserAccount userAccount = initial.getUserInfo().getUserByLogin(initial.getUserInfo().getUsers(userId).getLogin());
+//        List<Cart> carts = userAccount.getActualCarts();
+//        for(int i = 0; i<carts.size(); i++) {
+//            if(carts.get(i).getId() == cartId) {
+//                Cart cartTmp = carts.get(i);
+//                cartTmp.setPaidFromSalary(false);
+//                initial.getMenu().editCart(cartTmp);
+//                break;
+//            }
+//        }
+//        return "/all/success.xhtml";
+//    }
 
     public String addToCart(Dish dish) {
         cart.addDish(dish);
         return "/all/success.xhtml";
     }
 
-    public String addToModyfiedCart(Dish dish) {
-        cart.addDish(dish);
-        return "/all/success.xhtml";
-
-    }
 
     public String addCartToUser() {
-        cart.setCreateDate(new Date());
-        if(cart.getId() == 0) {
-            UserAccount userAccount = initial.getUserInfo().getUserByLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
-            cart.setStatus("New");
-            cart.setSubscribedType("");
-            userAccount.addCart(cart);
-            initial.getUserEditor().editUser(userAccount);
-        } else {
-            initial.getCartEditor().editCart(cart);
-        }
+        UserAccount user = initial.getUserInfo().getUserByLogin(FacesContext.getCurrentInstance().getExternalContext().getRemoteUser());
 
+        if(cart.getId() == 0) {
+            cart.setStatus("New");
+            cart.setCreateDate(new Date());
+            initial.getUserEditor().addCartToUser(user.getId(), cart);
+        } else initial.getCartEditor().editCart(cart);
         cart = new Cart();
         return "/all/success.xhtml";
     }
@@ -99,35 +141,45 @@ public class Client {
 
     }
 
-    public String cancelCart(int userId, int cartId) {
-
-        UserAccount userAccount = initial.getUserInfo().getUserByLogin(initial.getUserInfo().getUsers(userId).getLogin());
-        List<Cart> carts = userAccount.getActualCarts();
-        for(int i = 0; i<carts.size(); i++) {
-            if(carts.get(i).getId() == cartId) {
-                Cart cartTmp = carts.get(i);
-                cartTmp.setStatus("Cancelled");
-                initial.getMenu().editCart(cartTmp);
-                break;
-            }
-        }
+    public String cancelCart(Cart cart1) {
+        initial.getCartEditor().changeCartStatus(cart1, "Cancelled");
         return "/all/success.xhtml";
     }
 
-    public String payFromSalary(int userId, int cartId) {
+    public void createCartBySubscription(Cart cart, UserAccount user) {
+        Date nextDate = createNextRegularSubscription(cart.getDateOfReceipt());
 
-        UserAccount userAccount = initial.getUserInfo().getUserByLogin(initial.getUserInfo().getUsers(userId).getLogin());
-        List<Cart> carts = userAccount.getActualCarts();
-        for(int i = 0; i<carts.size(); i++) {
-            if(carts.get(i).getId() == cartId) {
-                Cart cartTmp = carts.get(i);
-                cartTmp.setPaidFromSalary(true);
-                initial.getMenu().editCart(cartTmp);
-                break;
-            }
-        }
-        return "/all/success.xhtml";
+        Address address = cart.getAddress();
+        address.setId(0);
+        cart.setId(0);
+        List<Dish> dishes = new ArrayList<>();
+        for(Dish dish : cart.getDishes()) dishes.add(dish);
+        cart.setDishes(dishes);
+        cart.setDateOfReceipt(nextDate);
+        initial.getUserEditor().addCartToUser(user.getId(), cart);
+
     }
+
+    public Date createNextRegularSubscription(Date date){
+        LocalDateTime date1 = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        date1 = date1.plusDays(1);
+        return Date.from(date1.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+//    public String payFromSalary(int userId, int cartId) {
+//
+//        UserAccount userAccount = initial.getUserInfo().getUserByLogin(initial.getUserInfo().getUsers(userId).getLogin());
+//        List<Cart> carts = userAccount.getActualCarts();
+//        for(int i = 0; i<carts.size(); i++) {
+//            if(carts.get(i).getId() == cartId) {
+//                Cart cartTmp = carts.get(i);
+//                cartTmp.setPaidFromSalary(true);
+//                initial.getMenu().editCart(cartTmp);
+//                break;
+//            }
+//        }
+//        return "/all/success.xhtml";
+//    }
 
     public String goToEditCart(Cart cart1) {
         cart = cart1;
