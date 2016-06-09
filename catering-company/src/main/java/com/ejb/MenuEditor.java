@@ -7,7 +7,7 @@ import org.hibernate.id.IncrementGenerator;
 import java.util.List;
 
 public interface MenuEditor {
-   public String addDish(Dish dish);
+   public Dish addDish(Dish dish);
    public String addMenu(Menu menu);
    public Ingredient addIngredient(Ingredient ingredient);
    public String editDish(Dish dish);

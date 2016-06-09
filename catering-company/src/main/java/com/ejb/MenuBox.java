@@ -4,9 +4,14 @@ package com.ejb;
 
 import com.model.*;
 import org.apache.log4j.Logger;
+import org.jboss.annotation.security.SecurityDomain;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Lock;
+import javax.ejb.SessionContext;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
@@ -22,7 +27,11 @@ import static javax.ejb.LockType.WRITE;
 
 @Singleton
 @Startup
+//@SecurityDomain(value="school")
+//@DeclareRoles({"ADMIN"})
+//@RolesAllowed({"ADMIN"})
 public class MenuBox {
+
     private static final Logger logger = Logger.getLogger(MenuBox.class);
     @PersistenceContext(name="catering-company")
     private EntityManager em;
@@ -35,8 +44,9 @@ public class MenuBox {
     }
 
     @Lock(WRITE)
-    public void addDish(Dish dish) {
+    public Dish addDish(Dish dish) {
         em.persist(dish);
+        return dish;
     }
 
     @Lock(WRITE)
@@ -108,7 +118,9 @@ public class MenuBox {
     }
 
     @Lock(READ)
+//    @RolesAllowed({"ADMIN"})
     public Menu getCurrentMenu() {
+
         Query q1 = em.createNamedQuery("Menu.getCurrentMenu");
         if(q1.getResultList().size()>0)
             return (Menu)q1.getResultList().get(0);

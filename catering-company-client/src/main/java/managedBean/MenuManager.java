@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 
 @ManagedBean
@@ -19,8 +20,8 @@ import java.util.List;
 public class MenuManager {
     private Initial initial = new Initial();
     private Menu menu = new Menu();
-    private Dish dish;
-    private Category category;
+    private Dish dish = new Dish();
+    private Category category = new Category();
     private Ingredient ingredient;
 
     public Dish getDish() {
@@ -172,6 +173,11 @@ public class MenuManager {
         return "/all/success.xhtml";
     }
 
+    public List<Dish> showTopTenDishes(){
+
+        return initial.getInfo().getTopTenDishes();
+    }
+
     //    public String removeIngredient(int id) {
 //        initial.getMenu().removeIngredient(id);
 //        return "success";
@@ -237,9 +243,9 @@ public class MenuManager {
 //
 //    //CATEGORY METHODS
 //
-//    public List<Category> showCategories() throws NamingException {
-//        return initial.getInfo().getCategories();
-//    }
+    public List<Category> showCategories() throws NamingException {
+        return menu.getCategories();
+    }
 
 
     public String saveMenu() {

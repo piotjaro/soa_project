@@ -22,6 +22,12 @@
                     <h:inputText styleClass="form-control" id="name" value="#{menuManager.dish.name}"/>
                     <h:message for="name"/>
 
+                    <h:outputLabel for="category" value="category"/>
+                    <h:selectOneMenu id="category" value="#{menuManager.category}">
+                        <f:selectItems value="#{menuManager.menu.categories}" var="c" itemLabel="#{c.name}" itemValue="#{c}"/>
+                    </h:selectOneMenu>
+                    <h:message for="category"/>
+
                     <h:outputLabel for="ingredientName" value="Ingredient name"/>
                     <h:inputText styleClass="form-control" id="ingredientName"
                                  value="#{menuManager.ingredient.name}"/>

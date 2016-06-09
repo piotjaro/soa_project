@@ -13,7 +13,10 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "UserAccount.getAll", query = "select u from UserAccount u"),
         @NamedQuery(name = "UserAccount.getUserByLogin", query = "Select u from UserAccount u where u.login = ?1"),
-        @NamedQuery(name = "UserAccount.getUserById", query = "Select u from UserAccount u where u.id = ?1")
+        @NamedQuery(name = "UserAccount.getUserById", query = "Select u from UserAccount u where u.id = ?1"),
+        @NamedQuery(name = "UserAccount.getUserByCartId", query = "Select u from UserAccount u join u.actualCarts c where c.id = ?1"),
+        @NamedQuery(name = "UserAccount.getUserCartByStatus", query = "Select c from UserAccount u join u.actualCarts c where u.id = ?1 and c.status = ?2"),
+        @NamedQuery(name = "UserAccount.getUserSubscribedCart", query = "Select c from UserAccount u join u.actualCarts c where u.id = ?1 and c.status not in('Cancelled', 'Finished')")
 
 })
 public class UserAccount implements Serializable {

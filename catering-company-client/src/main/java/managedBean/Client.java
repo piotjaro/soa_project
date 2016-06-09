@@ -62,6 +62,14 @@ public class Client {
         return allCost;
     }
 
+    public List<Cart> showCartByStatus(String status) {
+        return initial.getCartInfo().getCartsByStatusByUserId(user.getId(), status);
+    }
+
+    public List<Cart> showSubscribedCarts() {
+        return initial.getCartInfo().getSubscribedCartsByUserId(user.getId());
+    }
+
     public void setUser(UserAccount user) {
         this.user = user;
     }
@@ -146,25 +154,7 @@ public class Client {
         return "/all/success.xhtml";
     }
 
-    public void createCartBySubscription(Cart cart, UserAccount user) {
-        Date nextDate = createNextRegularSubscription(cart.getDateOfReceipt());
 
-        Address address = cart.getAddress();
-        address.setId(0);
-        cart.setId(0);
-        List<Dish> dishes = new ArrayList<>();
-        for(Dish dish : cart.getDishes()) dishes.add(dish);
-        cart.setDishes(dishes);
-        cart.setDateOfReceipt(nextDate);
-        initial.getUserEditor().addCartToUser(user.getId(), cart);
-
-    }
-
-    public Date createNextRegularSubscription(Date date){
-        LocalDateTime date1 = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
-        date1 = date1.plusDays(1);
-        return Date.from(date1.atZone(ZoneId.systemDefault()).toInstant());
-    }
 
 //    public String payFromSalary(int userId, int cartId) {
 //

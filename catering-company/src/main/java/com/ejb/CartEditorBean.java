@@ -47,14 +47,14 @@ public class CartEditorBean implements CartEditor{
         if(status.equals("FinishedCash")) {
             cart.setStatus("Finished");
             cartBox.editCart(cart);
-            user = userBox.getUserByCart(cart);
+            user = userBox.getUserByCart(cart.getId());
             if(!cart.getSubscribedType().equals("None"))
                 createCartBySubscription(cart, user);
 
 
         } else if(status.equals("FinishedSalary")) {
 
-            user = userBox.getUserByCart(cart);
+            user = userBox.getUserByCart(cart.getId());
             cart.setStatus("Finished");
             cart.setPaidFromSalary(true);
             cartBox.editCart(cart);
@@ -70,7 +70,7 @@ public class CartEditorBean implements CartEditor{
             cart.setStatus(status);
             cartBox.editCart(cart);
             if(!cart.getSubscribedType().equals("None")){
-                user = userBox.getUserByCart(cart);
+                user = userBox.getUserByCart(cart.getId());
                 createCartBySubscription(cart, user);
             }
 
@@ -83,21 +83,39 @@ public class CartEditorBean implements CartEditor{
     }
 
     public void createCartBySubscription(Cart cart, UserAccount user) {
-        cart.setStatus("New");
         cart.setId(0);
-        cart.setDateOfReceipt(createNextRegularSubscription(cart.getDateOfReceipt()));
+        cart.setStatus("New");
+        if(cart.getSubscribedType().equals("Regular"))
+            cart.setDateOfReceipt(createNextRegularSubscription(cart.getDateOfReceipt()));
+        else if(cart.getSubscribedType().equals("Repeated"))
+            cart.setDateOfReceipt(createNextRepeatedSubscription(cart.getSubscribedValue(), cart.getDateOfReceipt()));
+        else if(cart.getSubscribedType().equals("OnDays")){
+            cart.setDateOfReceipt(createNextOnDaysSubscription(cart.getSubscribedValue(), cart.getDateOfReceipt()));
+        }
         Address address = cart.getAddress();
         address.setId(0);
         List<Dish> dishes = new ArrayList<>();
         for(Dish dish : cart.getDishes()) dishes.add(dish);
         cart.setDishes(dishes);
+        cart = cartBox.addCart(cart);
         userBox.addCartToUser(user.getId(), cart);
-
     }
 
     public Date createNextRegularSubscription(Date date){
         LocalDateTime date1 = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
         date1=date1.plusDays(1);
+        return Date.from(date1.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public Date createNextRepeatedSubscription(String subscriptionValue, Date date) {
+        LocalDateTime date1 = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        date1=date1.plusDays(Integer.parseInt(subscriptionValue));
+        return Date.from(date1.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public Date createNextOnDaysSubscription(String subscriptionValue, Date date) {
+        LocalDateTime date1 = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        date1=date1.plusDays(7);
         return Date.from(date1.atZone(ZoneId.systemDefault()).toInstant());
     }
 }

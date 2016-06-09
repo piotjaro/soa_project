@@ -14,14 +14,14 @@ import java.util.List;
         @NamedQuery(name = "Dish.getAll", query = "Select d from Dish d")
 
 })
-public class Dish implements Serializable{
+public class Dish implements Serializable, Comparable<Dish> {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
     private double price;
-    @OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Ingredient> ingredients = new ArrayList<>();
     private String pathToPhoto;
     private Double dishPriceFromRestaurant;
@@ -81,6 +81,42 @@ public class Dish implements Serializable{
     public void removeIngredient(Ingredient ingredient) {
         ingredients.remove(ingredient);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Dish dish = (Dish) o;
+
+        if (id != dish.id) return false;
+        if (Double.compare(dish.price, price) != 0) return false;
+        if (name != null ? !name.equals(dish.name) : dish.name != null) return false;
+        if (ingredients != null ? !ingredients.equals(dish.ingredients) : dish.ingredients != null) return false;
+        if (pathToPhoto != null ? !pathToPhoto.equals(dish.pathToPhoto) : dish.pathToPhoto != null) return false;
+        return !(dishPriceFromRestaurant != null ? !dishPriceFromRestaurant.equals(dish.dishPriceFromRestaurant) : dish.dishPriceFromRestaurant != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (ingredients != null ? ingredients.hashCode() : 0);
+        result = 31 * result + (pathToPhoto != null ? pathToPhoto.hashCode() : 0);
+        result = 31 * result + (dishPriceFromRestaurant != null ? dishPriceFromRestaurant.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public int compareTo(Dish dish) {
+        return 1;
+    }
+
 
     @Override
     public String toString() {

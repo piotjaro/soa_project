@@ -82,9 +82,8 @@
     </div>
     <div class="panel-group">
         <div id="new">
-            <c:forEach items="#{client.getUserFromDatabase().actualCarts}" var="cart">
-                <c:choose>
-                    <c:when test="#{cart.status == 'New'}">
+            <c:forEach items="#{client.showCartByStatus('New')}" var="cart">
+
                         <div class="panel panel-success">
                             <div class="panel-heading">
                                 <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
@@ -109,15 +108,12 @@
                             </h:form>
 
                         </div>
-                    </c:when>
-                </c:choose>
             </c:forEach>
         </div>
 
         <div id="cancelled" style="display: none">
-            <c:forEach items="#{client.user.actualCarts}" var="cart">
-                <c:choose>
-                    <c:when test="#{cart.status == 'Cancelled'}">
+            <c:forEach items="#{client.showCartByStatus('Cancelled')}" var="cart">
+
                         <div class="panel panel-danger">
                             <div class="panel-heading">
                                 <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
@@ -136,13 +132,11 @@
                                 </ui:repeat>
                             </table>
                         </div>
-                    </c:when>
-                </c:choose>
             </c:forEach>
         </div>
 
         <div id="ready" style="display: none">
-            <c:forEach items="#{client.user.actualCarts}" var="cart">
+            <c:forEach items="#{client.showCartByStatus('Ready')}" var="cart">
                 <c:choose>
                     <c:when test="#{cart.status == 'Ready'}">
                         <div class="panel panel-danger">
@@ -169,7 +163,7 @@
         </div>
 
         <div id="finished" style="display: none">
-            <c:forEach items="#{client.user.actualCarts}" var="cart">
+            <c:forEach items="#{client.showCartByStatus('Finished')}" var="cart">
                 <c:choose>
                     <c:when test="#{cart.status == 'Finished'}">
                         <div class="panel panel-danger">
@@ -196,9 +190,9 @@
         </div>
 
         <div id="subscribed" style="display: none">
-            <c:forEach items="#{client.user.actualCarts}" var="cart">
+            <c:forEach items="#{client.showSubscribedCarts()}" var="cart">
                 <c:choose>
-                    <c:when test="#{cart.subscribedType != 'None'}">
+                    <c:when test="#{cart.subscribedType != 'None' and cart.status != 'Finished' and cart.status != 'Cancelled'}">
                         <div class="panel panel-danger">
                             <div class="panel-heading">
                                 <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
@@ -207,6 +201,7 @@
                                 <h:outputText value=", address: #{cart.address}"/>
                                 <h:outputText value=", subscription type: #{cart.subscribedType}"/>
                                 <h:outputText value=", subscription value: #{cart.subscribedValue}"/>
+                                <h:outputText value=", subscription value: #{cart.status}"/>
                             </div>
 
                             <table class="table table-striped">
@@ -238,7 +233,7 @@
         </h:form>
 
         <div id="inProgress" style="display: none">
-            <c:forEach items="#{client.user.actualCarts}" var="cart">
+            <c:forEach items="#{client.showCartByStatus('InProgress')}" var="cart">
                 <c:choose>
                     <c:when test="#{cart.status == 'Subscribed'}">
                         <div class="panel panel-danger">

@@ -35,38 +35,42 @@ public class Staff {
     }
 
 
+    public List<Cart> getCartsByStatus(String status) {
+        return initial.getCartInfo().getCartsByStatus(status);
+    }
+
 //    public List<Cart> getAllCarts() {
 //        return initial.getCartInfo().getCarts();
 //    }
 
-    public List<Cart> getNewCarts() {
-        return initial.getCartInfo().getNewCarts();
-    }
-
-    public List<Cart> getCancelledCarts() {
-        return initial.getCartInfo().getCancelledCarts();
-    }
-
-    public List<Cart> getReadyCarts() {
-        List<Cart> carts = initial.getCartInfo().getReadyCarts().stream().filter(c -> c.getAddress().getCity().equals("")).collect(Collectors.toList());
-        return carts;
-    }
-
-    public List<Cart> getReadyToDeliverCarts() {
-        return initial.getCartInfo().getReadyCarts().stream().filter(c -> !c.getAddress().getCity().equals("")).collect(Collectors.toList());
-    }
-
-    public List<Cart> getFinishedCarts() {
-        return initial.getCartInfo().getFinishedCarts();
-    }
-
-    public List<Cart> getInProgressCarts() {
-        return initial.getCartInfo().getInProgressCarts();
-    }
-
-    public List<Cart> getInDeliveryCarts() {
-        return initial.getCartInfo().getInDeliveredCarts();
-    }
+//    public List<Cart> getNewCarts() {
+//        return initial.getCartInfo().getNewCarts();
+//    }
+//
+//    public List<Cart> getCancelledCarts() {
+//        return initial.getCartInfo().getCancelledCarts();
+//    }
+//
+//    public List<Cart> getReadyCarts() {
+//        List<Cart> carts = initial.getCartInfo().getReadyCarts().stream().filter(c -> c.getAddress().getCity().equals("")).collect(Collectors.toList());
+//        return carts;
+//    }
+//
+//    public List<Cart> getReadyToDeliverCarts() {
+//        return initial.getCartInfo().getReadyCarts().stream().filter(c -> !c.getAddress().getCity().equals("")).collect(Collectors.toList());
+//    }
+//
+//    public List<Cart> getFinishedCarts() {
+//        return initial.getCartInfo().getFinishedCarts();
+//    }
+//
+//    public List<Cart> getInProgressCarts() {
+//        return initial.getCartInfo().getInProgressCarts();
+//    }
+//
+//    public List<Cart> getInDeliveryCarts() {
+//        return initial.getCartInfo().getInDeliveredCarts();
+//    }
 
 //    public String changeStatus(Cart cart, String status) {
 //        cart.setStatus(status);

@@ -22,9 +22,8 @@ public class MenuEditorBean implements MenuEditor {
 
 	@EJB MenuBox box;
 
-	public String addDish(Dish dish) {
-		box.addDish(dish);
-		return "Success";
+	public Dish addDish(Dish dish) {
+		return box.addDish(dish);
 	}
 
 	@Override

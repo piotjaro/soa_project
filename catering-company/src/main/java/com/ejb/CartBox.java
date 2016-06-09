@@ -40,46 +40,120 @@ public class CartBox {
         return (List<Cart>)q1.getResultList();
     }
 
+
     @Lock(READ)
-    public List<Cart> getNewCarts() {
+    public List<Cart> getCartsByStatus(String status) {
         Query q1 = em.createNamedQuery("Cart.getAllByStatus");
-        q1.setParameter(1, "New");
-        return (List<Cart>)q1.getResultList();
-    }
-    @Lock(READ)
-    public List<Cart> getCancelledCarts() {
-        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
-        q1.setParameter(1, "Cancelled");
+        q1.setParameter(1, status);
         return (List<Cart>)q1.getResultList();
     }
 
+//    @Lock(READ)
+//    public List<Cart> getNewCarts() {
+//        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
+//        q1.setParameter(1, "New");
+//        return (List<Cart>)q1.getResultList();
+//    }
+//    @Lock(READ)
+//    public List<Cart> getCancelledCarts() {
+//        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
+//        q1.setParameter(1, "Cancelled");
+//        return (List<Cart>)q1.getResultList();
+//    }
+//
+//
+//    @Lock(READ)
+//    public List<Cart> getInProgressCarts() {
+//        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
+//        q1.setParameter(1, "InProgress");
+//        return (List<Cart>)q1.getResultList();
+//    }
+//
+//    @Lock(READ)
+//    public List<Cart> getReadyCarts() {
+//        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
+//        q1.setParameter(1, "Ready");
+//        return (List<Cart>)q1.getResultList();
+//    }
+//
+//    @Lock(READ)
+//    public List<Cart> getFinishedCarts() {
+//        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
+//        q1.setParameter(1, "Finished");
+//        return (List<Cart>)q1.getResultList();
+//    }
+
 
     @Lock(READ)
-    public List<Cart> getInProgressCarts() {
-        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
-        q1.setParameter(1, "InProgress");
+    public List<Cart> getCartsByUserId(int userId, String status) {
+        Query q1 = em.createNamedQuery("UserAccount.getUserCartByStatus");
+        q1.setParameter(1, userId);
+        q1.setParameter(2, status);
+        return (List<Cart>)q1.getResultList();
+    }    @Lock(READ)
+
+
+    public List<Cart> getSubscribedCartsByUserId(int userId) {
+        Query q1 = em.createNamedQuery("UserAccount.getUserSubscribedCart");
+        q1.setParameter(1, userId);
         return (List<Cart>)q1.getResultList();
     }
 
-    @Lock(READ)
-    public List<Cart> getReadyCarts() {
-        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
-        q1.setParameter(1, "Ready");
-        return (List<Cart>)q1.getResultList();
-    }
-
-    @Lock(READ)
-    public List<Cart> getFinishedCarts() {
-        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
-        q1.setParameter(1, "Finished");
-        return (List<Cart>)q1.getResultList();
-    }
-
-    @Lock(READ)
-    public List<Cart> getReadyToDeliveredCarts() {
-        Query q1 = em.createNamedQuery("Cart.getReadyToDelivered");
-        return (List<Cart>)q1.getResultList();
-    }
+//    @Lock(READ)
+//    public List<Cart> getFinishedCartsByUserId(int userId) {
+//        Query q1 = em.createNamedQuery("UserAccount.getUserCartByStatus");
+//        q1.setParameter(1, userId);
+//        q1.setParameter(2, "Finished");
+//        return (List<Cart>)q1.getResultList();
+//    }
+//
+//    @Lock(READ)
+//    public List<Cart> getNewCartsByUserId(int userId) {
+//        Query q1 = em.createNamedQuery("UserAccount.getUserCartByStatus");
+//        q1.setParameter(1, userId);
+//        q1.setParameter(2, "New");
+//        return (List<Cart>)q1.getResultList();
+//    }
+//
+//    @Lock(READ)
+//    public List<Cart> getReadyCartsByUserId(int userId) {
+//        Query q1 = em.createNamedQuery("UserAccount.getUserCartByStatus");
+//        q1.setParameter(1, userId);
+//        q1.setParameter(2, "Ready");
+//        return (List<Cart>)q1.getResultList();
+//    }
+//
+//    @Lock(READ)
+//    public List<Cart> getInProgresCartsByUserId(int userId) {
+//        Query q1 = em.createNamedQuery("UserAccount.getUserCartByStatus");
+//        q1.setParameter(1, userId);
+//        q1.setParameter(2, "InProgress");
+//        return (List<Cart>)q1.getResultList();
+//    }
+//
+//    @Lock(READ)
+//    public List<Cart> getReadyToDeliveryCartsByUserId(int userId) {
+//        Query q1 = em.createNamedQuery("UserAccount.getUserCartByStatus");
+//        q1.setParameter(1, userId);
+//        q1.setParameter(2, "ReadyToDelivery");
+//        return (List<Cart>)q1.getResultList();
+//    }
+//
+//    @Lock(READ)
+//    public List<Cart> getInDeliveryCartsByUserId(int userId) {
+//        Query q1 = em.createNamedQuery("UserAccount.getUserCartByStatus");
+//        q1.setParameter(1, userId);
+//        q1.setParameter(2, "InDelivery");
+//        return (List<Cart>)q1.getResultList();
+//    }
+//
+//
+//
+//    @Lock(READ)
+//    public List<Cart> getReadyToDeliveredCarts() {
+//        Query q1 = em.createNamedQuery("Cart.getReadyToDelivered");
+//        return (List<Cart>)q1.getResultList();
+//    }
 
     public List<Cart> getCartsBetweenDate(Date date1, Date date2) {
 //        Query q1 = em.createNamedQuery("Cart.betweenDate");
@@ -89,12 +163,12 @@ public class CartBox {
         return null;
     }
 
-    @Lock(READ)
-    public List<Cart> getInDeliveredCarts() {
-        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
-                q1.setParameter(1, "InDelivery");
-        return (List<Cart>)q1.getResultList();
-    }
+//    @Lock(READ)
+//    public List<Cart> getInDeliveredCarts() {
+//        Query q1 = em.createNamedQuery("Cart.getAllByStatus");
+//                q1.setParameter(1, "InDelivery");
+//        return (List<Cart>)q1.getResultList();
+//    }
 
     @Lock(READ)
     public Cart getCart(int id) {

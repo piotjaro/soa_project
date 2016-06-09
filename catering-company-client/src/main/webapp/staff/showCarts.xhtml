@@ -85,7 +85,7 @@
     </div>
     <div class="panel-group">
         <div id="new">
-            <c:forEach items="#{staff.getNewCarts()}" var="cart">
+            <c:forEach items="#{staff.getCartsByStatus('New')}" var="cart">
 
                         <div class="panel panel-success">
                             <div class="panel-heading">
@@ -119,7 +119,7 @@
         </div>
 
         <div id="cancelled" style="display: none">
-            <c:forEach items="#{staff.getCancelledCarts()}" var="cart">
+            <c:forEach items="#{staff.getCartsByStatus('Cancelled')}" var="cart">
                         <div class="panel panel-danger">
                             <div class="panel-heading">
                                 <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
@@ -145,7 +145,7 @@
         </div>
 
         <div id="ready" style="display: none">
-            <c:forEach items="#{staff.getReadyCarts()}" var="cart">
+            <c:forEach items="#{staff.getCartsByStatus('Ready')}" var="cart">
                         <div class="panel panel-danger">
                             <div class="panel-heading">
                                 <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
@@ -176,7 +176,7 @@
         </div>
 
         <div id="readyToDeliver" style="display: none">
-            <c:forEach items="#{staff.getReadyToDeliverCarts()}" var="cart">
+            <c:forEach items="#{staff.getCartsByStatus('ReadyToDelievery')}" var="cart">
                 <div class="panel panel-danger">
                     <div class="panel-heading">
                         <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
@@ -204,7 +204,7 @@
         </div>
 
         <div id="finished" style="display: none">
-            <c:forEach items="#{staff.getFinishedCarts()}" var="cart">
+            <c:forEach items="#{staff.getCartsByStatus('Finished')}" var="cart">
                         <div class="panel panel-danger">
                             <div class="panel-heading">
                                 <h:outputText value="Date of receipt: #{cart.dateOfReceipt}"/>
@@ -229,7 +229,7 @@
         </div>
 
         <div id="inProgress" style="display: none">
-            <c:forEach items="#{staff.getInProgressCarts()}" var="cart">
+            <c:forEach items="#{staff.getCartsByStatus('InProgress')}" var="cart">
 
                         <div class="panel panel-danger">
                             <div class="panel-heading">
@@ -258,7 +258,7 @@
     </div>
 
     <div id="inDelivery" style="display: none">
-        <c:forEach items="#{staff.getInDeliveryCarts()}" var="cart">
+        <c:forEach items="#{staff.getCartsByStatus('InDelivery')}" var="cart">
 
             <div class="panel panel-danger">
                 <div class="panel-heading">

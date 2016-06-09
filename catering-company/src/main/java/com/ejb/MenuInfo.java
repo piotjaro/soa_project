@@ -7,6 +7,7 @@ import com.model.Ingredient;
 import com.model.Menu;
 
 import java.util.List;
+import java.util.Set;
 
 public interface MenuInfo {
 	public List<Dish> getDishes();
@@ -20,5 +21,6 @@ public interface MenuInfo {
 	public Menu getMenu(int id);
 	public Menu getCurrentMenu();
 	public List<Menu> getArchivedMenu();
+	public List<Dish> getTopTenDishes();
 
 }

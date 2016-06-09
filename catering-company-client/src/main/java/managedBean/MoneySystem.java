@@ -1,6 +1,7 @@
 package managedBean;
 
 import com.model.Cart;
+import com.model.Dish;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -15,7 +16,35 @@ import java.util.List;
 public class MoneySystem {
     private Initial initial = new Initial();
 
-    public List<Cart> paymentRaport() {
-        return initial.getCartInfo().getCarts();
+    public double paidMoney() {
+        double result = 0.0;
+
+        for(Cart cart : initial.getCartInfo().getCartsByStatus("Finished")){
+            if(!cart.isPaidFromSalary()) result += cart.getCost();
+        }
+        return result;
     }
+
+
+    public double paidFromSalary() {
+        double result = 0.0;
+
+        for(Cart cart : initial.getCartInfo().getCartsByStatus("Finished")){
+            if(cart.isPaidFromSalary()) result += cart.getCost();
+        }
+        return result;
+    }
+
+    public double payToAnotherRestaurant() {
+        double result = 0.0;
+
+        for(Cart cart : initial.getCartInfo().getCartsByStatus("Finished")){
+            for(Dish dish : cart.getDishes()){
+                if(dish.getDishPriceFromRestaurant() != null) result += dish.getDishPriceFromRestaurant();
+            }
+        }
+        return result;
+    }
+
+
 }

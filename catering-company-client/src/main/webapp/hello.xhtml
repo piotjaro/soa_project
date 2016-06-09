@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
     <h:outputStylesheet library="css" name="bootstrap.min.css"/>
 
@@ -20,6 +18,7 @@
             <h:commandButton rendered="#{request.isUserInRole('ADMIN') or request.isUserInRole('CUSTOMER')}" class="btn btn-default" onclick="location.href = 'customer/showMenu.xhtml';" value="show menu"/>
             <h:commandButton rendered="#{request.isUserInRole('ADMIN') or request.isUserInRole('CUSTOMER')}" class="btn btn-default" onclick="location.href = 'customer/showCart.xhtml';" value="show cart"/>
             <h:commandButton rendered="#{request.isUserInRole('ADMIN') or request.isUserInRole('STAFF')}" class="btn btn-default" onclick="location.href = 'staff/showCarts.xhtml';" value="show carts"/>
+            <h:commandButton class="btn btn-default" onclick="location.href = 'menuManager/paymentRaport.xhtml';" value="payment raport"/>
             <h:commandButton class="btn btn-default" onclick="location.href = '/all/registration.xhtml';" value="registration"/>
         </div>
     </div>
@@ -34,6 +33,17 @@
                 <h:commandButton rendered="#{menuManager.menu.id gt 0 and (request.isUserInRole('ADMIN') or request.isUserInRole('MENUMANAGER'))}" styleClass="btn btn-default" action="#{menuManager.goToCreateMenu()}" value="Update Menu"/>
                 <h:commandButton  rendered="#{request.isUserInRole('CUSTOMER') or request.isUserInRole('MENUMANAGER') or request.isUserInRole('ADMIN') or request.isUserInRole('STAFF')}"  styleClass="btn btn-default" action="#{registrationLogout.logout()}" value="logout"/>
             </h:form>
+        </div>
+    </div>
+
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Top ten dishes</div>
+
+        <div class="panel-body">
+            <ui:repeat value="#{menuManager.showTopTenDishes()}" var="top">
+                <h:outputText value="#{top.name}"/><br/>
+            </ui:repeat>
         </div>
     </div>
 
